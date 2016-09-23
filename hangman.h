@@ -19,6 +19,11 @@ public:
 private slots:
     void on_btnStartHost_clicked();
 
+    void on_btnSend_clicked();
+
+    void getMessage(QString message);
+    void on_btnFindHost_clicked();
+
 private:
     Ui::Hangman *ui;
     ClientServer *cServer;

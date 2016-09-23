@@ -17,7 +17,7 @@ QString ClientServer::startServer()
     }
     else
     {
-        connect(tcpServer, &QTcpServer::newConnection, this, &ClientServer::newClient());
+        connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newClient()));
     }
     QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -41,17 +41,41 @@ QString ClientServer::startServer()
     return info;
 }
 
+QString ClientServer::connectClient(QString ipAdress, int port)
+{
+    QString info = "";
+    socket = new QTcpSocket(this);
+    connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::DirectConnection); //Ohne Directconnection? DC = Multithreaded?
+    connect(socket, SIGNAL(disconnected()), this, SLOT(hostDisconnected()));
+    socket->connectToHost(ipAdress, port);
+
+    if(socket->waitForConnected(3000))
+    {
+        info = "Connected!";
+    }
+    else
+    {
+        info = "Cannot connect!";
+    }
+    return info;
+}
 
 void ClientServer::sendMessage(QString message)
 {
-    QByteArray block;
+    /*QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_7);
 
     out << message;
 
     clientConnection->write(block);
-    clientConnection->disconnectFromHost();
+    clientConnection->disconnectFromHost();*/
+
+    // send
+    socket->write(message.toUtf8());
+    socket->waitForBytesWritten(1000);
+    socket->waitForReadyRead(-1);
+    qDebug() << "Reading: " << socket->bytesAvailable();
 }
 
 void ClientServer::newClient()
@@ -62,6 +86,14 @@ void ClientServer::newClient()
         connect(clientConnection, &QAbstractSocket::readyRead, this, &ClientServer::readClientData);
         connect(clientConnection, &QAbstractSocket::disconnected, clientConnection, &QObject::deleteLater);
         //clientConnection->peerAddress()
+        ///in Map mit sockets speichern und später mit nicknames verbinden?
+
+
+        clientConnection->write("Hello client\r\n");
+        clientConnection->flush();
+
+        clientConnection->waitForBytesWritten(3000);
+
         connectedClients.append(clientConnection);
     }
 }
@@ -71,5 +103,19 @@ void ClientServer::readClientData()
 {
     //Choose socket that just connected!!!!
     ///Work
-    QByteArray newData = socket->readAll();
+    //QByteArray newData = socket->readAll();
+}
+
+void ClientServer::clientReadyRead()
+{
+QByteArray newData = socket->readAll();
+
+QString dataString(newData);
+
+emit receivedMessage(dataString);
+}
+
+void ClientServer::hostDisconnected()
+{
+    qDebug() << "Host disconnected";
 }

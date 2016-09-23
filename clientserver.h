@@ -7,6 +7,7 @@
 #include <QTcpSocket>
 #include <QNetworkSession>
 #include <QMessageBox>
+#include <QDebug>
 
 class ClientServer : public QObject
 {
@@ -14,13 +15,17 @@ class ClientServer : public QObject
 public:
     explicit ClientServer(QObject *parent = 0);
     QString startServer();
+    QString connectClient(QString ipAdress, int port);
+    void sendMessage(QString message);
 
 private slots:
-    //void sessionOpened();
-    //void sendFortune();
-    void sendMessage(QString message);
     void newClient();
     void readClientData();
+    void clientReadyRead();
+    void hostDisconnected();
+
+signals:
+    void receivedMessage(QString dataString);
 
 private:
     QLabel *statusLabel;
