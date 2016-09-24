@@ -1,0 +1,2 @@
+*.pro.user
+# except pro.user files which are created by compilation
