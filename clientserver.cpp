@@ -41,23 +41,20 @@ QString ClientServer::startServer()
     return info;
 }
 
-QString ClientServer::connectClient(QString ipAdress, int port)
+/*QString*/ bool ClientServer::connectClient(QString ipAdress, int port)
 {
     QString info = "";
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::DirectConnection); //Ohne Directconnection? DC = Multithreaded?
     connect(socket, SIGNAL(disconnected()), this, SLOT(hostDisconnected()));
     socket->connectToHost(ipAdress, port);
-
+    bool connected = false;
     if(socket->waitForConnected(3000))
     {
-        info = "Connected!";
+        connected = true;
     }
-    else
-    {
-        info = "Cannot connect!";
-    }
-    return info;
+
+    return connected;
 }
 
 void ClientServer::sendMessage(QString message)
@@ -113,6 +110,7 @@ void ClientServer::clientReadyRead()
     QString dataString(newData);
 
     emit receivedMessage(dataString);
+
 }
 
 void ClientServer::hostDisconnected()

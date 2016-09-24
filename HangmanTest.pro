@@ -16,9 +16,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         hangman.cpp \
-    clientserver.cpp
+    clientserver.cpp \
+    connectionsetup.cpp \
+    chatroom.cpp
 
 HEADERS  += hangman.h \
-    clientserver.h
+    clientserver.h \
+    connectionsetup.h \
+    chatroom.h
 
-FORMS    += hangman.ui
+FORMS    += hangman.ui \
+    connectionsetup.ui \
+    chatroom.ui
