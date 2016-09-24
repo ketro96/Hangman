@@ -28,7 +28,7 @@ void Hangman::on_btnSend_clicked()
 
 void Hangman::getMessage(QString message)
 {
-    ui->edtMessage->setText(message);
+    ui->lwChatWindow->addItem(message);
 }
 
 void Hangman::on_btnFindHost_clicked()

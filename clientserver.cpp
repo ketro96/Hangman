@@ -62,14 +62,14 @@ QString ClientServer::connectClient(QString ipAdress, int port)
 
 void ClientServer::sendMessage(QString message)
 {
-    /*QByteArray block;
+    QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_7);
 
     out << message;
 
-    clientConnection->write(block);
-    clientConnection->disconnectFromHost();*/
+    //clientConnection->write(block);
+    //clientConnection->disconnectFromHost();
 
     // send
     socket->write(message.toUtf8());
@@ -103,16 +103,16 @@ void ClientServer::readClientData()
 {
     //Choose socket that just connected!!!!
     ///Work
-    //QByteArray newData = socket->readAll();
+    QByteArray newData = socket->readAll();
 }
 
 void ClientServer::clientReadyRead()
 {
-QByteArray newData = socket->readAll();
+    QByteArray newData = socket->readAll();
 
-QString dataString(newData);
+    QString dataString(newData);
 
-emit receivedMessage(dataString);
+    emit receivedMessage(dataString);
 }
 
 void ClientServer::hostDisconnected()
