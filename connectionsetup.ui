@@ -101,7 +101,7 @@
     <string>Nickname</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="edtIpAdress_2">
+  <widget class="QLineEdit" name="edtNickname">
    <property name="geometry">
     <rect>
      <x>50</x>

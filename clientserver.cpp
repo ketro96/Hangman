@@ -41,9 +41,8 @@ QString ClientServer::startServer()
     return info;
 }
 
-/*QString*/ bool ClientServer::connectClient(QString ipAdress, int port)
+bool ClientServer::connectClient(QString ipAdress, int port)
 {
-    QString info = "";
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::DirectConnection); //Ohne Directconnection? DC = Multithreaded?
     connect(socket, SIGNAL(disconnected()), this, SLOT(hostDisconnected()));
@@ -59,15 +58,6 @@ QString ClientServer::startServer()
 
 void ClientServer::sendMessage(QString message)
 {
-    QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_7);
-
-    out << message;
-
-    //clientConnection->write(block);
-    //clientConnection->disconnectFromHost();
-
     // send
     socket->write(message.toUtf8());
     socket->waitForBytesWritten(1000);

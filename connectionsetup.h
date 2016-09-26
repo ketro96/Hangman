@@ -2,8 +2,6 @@
 #define CONNECTIONSETUP_H
 
 #include <QDialog>
-#include <clientserver.h>
-#include <chatroom.h>
 
 namespace Ui {
 class ConnectionSetup;
@@ -21,10 +19,11 @@ private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
+signals:
+    void connectClient(QString nickname, QString ipAdress, int port);
+
 private:
     Ui::ConnectionSetup *ui;
-    ClientServer *cServer;
-    ChatRoom *chatRoom;
 };
 
 #endif // CONNECTIONSETUP_H

@@ -9,15 +9,12 @@ Hangman::Hangman(QWidget *parent) :
     ui->setupUi(this);
     cServer = new ClientServer();
     connect(cServer, SIGNAL(receivedMessage(QString)), this, SLOT(getMessage(QString)));
-
-    chatRoom = new ChatRoom();
 }
 
 Hangman::~Hangman()
 {
     delete ui;
-    delete cServer;
-    delete chatRoom;
+
 }
 
 
@@ -28,21 +25,11 @@ void Hangman::on_btnStartHost_clicked()
     chatRoom ->show();
 }
 
-/*
-void Hangman::on_btnSend_clicked()
-{
-    cServer->sendMessage(ui->edtMessage->text());
-}
-
-void Hangman::getMessage(QString message)
-{
-    ui->lwChatWindow->addItem(message);
-}
-
-*/
 void Hangman::on_btnFindHost_clicked()
 {
-    connectionSetup = new ConnectionSetup();
+    ConnectionSetup *connectionSetup = new ConnectionSetup();
+
+    connect(connectionSetup, SIGNAL(connectClient(QString, int)), this, SLOT(connectClient(QString,int));
     connectionSetup->show();
 
 }
@@ -50,4 +37,16 @@ void Hangman::on_btnFindHost_clicked()
 void Hangman::on_btnSingleplayer_clicked()
 {
     //start Singleplayer Game
+}
+
+void Hangman::connectClient(QString nickname, QString ipAdress, int port)
+{
+    if(cServer->connectClient(ipAdress, port))
+    {
+
+    }
+    else
+    {
+
+    }
 }

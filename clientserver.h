@@ -15,6 +15,8 @@ class ClientServer : public QObject
 public:
     explicit ClientServer(QObject *parent = 0);
     QString startServer();
+
+public slots:
     bool connectClient(QString ipAdress, int port);
     void sendMessage(QString message);
 
@@ -31,7 +33,6 @@ private:
     QLabel *statusLabel;
     QTcpServer *tcpServer;
     QTcpSocket *socket;
-    QStringList fortunes;
     QNetworkSession *networkSession;
     QList<QTcpSocket*> connectedClients;
 };

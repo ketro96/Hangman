@@ -18,13 +18,15 @@ SOURCES += main.cpp\
         hangman.cpp \
     clientserver.cpp \
     connectionsetup.cpp \
-    chatroom.cpp
+    game.cpp \
+    connection.cpp
 
 HEADERS  += hangman.h \
     clientserver.h \
     connectionsetup.h \
-    chatroom.h
+    game.h \
+    connection.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
-    chatroom.ui
+    game.ui
