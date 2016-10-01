@@ -25,7 +25,10 @@ void Hangman::on_btnStartHost_clicked()
         game = new Game();
         game->show();
     }
-
+    else
+    {
+        //Could not start
+    }
 
 }
 
