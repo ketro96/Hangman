@@ -1,15 +1,11 @@
-#include "mainwindow.h"
+#include "hangman.h"
 #include <QApplication>
-#include <mywidget.h>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    Hangman w;
     w.show();
-
-    MyWidget myWidget;
-    myWidget.show();
 
     return a.exec();
 }

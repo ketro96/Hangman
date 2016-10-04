@@ -12,3 +12,21 @@ Game::~Game()
 {
     delete ui;
 }
+
+void Game::on_btnSend_clicked()
+{
+    emit sendMessage(ui->edtChat->text());
+}
+
+void Game::newServerInfo(QString ipAdress, QString port)
+{
+    ui->teIpAdress->setText(ipAdress);
+    ui->tePort->setText(port);
+}
+
+
+void Game::getMessage(QString message)
+{
+    ui->lwChat->addItem(message);
+}
+

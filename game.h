@@ -14,7 +14,13 @@ class Game : public QWidget
 public:
     explicit Game(QWidget *parent = 0);
     ~Game();
-
+public slots:
+    void getMessage(QString message);
+private slots:
+    void on_btnSend_clicked();
+    void newServerInfo(QString ipAdress, QString port);
+signals:
+    void sendMessage(QString message);
 private:
     Ui::Game *ui;
 };

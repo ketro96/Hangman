@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QLabel>
-#include <QTcpServer>
 #include <QTcpSocket>
 #include <QNetworkSession>
 #include <QMessageBox>
@@ -21,8 +20,6 @@ public slots:
     void sendMessage(QString message);
 
 private slots:
-    void newClient();
-    void readClientData();
     void clientReadyRead();
     void hostDisconnected();
 
@@ -31,7 +28,6 @@ signals:
 
 private:
     QLabel *statusLabel;
-    QTcpServer *tcpServer;
     QTcpSocket *socket;
     QNetworkSession *networkSession;
     QList<QTcpSocket*> connectedClients;

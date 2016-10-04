@@ -10,8 +10,8 @@ void Server::incomingConnection(qintptr socketDescriptor)
     QTcpSocket *connection = new QTcpSocket(this);
     connection->setSocketDescriptor(socketDescriptor);
     connect(connection, &QTcpSocket::readyRead, this, readClientData);
-    connect(connection, &QTcpSocket::disconnected, clientConnection, &Server::disconnectClient);
-
+    connect(connection, &QTcpSocket::disconnected, this, &Server::disconnectClient);
+    qDebug() << "Incoming connection";
     connectedClients.append(connection);
 }
 
@@ -19,13 +19,14 @@ bool Server::startServer()
 {
     if (!this->listen())
     {
-        emit serverInfo((this->errorString(), ""));
+        emit serverInfo(this->errorString(), "");
         this->close();
+        qDebug() << "Could not start Server";
         return false;
     }
     else
     {
-        connect(this, SIGNAL(newConnection()), this, SLOT(newClient()));
+        //connect(this, SIGNAL(newConnection()), this, SLOT(newClient()));
     }
     QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -36,6 +37,7 @@ bool Server::startServer()
                 ipAddressesList.at(i).toIPv4Address())
         {
             ipAddress = ipAddressesList.at(i).toString();
+            qDebug() << "Server started1";
             emit serverInfo(ipAddress, QString::number(this->serverPort()));
             break;
         }
@@ -44,6 +46,7 @@ bool Server::startServer()
     if (ipAddress.isEmpty())
     {
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+        qDebug() << "Server started2";
         emit serverInfo(ipAddress, QString::number(this->serverPort()));
     }
     return true;
@@ -54,9 +57,10 @@ void Server::readClientData()
     QTcpSocket *client = qobject_cast<QTcpSocket *>(sender());
     QByteArray data = client->readAll();
     QString incMessage = QString(data);
-
+    qDebug() << incMessage;
+    emit receivedMessage(incMessage);
     //only insert if nick does not already exist....
-    if(!clientMap.contains(client))
+    if(!clientMap.contains(incMessage) && !connectedClients.contains(client))
     {
         clientMap.insert(incMessage, client);
     }
@@ -68,13 +72,14 @@ void Server::sendToAllClients(QString message)
 
     foreach(QTcpSocket *client, connectedClients)
     {
-        client->write("Hello client\r\n");
+        qDebug() << "send to 1client";
+        client->write(messageData);
         client->flush();
         client->waitForBytesWritten(3000);
     }
 }
 
-void Server::clientDisconnected()
+void Server::disconnectClient()
 {
     QTcpSocket *client = qobject_cast<QTcpSocket *>(sender());
 

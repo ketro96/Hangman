@@ -2,6 +2,8 @@
 #define SERVER_H
 
 #include <QTcpServer>
+#include <QTcpSocket>
+#include <QNetworkInterface>
 
 class Server : public QTcpServer
 {
@@ -10,7 +12,7 @@ class Server : public QTcpServer
 public:
     Server(QObject *parent = 0);
 public slots:
-    QString startServer();
+    bool startServer();
 private slots:
     void readClientData();
     void disconnectClient();
@@ -20,6 +22,7 @@ protected:
     void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
 signals:
      void serverInfo(QString ipAdress, QString port);
+     void receivedMessage(QString message);
 private:
     QList<QTcpSocket *> connectedClients;
     QMap<QString, QTcpSocket *> clientMap;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
+    <width>397</width>
     <height>349</height>
    </rect>
   </property>
@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>24</x>
-      <y>62</y>
+      <y>30</y>
       <width>101</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -30,10 +30,10 @@
    <widget class="QPushButton" name="btnStartHost">
     <property name="geometry">
      <rect>
-      <x>134</x>
-      <y>62</y>
+      <x>140</x>
+      <y>30</y>
       <width>111</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -43,27 +43,27 @@
    <widget class="QPushButton" name="btnFindHost">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>60</y>
+      <x>270</x>
+      <y>30</y>
       <width>101</width>
-      <height>23</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Find a host</string>
+     <string>Connect to host</string>
     </property>
    </widget>
    <widget class="QLabel" name="lblStatus">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>371</width>
+      <x>20</x>
+      <y>80</y>
+      <width>361</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>Welcome to Hangman!</string>
     </property>
    </widget>
   </widget>
@@ -72,8 +72,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>430</width>
-     <height>22</height>
+     <width>397</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

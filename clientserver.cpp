@@ -12,11 +12,15 @@ bool ClientServer::connectClient(QString ipAdress, int port)
     connect(socket, SIGNAL(disconnected()), this, SLOT(hostDisconnected()));
     socket->connectToHost(ipAdress, port);
     bool connected = false;
-    if(socket->waitForConnected(3000))
+    if(socket->waitForConnected(10000))
     {
         connected = true;
     }
-
+    if(!connected)
+    {
+        qDebug() << "not connected";
+    }
+    qDebug() << socket->errorString();
     return connected;
 }
 
@@ -25,26 +29,17 @@ void ClientServer::sendMessage(QString message)
     // send
     socket->write(message.toUtf8());
     socket->waitForBytesWritten(1000);
-    socket->waitForReadyRead(-1);
-    qDebug() << "Reading: " << socket->bytesAvailable();
-}
-
-
-void ClientServer::readClientData()
-{
-    //Choose socket that just connected!!!!
-    ///Work
-    QByteArray newData = socket->readAll();
+    //socket->waitForReadyRead(-1);
 }
 
 void ClientServer::clientReadyRead()
 {
+    qDebug() << "readyRead";
     QByteArray newData = socket->readAll();
 
     QString dataString(newData);
-
+    qDebug() << dataString;
     emit receivedMessage(dataString);
-
 }
 
 void ClientServer::hostDisconnected()

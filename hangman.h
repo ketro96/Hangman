@@ -19,6 +19,7 @@ class Hangman : public QMainWindow
 public:
     explicit Hangman(QWidget *parent = 0);
     ~Hangman();
+public slots:
     void connectClient(QString nickname, QString ipAdress, int port);
 
 private slots:
@@ -27,11 +28,11 @@ private slots:
     void on_btnFindHost_clicked();
 
     void on_btnSingleplayer_clicked();
-
 private:
     Ui::Hangman *ui;
     Server *server;
     Game *game;
+    ClientServer *client;
 };
 
 #endif // HANGMAN_H
