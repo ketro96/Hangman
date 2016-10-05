@@ -19,6 +19,8 @@ public slots:
 private slots:
     void on_btnSend_clicked();
     void newServerInfo(QString ipAdress, QString port);
+    void on_edtChat_returnPressed();
+
 signals:
     void sendMessage(QString message);
 private:
