@@ -16,6 +16,7 @@ Game::~Game()
 void Game::on_btnSend_clicked()
 {
     emit sendMessage(ui->edtChat->text());
+    ui->lwChat->addItem(ui->edtChat->text();
 }
 
 void Game::newServerInfo(QString ipAdress, QString port)
@@ -30,3 +31,8 @@ void Game::getMessage(QString message)
     ui->lwChat->addItem(message);
 }
 
+
+void Game::on_edtChat_returnPressed()
+{
+     emit sendMessage(ui->edtChat->text());
+}
