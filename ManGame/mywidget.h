@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include <QWidget>
+#include <QStringList>
 
 namespace Ui {
 class MyWidget;
@@ -23,16 +24,20 @@ protected:
     };
 
 private slots:
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
     void guessed(QKeyEvent *e);
+    void endOfGame(bool won);
 
 private:
     Ui::MyWidget *ui;
 
     int counter;
-    int wordLenght;
+    QString word;
+    QString *characterArray;
+    QList<QString> *usedCharacterList;
+    int guesses;
+    QRegularExpression regex;
+    bool won;
+    bool lost;
 
 };
 

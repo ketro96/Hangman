@@ -7,8 +7,18 @@ MyWidget::MyWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->word = "Hangman";
+
+    this->guesses = 0;
     this->counter = 0;
-    this->wordLenght = 3;
+    this->characterArray = NULL;
+    this->characterArray = new QString [word.length()];
+    this->usedCharacterList = new QList<QString>();
+
+    this->regex = QRegularExpression("[A-Za-z]");
+    this->won = false;
+    this->lost = false;
+
 }
 MyWidget::~MyWidget()
 {
@@ -79,35 +89,90 @@ void MyWidget::paintEvent(QPaintEvent *event)
     }
 
     int xPos = 190;
-    for(int i = 0; i < wordLenght; i++){
+
+    for(int i = 0; i < word.length(); i++){
         painter.setRenderHint(QPainter::Antialiasing, false);
         painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
         painter.drawLine(xPos, 300, xPos + 16, 300);
 
         painter.setFont(QFont("times",22));
-        painter.drawText(xPos, 298, "A");
-
+        painter.drawText(xPos, 298, characterArray[i].toUpper());
         xPos += 40;
+    }
+
+    xPos =20;
+    painter.setRenderHint(QPainter::Antialiasing, false);
+    painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
+
+
+    painter.setFont(QFont("arial",20));
+    painter.drawText(xPos, 350, "Benutzte Buchstaben:");
+    xPos += 200;
+
+    for(int i = 0; i < usedCharacterList->count(); i++){
+
+        painter.drawText(xPos, 350, usedCharacterList->at(i).toUpper());
+        xPos += 18;
+    }
+
+    if(won){
+
+
+        painter.drawRect(200, 200, 400, 200);
+    }
+    else if(lost){
+
     }
 
 }
 
 
+void MyWidget::endOfGame(bool won){
+
+    if(won){
+        this->won = true;
+    }
+    else{
+        lost = true;
+    }
+}
+
 void MyWidget::guessed(QKeyEvent *e){
 
-}
+    guesses++;
 
-void MyWidget::on_pushButton_clicked() //Fail
-{
-    counter++;
-    if(counter < 7)
+    QRegularExpressionMatch match = regex.match(e->text());
+    if(match.hasMatch()){
+
+        if(word.contains(e->text(), Qt::CaseInsensitive)){
+            int posLastChar = 0;
+            for(int i = 0; i < word.count(e->text(), Qt::CaseInsensitive); i++){
+                posLastChar = word.indexOf(e->text(), posLastChar, Qt::CaseInsensitive);
+                characterArray[posLastChar] = e->text();
+                posLastChar += 1;
+            }
+            if(!usedCharacterList->contains(e->text())){
+                usedCharacterList->append(e->text());
+            }
+            if(counter > 6){
+                endOfGame(true);
+            }
+        }
+        else{
+            counter++;
+            if(counter < 7){
+
+                if(!usedCharacterList->contains(e->text())){
+                    usedCharacterList->append(e->text());
+                }
+            }
+            else{
+                endOfGame(false);
+            }
+
+        }
         update();
+    }
 
-}
-
-void MyWidget::on_pushButton_2_clicked() //Reset
-{
-    counter = 0;
-    update();
 
 }
