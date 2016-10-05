@@ -20,7 +20,10 @@ bool ClientServer::connectClient(QString ipAdress, int port)
     {
         qDebug() << "not connected";
     }
+    qDebug() << "errror1?";
     qDebug() << socket->errorString();
+    qDebug() << "errror2?";
+
     return connected;
 }
 
