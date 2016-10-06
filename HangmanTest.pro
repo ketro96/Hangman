@@ -16,16 +16,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         hangman.cpp \
-    clientserver.cpp \
     connectionsetup.cpp \
     game.cpp \
-    server.cpp
+    server.cpp \
+    client.cpp
 
 HEADERS  += hangman.h \
-    clientserver.h \
     connectionsetup.h \
     game.h \
-    server.h
+    server.h \
+    client.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \

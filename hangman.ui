@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
-    <height>349</height>
+    <width>432</width>
+    <height>209</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QPushButton" name="btnSingleplayer">
     <property name="geometry">
      <rect>
-      <x>24</x>
-      <y>30</y>
-      <width>101</width>
-      <height>41</height>
+      <x>10</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -30,10 +30,10 @@
    <widget class="QPushButton" name="btnStartHost">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>30</y>
-      <width>111</width>
-      <height>41</height>
+      <x>150</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -43,10 +43,10 @@
    <widget class="QPushButton" name="btnFindHost">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>30</y>
-      <width>101</width>
-      <height>41</height>
+      <x>290</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="text">
@@ -57,9 +57,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
-      <width>361</width>
-      <height>31</height>
+      <y>0</y>
+      <width>391</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -72,10 +72,26 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>397</width>
+     <width>432</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFIle">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionHighscore"/>
+    <addaction name="actionDictionary"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionGame_Help"/>
+    <addaction name="actionInfo_2"/>
+   </widget>
+   <addaction name="menuFIle"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -86,6 +102,31 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionHighscore">
+   <property name="text">
+    <string>Highscore</string>
+   </property>
+  </action>
+  <action name="actionDictionary">
+   <property name="text">
+    <string>Dictionary</string>
+   </property>
+  </action>
+  <action name="actionInfo">
+   <property name="text">
+    <string>Info</string>
+   </property>
+  </action>
+  <action name="actionGame_Help">
+   <property name="text">
+    <string>Game Help</string>
+   </property>
+  </action>
+  <action name="actionInfo_2">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

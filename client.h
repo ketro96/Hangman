@@ -1,5 +1,5 @@
-#ifndef CLIENTSERVER_H
-#define CLIENTSERVER_H
+#ifndef CLIENT_H
+#define CLIENT_H
 
 #include <QObject>
 #include <QLabel>
@@ -8,11 +8,11 @@
 #include <QMessageBox>
 #include <QDebug>
 
-class ClientServer : public QObject
+class Client : public QObject
 {
     Q_OBJECT
 public:
-    explicit ClientServer(QObject *parent = 0);
+    explicit Client(QObject *parent = 0);
     QString startServer();
 
 public slots:
@@ -21,16 +21,15 @@ public slots:
 
 private slots:
     void clientReadyRead();
-    void hostDisconnected();
+    void disconnected();
 
 signals:
-    void receivedMessage(QString dataString);
+    void receivedChatMessage(QString dataString);
+    void receivedGameMessage(QString dataString);
+    void receivedCharMessage(QString dataString);
 
 private:
-    QLabel *statusLabel;
     QTcpSocket *socket;
-    QNetworkSession *networkSession;
-    QList<QTcpSocket*> connectedClients;
 };
 
-#endif // CLIENTSERVER_H
+#endif // CLIENT_H

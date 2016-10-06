@@ -20,7 +20,7 @@ private slots:
     void on_buttonBox_rejected();
 
 signals:
-    void connectClient(QString nickname, QString ipAdress, int port);
+    void connectClient(QString ipAdress, int port);
 
 private:
     Ui::ConnectionSetup *ui;

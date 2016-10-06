@@ -22,10 +22,9 @@ void ConnectionSetup::on_buttonBox_rejected()
 
 void ConnectionSetup::on_buttonBox_accepted()
 {
-    QString nickname = ui->edtNickname->text();
     QString ipAdress = ui->edtIpAdress->text();
     int port = ui->edtPort->text().toInt();
 
-    emit connectClient(nickname, ipAdress, port);
+    emit connectClient(ipAdress, port);
 }
 

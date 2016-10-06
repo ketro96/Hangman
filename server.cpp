@@ -56,23 +56,55 @@ void Server::readClientData()
 {
     QTcpSocket *client = qobject_cast<QTcpSocket *>(sender());
     QByteArray data = client->readAll();
-    QString incMessage = QString(data);
-    qDebug() << incMessage;
-    emit receivedMessage(incMessage);
-    //only insert if nick does not already exist....
-    if(!clientMap.contains(incMessage) && !connectedClients.contains(client))
+    QString dataString = QString(data);
+    qDebug() << dataString;
+    if(dataString.left(5)=="GAME_")
     {
-        clientMap.insert(incMessage, client);
+        /*
+         * START
+         * FAIL
+         * SUCCESS
+         * WIN
+         * LOSE
+         */
+        emit receivedGameMessage(dataString.mid(5));
+    }
+    else if(dataString.left(5)=="CHAR_")
+    {
+        //LENGTH from server? CHAR from client
+        QString content = dataString.mid(5);
+        emit receivedCharMessage(content);
+    }
+    else if(dataString.left(5)=="CHAT_")
+    {
+        //CHAT MESSAGE
+        QString username = clientMap.value(client);
+        QString content = dataString.mid(5);
+        emit receivedChatMessage(username+": "+content);
+        sendToAllClients(username+": "+content);
+    }
+    else if(dataString.left(5)=="USER_")
+    {
+        QString username = dataString.mid(5);
+        qDebug() << "User: " << username;
+        if(!clientMap.contains(client))
+        {
+            clientMap.insert(client, username);
+        }
+    }
+    else
+    {
+        qDebug() << "Received invalid Message.";
     }
 }
 
 void Server::sendToAllClients(QString message)
-{
+{   
     QByteArray messageData = message.toUtf8();
 
     foreach(QTcpSocket *client, connectedClients)
     {
-        qDebug() << "send to 1client";
+        qDebug() << "send to"+clientMap.value(client);
         client->write(messageData);
         client->flush();
         client->waitForBytesWritten(3000);

@@ -22,10 +22,12 @@ protected:
     void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
 signals:
      void serverInfo(QString ipAdress, QString port);
-     void receivedMessage(QString message);
+     void receivedChatMessage(QString message);
+     void receivedGameMessage(QString message);
+     void receivedCharMessage(QString message);
 private:
     QList<QTcpSocket *> connectedClients;
-    QMap<QString, QTcpSocket *> clientMap;
+    QMap<QTcpSocket *, QString> clientMap;
     QTcpSocket *currentOpponent;
 };
 

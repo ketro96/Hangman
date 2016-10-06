@@ -2,7 +2,9 @@
 #define HANGMAN_H
 
 #include <QMainWindow>
-#include <clientserver.h>
+#include <QInputDialog>
+#include <QDir>
+#include <client.h>
 #include <server.h>
 #include <game.h>
 #include <connectionsetup.h>
@@ -20,7 +22,7 @@ public:
     explicit Hangman(QWidget *parent = 0);
     ~Hangman();
 public slots:
-    void connectClient(QString nickname, QString ipAdress, int port);
+    void connectClient(QString ipAdress, int port);
 
 private slots:
     void on_btnStartHost_clicked();
@@ -28,11 +30,14 @@ private slots:
     void on_btnFindHost_clicked();
 
     void on_btnSingleplayer_clicked();
+
+    bool getUsername();
 private:
     Ui::Hangman *ui;
     Server *server;
     Game *game;
-    ClientServer *client;
+    Client *client;
+    QString username = "";
 };
 
 #endif // HANGMAN_H
