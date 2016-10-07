@@ -23,8 +23,7 @@ void Game::on_btnSend_clicked()
 
 void Game::newServerInfo(QString ipAdress, QString port)
 {
-    ui->teIpAdress->setText(ipAdress);
-    ui->tePort->setText(port);
+        ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port+" .");
 }
 
 
@@ -49,6 +48,5 @@ void Game::sendChatMessage()
     }
     message.prepend("CHAT_");
     ui->edtChat->clear();
-    qDebug() << "servermessage: "+message;
     emit sendMessage(message);
 }
