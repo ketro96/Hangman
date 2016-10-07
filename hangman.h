@@ -6,7 +6,7 @@
 #include <QDir>
 #include <client.h>
 #include <server.h>
-#include <game.h>
+#include <chat.h>
 #include <connectionsetup.h>
 
 
@@ -39,7 +39,7 @@ private slots:
 private:
     Ui::Hangman *ui;
     Server *server;
-    Game *game;
+    Chat *chat;
     Client *client;
     QString username = "";
 };

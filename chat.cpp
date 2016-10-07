@@ -1,9 +1,9 @@
-#include "game.h"
-#include "ui_game.h"
+#include "chat.h"
+#include "ui_chat.h"
 
-Game::Game(QString mode, QString username, QWidget *parent) :
+Chat::Chat(QString mode, QString username, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Game)
+    ui(new Ui::Chat)
 {
     ui->setupUi(this);
     this->mode = mode;
@@ -11,40 +11,42 @@ Game::Game(QString mode, QString username, QWidget *parent) :
     qDebug() << mode;
 }
 
-Game::~Game()
+Chat::~Chat()
 {
     delete ui;
 }
 
-void Game::on_btnSend_clicked()
+void Chat::on_btnSend_clicked()
 {
     sendChatMessage();
 }
 
-void Game::newServerInfo(QString ipAdress, QString port)
+void Chat::newServerInfo(QString ipAdress, QString port)
 {
         ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port+" .");
 }
 
 
-void Game::getMessage(QString message)
+void Chat::getMessage(QString message)
 {
     ui->lwChat->addItem(message);
+    ui->lwChat->scrollToBottom();
 }
 
 
-void Game::on_edtChat_returnPressed()
+void Chat::on_edtChat_returnPressed()
 {
     sendChatMessage();
 }
 
-void Game::sendChatMessage()
+void Chat::sendChatMessage()
 {
     QString message = ui->edtChat->text();
     if(mode=="MP_HOST")
     {
         message.prepend(username+": ");
         ui->lwChat->addItem(message);
+        ui->lwChat->scrollToBottom();
     }
     message.prepend("CHAT_");
     ui->edtChat->clear();

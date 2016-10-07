@@ -24,19 +24,19 @@ Hangman::~Hangman()
 void Hangman::on_btnStartHost_clicked()
 {
     server = new Server();
-    game = new Game("MP_HOST", username);
-    connect(server, SIGNAL(receivedChatMessage(QString)), game, SLOT(getMessage(QString)));
-    connect(game, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
-    connect(server, SIGNAL(serverInfo(QString,QString)), game, SLOT(newServerInfo(QString, QString)));
+    chat = new Chat("MP_HOST", username);
+    connect(server, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
+    connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
+    connect(server, SIGNAL(serverInfo(QString,QString)), chat, SLOT(newServerInfo(QString, QString)));
     if(server->startServer())
     {
-        game->show();
+        chat->show();
     }
     else
     {
-        //game->disconnect()
+        //chat->disconnect()
         delete server;
-        delete game;
+        delete chat;
         //Could not start
     }
 }
@@ -82,10 +82,10 @@ void Hangman::connectClient(QString ipAdress, int port)
     {
         client->sendMessage("USER_"+username);
         ui->lblStatus->setText("Connected");
-        game = new Game("MP_CLIENT", username);
-        connect(client, SIGNAL(receivedChatMessage(QString)), game, SLOT(getMessage(QString)));
-        connect(game, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
-        game->show();
+        chat = new Chat("MP_CLIENT", username);
+        connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
+        connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
+        chat->show();
     }
     else
     {

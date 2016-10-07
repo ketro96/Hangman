@@ -1,20 +1,20 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef CHAT_H
+#define CHAT_H
 
 #include <QWidget>
 #include <QDebug>
 
 namespace Ui {
-class Game;
+class Chat;
 }
 
-class Game : public QWidget
+class Chat : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Game(QString mode, QString username, QWidget *parent = 0);
-    ~Game();
+    explicit Chat(QString mode, QString username, QWidget *parent = 0);
+    ~Chat();
 public slots:
     void getMessage(QString message);
 private slots:
@@ -28,7 +28,7 @@ signals:
 private:
     QString mode;
     QString username;
-    Ui::Game *ui;
+    Ui::Chat *ui;
 };
 
-#endif // GAME_H
+#endif // CHAT_H
