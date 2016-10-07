@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>131</width>
+      <width>201</width>
       <height>71</height>
      </rect>
     </property>
@@ -30,9 +30,9 @@
    <widget class="QPushButton" name="btnStartHost">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>10</x>
       <y>60</y>
-      <width>131</width>
+      <width>201</width>
       <height>71</height>
      </rect>
     </property>
@@ -43,9 +43,9 @@
    <widget class="QPushButton" name="btnFindHost">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>220</x>
       <y>60</y>
-      <width>131</width>
+      <width>201</width>
       <height>71</height>
      </rect>
     </property>
@@ -64,6 +64,71 @@
     </property>
     <property name="text">
      <string>Welcome to Hangman!</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSP_Easy">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Easy</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSP_Medium">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Medium</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSP_Hard">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hard</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnGoBack">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnMultiplayer">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>60</y>
+      <width>201</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Multiplayer</string>
     </property>
    </widget>
   </widget>

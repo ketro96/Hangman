@@ -81,7 +81,7 @@ void Server::readClientData()
         QString username = clientMap.value(client);
         QString content = dataString.mid(5);
         emit receivedChatMessage(username+": "+content);
-        sendToAllClients(username+": "+content);
+        sendToAllClients("CHAT_"+username+": "+content);
     }
     else if(dataString.left(5)=="USER_")
     {
@@ -101,10 +101,10 @@ void Server::readClientData()
 void Server::sendToAllClients(QString message)
 {   
     QByteArray messageData = message.toUtf8();
-
+    qDebug() << "send _"+message+"_ to :";
     foreach(QTcpSocket *client, connectedClients)
     {
-        qDebug() << "send to"+clientMap.value(client);
+        qDebug() << clientMap.value(client);
         client->write(messageData);
         client->flush();
         client->waitForBytesWritten(3000);

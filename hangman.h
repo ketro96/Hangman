@@ -32,6 +32,10 @@ private slots:
     void on_btnSingleplayer_clicked();
 
     bool getUsername();
+    void on_btnGoBack_clicked();
+
+    void on_btnMultiplayer_clicked();
+
 private:
     Ui::Hangman *ui;
     Server *server;

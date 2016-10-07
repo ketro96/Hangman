@@ -1,11 +1,14 @@
 #include "game.h"
 #include "ui_game.h"
 
-Game::Game(QWidget *parent) :
+Game::Game(QString mode, QString username, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Game)
 {
     ui->setupUi(this);
+    this->mode = mode;
+    this->username = username;
+    qDebug() << mode;
 }
 
 Game::~Game()
@@ -15,8 +18,7 @@ Game::~Game()
 
 void Game::on_btnSend_clicked()
 {
-    QString message = "CHAT_"+ui->edtChat->text();
-    emit sendMessage(message);
+    sendChatMessage();
 }
 
 void Game::newServerInfo(QString ipAdress, QString port)
@@ -34,6 +36,19 @@ void Game::getMessage(QString message)
 
 void Game::on_edtChat_returnPressed()
 {
-    QString message = "CHAT_"+ui->edtChat->text();
+    sendChatMessage();
+}
+
+void Game::sendChatMessage()
+{
+    QString message = ui->edtChat->text();
+    if(mode=="MP_HOST")
+    {
+        message.prepend(username+": ");
+        ui->lwChat->addItem(message);
+    }
+    message.prepend("CHAT_");
+    ui->edtChat->clear();
+    qDebug() << "servermessage: "+message;
     emit sendMessage(message);
 }
