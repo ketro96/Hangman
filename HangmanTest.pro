@@ -19,14 +19,17 @@ SOURCES += main.cpp\
     connectionsetup.cpp \
     server.cpp \
     client.cpp \
-    chat.cpp
+    chat.cpp \
+    game.cpp
 
 HEADERS  += hangman.h \
     connectionsetup.h \
     server.h \
     client.h \
-    chat.h
+    chat.h \
+    game.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
-    chat.ui
+    chat.ui \
+    game.ui

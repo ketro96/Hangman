@@ -8,7 +8,6 @@ Chat::Chat(QString mode, QString username, QWidget *parent) :
     ui->setupUi(this);
     this->mode = mode;
     this->username = username;
-    qDebug() << mode;
 }
 
 Chat::~Chat()
