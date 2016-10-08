@@ -55,6 +55,7 @@ private:
     Game *game;
     QString username = "";
     Dictionary *dictionary;
+
 };
 
 #endif // HANGMAN_H
