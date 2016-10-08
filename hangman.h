@@ -9,7 +9,7 @@
 #include <chat.h>
 #include <game.h>
 #include <connectionsetup.h>
-#include <wordlibrary.h>
+#include <dictionary.h>
 
 
 namespace Ui {
@@ -54,7 +54,7 @@ private:
     Chat *chat;
     Game *game;
     QString username = "";
-    WordLibrary *wordLibrary;
+    Dictionary *dictionary;
 };
 
 #endif // HANGMAN_H

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WordLibrary</class>
- <widget class="QWidget" name="WordLibrary">
+ <class>Dictionary</class>
+ <widget class="QWidget" name="Dictionary">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="lblDictionary">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -38,10 +38,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Word Library</string>
+    <string>Dictionary</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btnAdd">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -54,7 +54,7 @@
     <string>Add Word</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btnDelete">
    <property name="geometry">
     <rect>
      <x>310</x>

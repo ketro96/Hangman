@@ -22,6 +22,7 @@ Hangman::~Hangman()
     if(client) delete client;
     if(chat) delete chat;
     if(game) delete game;
+    if(dictionary) delete dictionary;
 }
 
 
@@ -131,8 +132,8 @@ void Hangman::on_btnGoBack_clicked()
 
 void Hangman::on_actionDictionary_triggered()
 {
-    wordLibrary = new WordLibrary();
-    wordLibrary->show();
+    dictionary = new Dictionary();
+    dictionary->show();
 }
 
 void Hangman::on_btnSP_Easy_clicked()

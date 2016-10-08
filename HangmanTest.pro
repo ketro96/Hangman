@@ -19,21 +19,21 @@ SOURCES += main.cpp\
     connectionsetup.cpp \
     server.cpp \
     client.cpp \
-    wordlibrary.cpp \
     chat.cpp \
-    game.cpp
+    game.cpp \
+    dictionary.cpp
 
 
 HEADERS  += hangman.h \
     connectionsetup.h \
     server.h \
     client.h \
-    wordlibrary.h \
     chat.h \
     game.h \
+    dictionary.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
     chat.ui \
     game.ui \
-    wordlibrary.ui \
+    dictionary.ui
