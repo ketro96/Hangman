@@ -9,7 +9,7 @@ void Server::incomingConnection(qintptr socketDescriptor)
 {
     QTcpSocket *connection = new QTcpSocket(this);
     connection->setSocketDescriptor(socketDescriptor);
-    connect(connection, &QTcpSocket::readyRead, this, readClientData);
+    connect(connection, SIGNAL(readyRead()), this, SLOT(readClientData()));
     connect(connection, &QTcpSocket::disconnected, this, &Server::disconnectClient);
     qDebug() << "Incoming connection";
     connectedClients.append(connection);

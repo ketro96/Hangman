@@ -119,3 +119,8 @@ void Hangman::on_btnGoBack_clicked()
 }
 
 
+void Hangman::on_actionDictionary_triggered()
+{
+    wordLibrary = new WordLibrary();
+    wordLibrary->show();
+}

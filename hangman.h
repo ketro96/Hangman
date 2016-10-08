@@ -8,6 +8,7 @@
 #include <server.h>
 #include <game.h>
 #include <connectionsetup.h>
+#include <wordlibrary.h>
 
 
 namespace Ui {
@@ -36,12 +37,15 @@ private slots:
 
     void on_btnMultiplayer_clicked();
 
+    void on_actionDictionary_triggered();
+
 private:
     Ui::Hangman *ui;
     Server *server;
     Game *game;
     Client *client;
     QString username = "";
+    WordLibrary *wordLibrary;
 };
 
 #endif // HANGMAN_H
