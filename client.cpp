@@ -20,7 +20,7 @@ bool Client::connectClient(QString ipAdress, int port)
     if(!connected)
     {
         QMessageBox::information(0,"Not connected","Could not connect to host.");
-        qDebug() << "Client connection error?";
+        qDebug() << "Client connection error:";
         qDebug() << socket->errorString();
     }
 

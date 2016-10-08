@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include <QWidget>
+#include <QtGui>
+#include <QStringList>
 #include <QDebug>
 
 namespace Ui {
@@ -15,20 +17,30 @@ class Game : public QWidget
 public:
     explicit Game(QString mode, QString username, QWidget *parent = 0);
     ~Game();
-public slots:
-    void getMessage(QString message);
-private slots:
-    void on_btnSend_clicked();
-    void newServerInfo(QString ipAdress, QString port);
-    void on_edtChat_returnPressed();
-    void sendChatMessage();
 
-signals:
-    void sendMessage(QString message);
+protected:
+    void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *e){guessed(e);}
+
+private slots:
+    void guessed(QKeyEvent *e);
+    void endOfGame(bool won);
+
 private:
+    Ui::Game *ui;
+    int counter;
+    int tryCounter;
+    int roundTime;
+    int gameTime;
+    QString word;
+    QString *characterArray;
+    QList<QString> *usedCharacterList;
+    int guesses;
+    QRegularExpression regex;
+    bool won;
+    bool lost;
     QString mode;
     QString username;
-    Ui::Game *ui;
 };
 
 #endif // GAME_H

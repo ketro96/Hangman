@@ -17,19 +17,23 @@ TEMPLATE = app
 SOURCES += main.cpp\
         hangman.cpp \
     connectionsetup.cpp \
-    game.cpp \
     server.cpp \
     client.cpp \
-    wordlibrary.cpp
+    wordlibrary.cpp \
+    chat.cpp \
+    game.cpp
+
 
 HEADERS  += hangman.h \
     connectionsetup.h \
-    game.h \
     server.h \
     client.h \
-    wordlibrary.h
+    wordlibrary.h \
+    chat.h \
+    game.h \
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
+    chat.ui \
     game.ui \
-    wordlibrary.ui
+    wordlibrary.ui \

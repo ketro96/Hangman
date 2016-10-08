@@ -6,6 +6,7 @@
 #include <QDir>
 #include <client.h>
 #include <server.h>
+#include <chat.h>
 #include <game.h>
 #include <connectionsetup.h>
 #include <wordlibrary.h>
@@ -39,11 +40,19 @@ private slots:
 
     void on_actionDictionary_triggered();
 
+    void on_btnSP_Easy_clicked();
+
+    void on_btnSP_Medium_clicked();
+
+    void on_btnSP_Hard_clicked();
+
+
 private:
     Ui::Hangman *ui;
     Server *server;
-    Game *game;
     Client *client;
+    Chat *chat;
+    Game *game;
     QString username = "";
     WordLibrary *wordLibrary;
 };
