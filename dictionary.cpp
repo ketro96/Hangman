@@ -41,7 +41,7 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
     }
 }
 
-QString Dictionary::getDictionaryItems(int difficulty)
+QString *Dictionary::getDictionaryItems(int difficulty)
 {
     bool successful;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary' WHERE difficulty = " +QString::number(difficulty)+ ";", successful);

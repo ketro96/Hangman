@@ -10,6 +10,7 @@
 #include <game.h>
 #include <connectionsetup.h>
 #include <dictionary.h>
+#include <highscore.h>
 
 
 namespace Ui {
@@ -47,6 +48,8 @@ private slots:
     void on_btnSP_Hard_clicked();
 
 
+    void on_actionHighscore_triggered();
+
 private:
     Ui::Hangman *ui;
     Server *server;
@@ -55,6 +58,7 @@ private:
     Game *game;
     QString username = "";
     Dictionary *dictionary;
+    Highscore *highscore;
 
 };
 

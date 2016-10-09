@@ -26,7 +26,7 @@ private slots:
 
     void getDictionaryItems();
 
-    QString getDictionaryItems(int difficulty); //return QString Array
+    QString *getDictionaryItems(int difficulty); //return QString Array
 
     void addDictionaryItems(QString word, int difficutly);
 

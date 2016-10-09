@@ -23,6 +23,7 @@ Hangman::~Hangman()
     if(chat) delete chat;
     if(game) delete game;
     if(dictionary) delete dictionary;
+    if(highscore) delete highscore;
 }
 
 
@@ -159,4 +160,10 @@ void Hangman::on_btnSP_Hard_clicked()
 
     game->show();
     //disable hangman gui
+}
+
+void Hangman::on_actionHighscore_triggered()
+{
+    highscore = new Highscore();
+    highscore->show();
 }
