@@ -5,6 +5,7 @@
 #include <QtGui>
 #include <QStringList>
 #include <QDebug>
+#include <dictionary.h>
 
 namespace Ui {
 class Game;
@@ -41,6 +42,7 @@ private:
     bool lost;
     QString mode;
     QString username;
+    Dictionary *dictionary;
 };
 
 #endif // GAME_H

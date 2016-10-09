@@ -9,9 +9,9 @@ Dictionary::Dictionary(QWidget *parent) :
     readDB();
     getDictionaryItems();
     this->regex = QRegularExpression("^[A-Za-z]{3,20}+$");
-    QButtonGroup::setId(ui->rbEasy, 0);
-    QButtonGroup::setId(ui->rbMedium, 1);
-    QButtonGroup::setId(ui->rbHard, 2);
+    ui->rbGroup->setId(ui->rbEasy, 0);
+    ui->rbGroup->setId(ui->rbMedium, 1);
+    ui->rbGroup->setId(ui->rbHard, 2);
 }
 
 Dictionary::~Dictionary()
@@ -39,6 +39,27 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
         successful = query.exec(queryString);
         return query;
     }
+}
+
+QString Dictionary::getDictionaryItems(int difficulty)
+{
+    bool successful;
+    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary' WHERE difficulty = " +QString::number(difficulty)+ ";", successful);
+    QString *wordArray = new QString [query.size()];
+    if (successful)
+    {
+        int i = 0;
+        successful = query.first(); //jump to first item
+        while (successful)
+        {
+            wordArray[i] = query.value(0).toString();
+            successful = query.next();
+        } //while successful
+    } else
+    { //Fehler beim Ausführen des SQL-Statements
+        QMessageBox::information(0,"Error", query.lastError().text());
+    } //else: Fehler
+    return wordArray;
 }
 
 void Dictionary::getDictionaryItems()

@@ -25,6 +25,7 @@ Game::Game(QString mode, QString username, QWidget *parent) :
     this->regex = QRegularExpression("[A-Za-z]");
     this->won = false;
     this->lost = false;
+    this->dictionary = NULL;
 
     if(mode=="SP_EASY")
     {
@@ -57,6 +58,7 @@ Game::~Game()
     delete ui;
     delete characterArray;
     delete usedCharacterList;
+    delete dictionary;
 }
 
 
@@ -149,16 +151,6 @@ void Game::paintEvent(QPaintEvent *event)
         painter.drawText(xPos, 350, usedCharacterList->at(i).toUpper());
         xPos += 18;
     }
-
-    if(won){
-
-
-        painter.drawRect(200, 200, 400, 200);
-    }
-    else if(lost){
-
-    }
-
 }
 
 
