@@ -9,6 +9,9 @@ Dictionary::Dictionary(QWidget *parent) :
     readDB();
     getDictionaryItems();
     this->regex = QRegularExpression("^[A-Za-z]{3,20}+$");
+    QButtonGroup::setId(ui->rbEasy, 0);
+    QButtonGroup::setId(ui->rbMedium, 1);
+    QButtonGroup::setId(ui->rbHard, 2);
 }
 
 Dictionary::~Dictionary()
@@ -41,7 +44,7 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
 void Dictionary::getDictionaryItems()
 {
     bool successful;
-    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary';", successful);
+    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary' ORDER BY rowid;", successful);
     if (successful)
     {
         ui->lwDictionary->clear();
@@ -64,6 +67,7 @@ void Dictionary::addDictionaryItems(QString word, int difficutly)
     if (successful)
     {
         getDictionaryItems();
+        ui->lineEdit->clear();
     } else
     { //Fehler beim Ausführen des SQL-Statements
         QMessageBox::information(0,"Error", query.lastError().text());
@@ -75,29 +79,27 @@ void Dictionary::on_btnAdd_clicked()
     QRegularExpressionMatch match = regex.match(ui->lineEdit->text());
     if(match.hasMatch())
     {
-        addDictionaryItems(ui->lineEdit->text(), ui->rbGroup->checkedId() +3);
+        addDictionaryItems(ui->lineEdit->text(), ui->rbGroup->checkedId());
     }else
     {
         QMessageBox::information(0,"Error", "Only words with 3-20 characters are valid.");
     }
-
-
 }
 
-void Dictionary::deleteDictionaryItems()
-{
-
-}
-
-void Dictionary::on_btnDelete_clicked()
+void Dictionary::deleteDictionaryItems(int id)
 {
     bool successful;
-    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary';", successful);
+    QSqlQuery query = queryDB("DELETE FROM Dictionary WHERE rowid = (SELECT COUNT(*) FROM Dictionary b WHERE " +QString::number(id)+ " >= b.rowid ORDER BY rowid);", successful);
     if (successful)
     {
-
+        getDictionaryItems();
     } else
     { //Fehler beim Ausführen des SQL-Statements
         QMessageBox::information(0,"Error", query.lastError().text());
     } //else: Fehler
+}
+
+void Dictionary::on_btnDelete_clicked()
+{
+    //deleteDictionaryItems(ui->lwDictionary->SelectRows +1);
 }

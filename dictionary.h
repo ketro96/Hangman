@@ -28,7 +28,7 @@ private slots:
 
     void addDictionaryItems(QString word, int difficutly);
 
-    void deleteDictionaryItems();
+    void deleteDictionaryItems(int id);
 
     void readDB();
 
