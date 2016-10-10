@@ -17,6 +17,7 @@ class GameView : public QWidget
 
 public:
     explicit GameView(QWidget *parent = 0);
+    void triggerPaintEvent(bool includesCharacter, QString key);
     ~GameView();
 
 protected:
@@ -26,14 +27,12 @@ protected:
 private slots:
     void guessed(QKeyEvent *e);
     void endOfGame(bool won);
-    void triggerPaintEvent(bool includesCharacter);
 
 private:
     Ui::GameView*ui;
-
-    bool won;
-    bool lost;
-
+    int wordLength;
+    QList<QString> *usedCharacterList;
+    int counter;
     QRegularExpression regex;
 
 signals:

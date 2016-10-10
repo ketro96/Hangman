@@ -44,7 +44,8 @@ void GameController::initializeGameController()
         break;
     }
     connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-    connect(this, SIGNAL(keyChecked(bool)), gameView, SLOT(triggerPaintEvent(bool)));
+    //connect(this, SIGNAL(keyChecked(bool)), gameView, SLOT(triggerPaintEvent(bool, QString)));
+    //connect(gameView, SIGNAL(startNewGame()), this, SLOT(initializeNewGame()));
 
     dictionaryList = dictionary->getDictionaryItems();
     getNextWord();
@@ -62,6 +63,7 @@ void GameController::initializeNewGame()
     this->characterArray = new QString [word.length()];
     this->usedCharacterList = new QList<QString>();
 
+    getNextWord();
 }
 
 void GameController::getNextWord()
@@ -76,7 +78,9 @@ void GameController::getNextWord()
 
 void GameController::checkKey(QString key)
 {
+    bool includesKey = false;
     guesses++;
+
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;
         for(int i = 0; i < word.count(key, Qt::CaseInsensitive); i++){
@@ -103,6 +107,7 @@ void GameController::checkKey(QString key)
             //endOfGame(false);
         }
     }
+
 
 }
 

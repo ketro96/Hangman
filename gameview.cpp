@@ -6,14 +6,13 @@ GameView::GameView(QWidget *parent) :
     ui(new Ui::GameView)
 {
     ui->setupUi(this);
-    ui->setupUi(this);
-
-    this->won = false;
-    this->lost = false;
 
     this->regex = QRegularExpression("[A-Za-z]");
 
-
+    //delete me
+    this->wordLength = 5;
+    this->usedCharacterList = new QList<QString>();
+    this->counter = 0;
 }
 
 GameView::~GameView()
@@ -27,7 +26,6 @@ void GameView::paintEvent(QPaintEvent *event)
     //A paint device can be a QWidget, a QPixmap or a QImage
     QPainter painter(this);
 
-
     //create a black pen that has solid line
     //and the width is 2.
     QPen myPen(Qt::black, 4, Qt::SolidLine);
@@ -36,7 +34,7 @@ void GameView::paintEvent(QPaintEvent *event)
     painter.drawLine(30,300,160,300);
     painter.drawLine(50,50,140,50);
     painter.drawLine(140,50,140,90);
-/*
+
     if(counter == 1){
         painter.setRenderHint(QPainter::Antialiasing, true);
         painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
@@ -86,13 +84,13 @@ void GameView::paintEvent(QPaintEvent *event)
 
     int xPos = 190;
 
-    for(int i = 0; i < word.length(); i++){
+    for(int i = 0; i < wordLength; i++){
         painter.setRenderHint(QPainter::Antialiasing, false);
         painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
         painter.drawLine(xPos, 300, xPos + 16, 300);
 
         painter.setFont(QFont("times",22));
-        painter.drawText(xPos, 298, characterArray[i].toUpper());
+        //painter.drawText(xPos, 298, characterArray[i].toUpper());
         xPos += 40;
     }
 
@@ -110,23 +108,17 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawText(xPos, 350, usedCharacterList->at(i).toUpper());
         xPos += 18;
     }
-
-    */
 }
 
 
 void GameView::endOfGame(bool won){
 
-    if(won){
-        this->won = true;
-    }
-    else{
-        lost = true;
-    }
+   //show Dialog-> restart / end / show highscore
 }
 
-void GameView::triggerPaintEvent(bool includesCharacter)
+void GameView::triggerPaintEvent(bool includesCharacter, QString key)
 {
+    //if()
     update();
 }
 
