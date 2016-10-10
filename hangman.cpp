@@ -21,7 +21,7 @@ Hangman::~Hangman()
     if(server) delete server;
     if(client) delete client;
     if(chat) delete chat;
-    if(game) delete game;
+    if(gameView) delete gameView;
     if(dictionary) delete dictionary;
     if(highscore) delete highscore;
 }
@@ -31,22 +31,22 @@ void Hangman::on_btnStartHost_clicked()
 {
     server = new Server();
     chat = new Chat("MP_HOST", username);
-    game = new Game("MP_HOST", username);
-    //connect game
+    gameView = new GameView("MP_HOST", username);
+    //connect gameView
     connect(server, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
     connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
     connect(server, SIGNAL(serverInfo(QString,QString)), chat, SLOT(newServerInfo(QString, QString)));
     if(server->startServer())
     {
         chat->show();
-        game->show();
+        gameView->show();
     }
     else
     {
         //chat->disconnect()
         delete server;
         delete chat;
-        delete game;
+        delete gameView;
         QMessageBox::information(0,"Error","Could not start server.");
     }
 }
@@ -71,7 +71,7 @@ void Hangman::on_btnSingleplayer_clicked()
         ui->btnSP_Medium->show();
         ui->btnSP_Hard->show();
     }
-    //start Singleplayer Game
+    //start Singleplayer gameView
 }
 
 void Hangman::on_btnMultiplayer_clicked()
@@ -93,12 +93,12 @@ void Hangman::connectClient(QString ipAdress, int port)
         client->sendMessage("USER_"+username);
         ui->lblStatus->setText("Connected");
         chat = new Chat("MP_CLIENT", username);
-        game = new Game("MP_CLIENT", username);
-        //connect game
+        gameView = new GameView("MP_CLIENT", username);
+        //connect gameView
         connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
         chat->show();
-        game->show();
+        gameView->show();
     }
     else
     {
@@ -139,26 +139,26 @@ void Hangman::on_actionDictionary_triggered()
 
 void Hangman::on_btnSP_Easy_clicked()
 {
-    game = new Game("SP_EASY", username);
+    gameView = new GameView("SP_EASY", username);
     //connects
 
-    game->show();
+    gameView->show();
 }
 
 void Hangman::on_btnSP_Medium_clicked()
 {
-    game = new Game("SP_EASY", username);
+    gameView = new GameView("SP_EASY", username);
     //connects
 
-    game->show();
+    gameView->show();
 }
 
 void Hangman::on_btnSP_Hard_clicked()
 {
-    game = new Game("SP_EASY", username);
+    gameView = new GameView("SP_EASY", username);
     //connects
 
-    game->show();
+    gameView->show();
     //disable hangman gui
 }
 

@@ -7,7 +7,7 @@
 #include <client.h>
 #include <server.h>
 #include <chat.h>
-#include <game.h>
+#include <gameView.h>
 #include <connectionsetup.h>
 #include <dictionary.h>
 #include <highscore.h>
@@ -55,7 +55,7 @@ private:
     Server *server;
     Client *client;
     Chat *chat;
-    Game *game;
+    GameView *gameView;
     QString username = "";
     Dictionary *dictionary;
     Highscore *highscore;

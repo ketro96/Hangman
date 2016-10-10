@@ -1,9 +1,9 @@
-#include "game.h"
-#include "ui_game.h"
+#include "gameView.h"
+#include "ui_gameView.h"
 
-Game::Game(QString mode, QString username, QWidget *parent) :
+GameView::GameView(QString mode, QString username, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Game)
+    ui(new Ui::GameView)
 {
     ui->setupUi(this);
     ui->setupUi(this);
@@ -53,7 +53,7 @@ Game::Game(QString mode, QString username, QWidget *parent) :
     }
 }
 
-Game::~Game()
+GameView::~GameView()
 {
     delete ui;
     delete characterArray;
@@ -62,7 +62,7 @@ Game::~Game()
 }
 
 
-void Game::paintEvent(QPaintEvent *event)
+void GameView::paintEvent(QPaintEvent *event)
 {
     //create a QPainter and pass a pointer to the device.
     //A paint device can be a QWidget, a QPixmap or a QImage
@@ -154,7 +154,7 @@ void Game::paintEvent(QPaintEvent *event)
 }
 
 
-void Game::endOfGame(bool won){
+void GameView::endOfGame(bool won){
 
     if(won){
         this->won = true;
@@ -164,7 +164,7 @@ void Game::endOfGame(bool won){
     }
 }
 
-void Game::guessed(QKeyEvent *e){
+void GameView::guessed(QKeyEvent *e){
     guesses++;
     QRegularExpressionMatch match = regex.match(e->text());
     if(match.hasMatch()){

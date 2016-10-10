@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAMEVIEW_H
+#define GAMEVIEW_H
 
 #include <QWidget>
 #include <QtGui>
@@ -8,16 +8,16 @@
 #include <dictionary.h>
 
 namespace Ui {
-class Game;
+class GameView;
 }
 
-class Game : public QWidget
+class GameView : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Game(QString mode, QString username, QWidget *parent = 0);
-    ~Game();
+    explicit GameView(QString mode, QString username, QWidget *parent = 0);
+    ~GameView();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -28,7 +28,7 @@ private slots:
     void endOfGame(bool won);
 
 private:
-    Ui::Game *ui;
+    Ui::GameView*ui;
     int counter;
     int tryCounter;
     int roundTime;
@@ -45,4 +45,4 @@ private:
     Dictionary *dictionary;
 };
 
-#endif // GAME_H
+#endif // GAMEVIEW_H
