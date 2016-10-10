@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtSql>
 #include <QMessageBox>
+#include <QStringList>
 
 namespace Ui {
 class Dictionary;
@@ -17,16 +18,15 @@ public:
     explicit Dictionary(QWidget *parent = 0);
     ~Dictionary();
 
+public slots:
+    QList<QString> *getDictionaryItems(); //return QString Array
+
 private slots:
     void on_btnAdd_clicked();
 
     void on_btnDelete_clicked();
 
     QSqlQuery queryDB(QString queryString, bool &successful);
-
-    void getDictionaryItems();
-
-    QString *getDictionaryItems(int difficulty); //return QString Array
 
     void addDictionaryItems(QString word, int difficutly);
 

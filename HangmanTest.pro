@@ -22,8 +22,8 @@ SOURCES += main.cpp\
     chat.cpp \
     dictionary.cpp \
     highscore.cpp \
-    gameView.cpp \
-    gamecontroller.cpp
+    gamecontroller.cpp \
+    gameview.cpp
 
 
 HEADERS  += hangman.h \
@@ -33,12 +33,12 @@ HEADERS  += hangman.h \
     chat.h \
     dictionary.h \
     highscore.h \
-    gameView.h \
-    gamecontroller.h
+    gamecontroller.h \
+    gameview.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
     chat.ui \
     dictionary.ui \
     highscore.ui \
-    gameView.ui
+    gameview.ui

@@ -7,10 +7,10 @@
 #include <client.h>
 #include <server.h>
 #include <chat.h>
-#include <gameView.h>
 #include <connectionsetup.h>
 #include <dictionary.h>
 #include <highscore.h>
+#include <gamecontroller.h>
 
 
 namespace Ui {
@@ -55,7 +55,7 @@ private:
     Server *server;
     Client *client;
     Chat *chat;
-    GameView *gameView;
+    GameController *gameController;
     QString username = "";
     Dictionary *dictionary;
     Highscore *highscore;

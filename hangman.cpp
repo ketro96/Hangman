@@ -21,7 +21,7 @@ Hangman::~Hangman()
     if(server) delete server;
     if(client) delete client;
     if(chat) delete chat;
-    if(gameView) delete gameView;
+    if(gameController) delete gameController;
     if(dictionary) delete dictionary;
     if(highscore) delete highscore;
 }
@@ -31,7 +31,7 @@ void Hangman::on_btnStartHost_clicked()
 {
     server = new Server();
     chat = new Chat("MP_HOST", username);
-    gameView = new GameView("MP_HOST", username);
+    gameController = new GameController("MP_HOST", username);
     //connect gameView
     connect(server, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
     connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
@@ -39,14 +39,13 @@ void Hangman::on_btnStartHost_clicked()
     if(server->startServer())
     {
         chat->show();
-        gameView->show();
     }
     else
     {
         //chat->disconnect()
         delete server;
         delete chat;
-        delete gameView;
+        delete gameController;
         QMessageBox::information(0,"Error","Could not start server.");
     }
 }
@@ -93,12 +92,12 @@ void Hangman::connectClient(QString ipAdress, int port)
         client->sendMessage("USER_"+username);
         ui->lblStatus->setText("Connected");
         chat = new Chat("MP_CLIENT", username);
-        gameView = new GameView("MP_CLIENT", username);
+        gameController = new GameController("MP_CLIENT", username);
         //connect gameView
         connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
         chat->show();
-        gameView->show();
+        //gameView->show();
     }
     else
     {
@@ -139,26 +138,21 @@ void Hangman::on_actionDictionary_triggered()
 
 void Hangman::on_btnSP_Easy_clicked()
 {
-    gameView = new GameView("SP_EASY", username);
+    gameController = new GameController("SP_EASY", username);
     //connects
 
-    gameView->show();
 }
 
 void Hangman::on_btnSP_Medium_clicked()
 {
-    gameView = new GameView("SP_EASY", username);
+    gameController = new GameController("SP_EASY", username);
     //connects
-
-    gameView->show();
 }
 
 void Hangman::on_btnSP_Hard_clicked()
 {
-    gameView = new GameView("SP_EASY", username);
+    gameController = new GameController("SP_EASY", username);
     //connects
-
-    gameView->show();
     //disable hangman gui
 }
 

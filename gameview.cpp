@@ -1,66 +1,25 @@
-#include "gameView.h"
+#include "gameview.h"
 #include "ui_gameView.h"
 
-GameView::GameView(QString mode, QString username, QWidget *parent) :
+GameView::GameView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameView)
 {
     ui->setupUi(this);
     ui->setupUi(this);
-    this->mode = mode;
-    this->username = username;
-    qDebug() << mode;
 
-    this->word = "Hangman";
-
-    this->tryCounter = 0;
-    this->roundTime = 0;
-    this->gameTime = 0;
-    this->guesses = 0;
-    this->counter = 0;
-    this->characterArray = NULL;
-    this->characterArray = new QString [word.length()];
-    this->usedCharacterList = new QList<QString>();
-
-    this->regex = QRegularExpression("[A-Za-z]");
     this->won = false;
     this->lost = false;
-    this->dictionary = NULL;
 
-    if(mode=="SP_EASY")
-    {
-        //standard settings
-    }
-    else if(mode=="SP_MEDIUM")
-    {
-        this->roundTime = 10;
-    }
-    else if(mode=="SP_HARD")
-    {
-        this->gameTime = 30;
-    }
-    else if(mode=="MP_CLIENT")
-    {
-        //client settings
-    }
-    else if(mode=="MP_HOST")
-    {
-        //host settings
-    }
-    else
-    {
-        qDebug() << "Invalid gamemode";
-    }
+    this->regex = QRegularExpression("[A-Za-z]");
+
+
 }
 
 GameView::~GameView()
 {
     delete ui;
-    delete characterArray;
-    delete usedCharacterList;
-    delete dictionary;
 }
-
 
 void GameView::paintEvent(QPaintEvent *event)
 {
@@ -77,7 +36,7 @@ void GameView::paintEvent(QPaintEvent *event)
     painter.drawLine(30,300,160,300);
     painter.drawLine(50,50,140,50);
     painter.drawLine(140,50,140,90);
-
+/*
     if(counter == 1){
         painter.setRenderHint(QPainter::Antialiasing, true);
         painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
@@ -151,6 +110,8 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawText(xPos, 350, usedCharacterList->at(i).toUpper());
         xPos += 18;
     }
+
+    */
 }
 
 
@@ -164,37 +125,15 @@ void GameView::endOfGame(bool won){
     }
 }
 
+void GameView::triggerPaintEvent(bool includesCharacter)
+{
+    update();
+}
+
+
 void GameView::guessed(QKeyEvent *e){
-    guesses++;
     QRegularExpressionMatch match = regex.match(e->text());
     if(match.hasMatch()){
-
-        if(word.contains(e->text(), Qt::CaseInsensitive)){
-            int posLastChar = 0;
-            for(int i = 0; i < word.count(e->text(), Qt::CaseInsensitive); i++){
-                posLastChar = word.indexOf(e->text(), posLastChar, Qt::CaseInsensitive);
-                characterArray[posLastChar] = e->text();
-                posLastChar += 1;
-            }
-            if(!usedCharacterList->contains(e->text())){
-                usedCharacterList->append(e->text());
-            }
-            if(counter > 6){
-                endOfGame(true);
-            }
-        }
-        else{
-            counter++;
-            if(counter < 7){
-
-                if(!usedCharacterList->contains(e->text())){
-                    usedCharacterList->append(e->text());
-                }
-            }
-            else{
-                endOfGame(false);
-            }
-        }
-        update();
+        emit keyPressed(e->text());
     }
 }

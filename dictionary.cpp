@@ -41,37 +41,17 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
     }
 }
 
-QString *Dictionary::getDictionaryItems(int difficulty)
+QList<QString> *Dictionary::getDictionaryItems()
 {
     bool successful;
-    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary' WHERE difficulty = " +QString::number(difficulty)+ ";", successful);
-    QString *wordArray = new QString [query.size()];
+    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
+    QList<QString> *wordList = new QList<QString>();
     if (successful)
     {
-        int i = 0;
         successful = query.first(); //jump to first item
         while (successful)
         {
-            wordArray[i] = query.value(0).toString();
-            successful = query.next();
-        } //while successful
-    } else
-    { //Fehler beim Ausführen des SQL-Statements
-        QMessageBox::information(0,"Error", query.lastError().text());
-    } //else: Fehler
-    return wordArray;
-}
-
-void Dictionary::getDictionaryItems()
-{
-    bool successful;
-    QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary' ORDER BY rowid;", successful);
-    if (successful)
-    {
-        ui->lwDictionary->clear();
-        successful = query.first(); //jump to first item
-        while (successful)
-        {
+            wordList->append(query.value(0).toString());
             ui->lwDictionary->addItem(query.value(0).toString());
             successful = query.next();
         } //while successful
@@ -79,6 +59,7 @@ void Dictionary::getDictionaryItems()
     { //Fehler beim Ausführen des SQL-Statements
         QMessageBox::information(0,"Error", query.lastError().text());
     } //else: Fehler
+    return wordList;
 }
 
 void Dictionary::addDictionaryItems(QString word, int difficutly)
