@@ -7,7 +7,8 @@ GameView::GameView(QWidget *parent) :
 {
     ui->setupUi(this);
     this->regex = QRegularExpression("[A-Za-z]");
-    endOfGame = NULL;
+    characterArray [1];
+    enableKeyPressEvents(false);
 }
 
 GameView::~GameView()
@@ -17,8 +18,6 @@ GameView::~GameView()
 
 void GameView::paintEvent(QPaintEvent *event)
 {
-
-
     //create a QPainter and pass a pointer to the device.
     //A paint device can be a QWidget, a QPixmap or a QImage
     QPainter painter(this);
@@ -107,13 +106,11 @@ void GameView::paintEvent(QPaintEvent *event)
         xPos += 18;
     }
 
-
 }
 
-
-void GameView::endGame(bool won){
-
-
+void GameView::enableKeyPressEvents(bool enable)
+{
+    keyPressEventsEnabled = enable;
 }
 
 void GameView::triggerPaintEvent(bool includesCharacter)
@@ -139,6 +136,7 @@ void GameView::newGame(int wordLength)
     */
     this->counter = 0;
     update();
+    enableKeyPressEvents(true);
 }
 
 void GameView::addCharacter(QString key, int pos)
@@ -157,7 +155,7 @@ void GameView::addUsedCharacter(QString key)
 
 void GameView::guessed(QKeyEvent *e){
     QRegularExpressionMatch match = regex.match(e->text());
-    if(match.hasMatch()){
+    if(match.hasMatch() && keyPressEventsEnabled){
         emit keyPressed(e->text());
     }
 }

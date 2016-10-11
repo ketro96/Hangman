@@ -14,6 +14,7 @@ class EndOfGame : public QDialog
 public:
     explicit EndOfGame(QWidget *parent = 0);
     ~EndOfGame();
+    void showDialog(bool won, int score);
 
 private slots:
 
@@ -21,6 +22,10 @@ private slots:
 
     void on_buttonBox_rejected();
 
+
+
+signals:
+    void buttonBoxAnswer(bool restartGame);
 private:
     Ui::EndOfGame *ui;
 };

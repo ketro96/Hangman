@@ -8,12 +8,14 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     dictionary = NULL;
     qDebug() << mode;
     initializeGameController();
+    endOfGame = new EndOfGame();
 }
 
 GameController::~GameController()
 {
     delete dictionary;
     delete gameView;
+    if(endOfGame) delete endOfGame;
 }
 
 
@@ -53,22 +55,33 @@ void GameController::initializeGameController()
     }
 
     connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-   // dictionaryList = dictionary->getDictionaryItems();
+    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
+    dictionaryList = dictionary->getDictionaryItems();
     getNextWord();
     gameView->show();
-    initializeNewGame();
+    initializeNewGame(true);
 }
 
-void GameController::initializeNewGame()
+void GameController::initializeNewGame(bool restart)
 {
-    this->tryCounter = 0;
-    this->roundTime = 0;
-    this->gameTime = 0;
-    this->guesses = 0;
-    this->counter = 0;
+    if(restart)
+    {
+        if(endOfGame) delete endOfGame;
 
-    getNextWord();
-    gameView->newGame(word.length());
+        this->tryCounter = 0;
+        this->roundTime = 0;
+        this->gameTime = 0;
+        this->guesses = 0;
+        this->failCounter = 0;
+        this->correctCounter = 0;
+
+        getNextWord();
+        gameView->newGame(word.length());
+    }
+    else
+    {
+        //close or show hauptmenue
+    }
 }
 
 void GameController::getNextWord()
@@ -78,7 +91,13 @@ void GameController::getNextWord()
     std::uniform_int_distribution dist(0, dictionaryArray->size() - 1);
     int StringIndex = dist(generator);
     */
-    word = "Diaplaysd";
+    //word = dictionaryList.at(0);
+    word = "KackGruening";
+}
+
+int GameController::getScore()
+{
+    return 100;
 }
 
 void GameController::checkKey(QString key)
@@ -96,20 +115,22 @@ void GameController::checkKey(QString key)
         }
         gameView->addUsedCharacter(key);
 
-        if(counter > 6){
-            gameView->endGame(true);
+        if(correctCounter >= word.length()){
+            gameView->enableKeyPressEvents(false);
+            endOfGame->showDialog(true, getScore());
         }
         includesKey = true;
     }
     else{
-        counter++;
-        if(counter > 6){
+        failCounter++;
+        if(failCounter > 6){
+            gameView->enableKeyPressEvents(false);
+            endOfGame->showDialog(false, 0);
 
-            gameView->endGame(false);
+            //gameView->endGame(false);
         }
     }
     gameView->triggerPaintEvent(includesKey);
-
 }
 
 void GameController::closeView()

@@ -7,6 +7,7 @@
 #include <dictionary.h>
 #include <random>
 #include <gameView.h>
+#include <endofgame.h>
 
 class GameController : public QObject
 {
@@ -21,17 +22,20 @@ private slots:
 
     void initializeGameController();
 
-    void initializeNewGame();
+    void initializeNewGame(bool restart);
 
     void checkKey(QString key);
 
     void viewDestroyed();
 
+    int getScore();
+
 
 private:
     GameView *gameView;
-    int counter;
+    int failCounter;
     int tryCounter;
+    int correctCounter;
     int roundTime;
     int gameTime;
     QString word;
@@ -41,6 +45,8 @@ private:
     Dictionary *dictionary;
     QList<QString> dictionaryList;
     QList<QString> modeStringList;
+
+    EndOfGame *endOfGame;
 
 public slots:
 void closeView();

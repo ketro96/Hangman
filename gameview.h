@@ -5,7 +5,6 @@
 #include <QtGui>
 #include <QStringList>
 #include <QDebug>
-#include <endofgame.h>
 
 namespace Ui {
 class GameView;
@@ -22,7 +21,7 @@ public:
     void addUsedCharacter(QString key);
     void addCharacter(QString key, int pos);
     void newGame(int wordLength);
-    void endGame(bool won);
+    void enableKeyPressEvents(bool enable);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -38,7 +37,7 @@ private:
     QList<QString> usedCharacterList;
     int counter;
     QRegularExpression regex;
-    EndOfGame *endOfGame;
+    bool keyPressEventsEnabled;
 
 signals:
     void keyPressed(QString key);
