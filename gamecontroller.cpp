@@ -90,7 +90,7 @@ void GameController::getNextWord()
     int StringIndex = dist(generator);
     */
     //word = dictionaryList.at(0);
-    word = "KackGruening";
+    word = "Pinapple";
 }
 
 int GameController::getScore()
@@ -124,40 +124,43 @@ void GameController::gameOver(bool win)
 
 void GameController::checkKey(QString key)
 {
-    bool includesKey = false;
     guesses++;
 
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;
-        for(int i = 0; i < word.count(key, Qt::CaseInsensitive); i++){
+        int characterCount = word.count(key, Qt::CaseInsensitive);
+        for(int i = 0; i < characterCount; i++){
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
             gameView->addCharacter(key, posLastChar);
             posLastChar += 1;
         }
         if(!gameView->addUsedCharacter(key))
         {
-            correctCounter++;
+            correctCounter += characterCount; //add the count of characters that where added
+            gameView->triggerPaintEvent(true);
         }
 
         if(correctCounter >= word.length()){
             gameView->enableKeyPressEvents(false);
             endOfGame->showDialog(true, getScore());
         }
-        includesKey = true;
+
     }
     else{
 
         if(!gameView->addUsedCharacter(key))
         {
             failCounter++;
+            if(failCounter > 5)
+            {
+                gameView->enableKeyPressEvents(false);
+                endOfGame->showDialog(false, 0);
+            }
+            gameView->triggerPaintEvent(false);
         }
-        if(failCounter > 6)
-        {
-            gameView->enableKeyPressEvents(false);
-            endOfGame->showDialog(false, 0);
-        }
+
     }
-    gameView->triggerPaintEvent(includesKey);
+
 }
 
 void GameController::closeView()
