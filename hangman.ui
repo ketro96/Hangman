@@ -132,6 +132,9 @@ color: rgb(255, 255, 255)
       <height>21</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/images/images/Back.png);</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -437,9 +440,9 @@ color: rgb(255, 255, 255)</string>
    <widget class="QLabel" name="lblLogo">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>50</x>
       <y>0</y>
-      <width>391</width>
+      <width>311</width>
       <height>61</height>
      </rect>
     </property>
