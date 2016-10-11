@@ -141,15 +141,19 @@ void GameView::newGame(int wordLength)
 
 void GameView::addCharacter(QString key, int pos)
 {
+    if(characterArray.contains("key"))
     characterArray[pos] = key[0];
 }
 
 
-void GameView::addUsedCharacter(QString key)
+bool GameView::addUsedCharacter(QString key)
 {
+    bool alreadyExists = true;
     if(!usedCharacterList.contains(key)){
         usedCharacterList.append(key);
+        alreadyExists = false;
     }
+    return alreadyExists;
 }
 
 

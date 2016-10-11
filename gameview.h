@@ -18,7 +18,7 @@ public:
     explicit GameView(QWidget *parent = 0);
     void triggerPaintEvent(bool includesCharacter);
     ~GameView();
-    void addUsedCharacter(QString key);
+    bool addUsedCharacter(QString key); //return if already exists
     void addCharacter(QString key, int pos);
     void newGame(int wordLength);
     void enableKeyPressEvents(bool enable);

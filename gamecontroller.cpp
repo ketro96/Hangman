@@ -66,7 +66,6 @@ void GameController::initializeNewGame(bool restart)
 {
     if(restart)
     {
-        if(endOfGame) delete endOfGame;
 
         this->tryCounter = 0;
         this->roundTime = 0;
@@ -80,7 +79,7 @@ void GameController::initializeNewGame(bool restart)
     }
     else
     {
-        //close or show hauptmenue
+        closeView();
     }
 }
 
@@ -104,7 +103,6 @@ void GameController::checkKey(QString key)
 {
     bool includesKey = false;
     guesses++;
-    gameView->addUsedCharacter(key);
 
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;
@@ -113,7 +111,10 @@ void GameController::checkKey(QString key)
             gameView->addCharacter(key, posLastChar);
             posLastChar += 1;
         }
-        gameView->addUsedCharacter(key);
+        if(!gameView->addUsedCharacter(key))
+        {
+            correctCounter++;
+        }
 
         if(correctCounter >= word.length()){
             gameView->enableKeyPressEvents(false);
@@ -122,12 +123,15 @@ void GameController::checkKey(QString key)
         includesKey = true;
     }
     else{
-        failCounter++;
-        if(failCounter > 6){
+
+        if(!gameView->addUsedCharacter(key))
+        {
+            failCounter++;
+        }
+        if(failCounter > 6)
+        {
             gameView->enableKeyPressEvents(false);
             endOfGame->showDialog(false, 0);
-
-            //gameView->endGame(false);
         }
     }
     gameView->triggerPaintEvent(includesKey);
