@@ -150,8 +150,9 @@ void Hangman::on_actionHighscore_triggered()
 {
     this->setDisabled(true);
     highscore = new Highscore();
-    connect(highscore, SIGNAL(closed()), this, SLOT(enable()));
-    connect(highscore, SIGNAL(closed()), this, SLOT(deleteHighscore()));
+    highscore->setAttribute(Qt::WA_DeleteOnClose);
+    connect(highscore, SIGNAL(destroyed(QObject*)), this, SLOT(enable()));
+    connect(highscore, SIGNAL(destroyed(QObject*)), this, SLOT(deleteHighscore()));
     highscore->show();
 }
 
@@ -159,8 +160,9 @@ void Hangman::on_actionDictionary_triggered()
 {
     this->setDisabled(true);
     dictionary = new Dictionary();
-    connect(dictionary, SIGNAL(closed()), this, SLOT(enable()));
-    connect(dictionary, SIGNAL(closed()), this, SLOT(deleteDict()));
+    dictionary->setAttribute(Qt::WA_DeleteOnClose);
+    connect(dictionary, SIGNAL(destroyed(QObject*)), this, SLOT(enable()));
+    connect(dictionary, SIGNAL(destroyed(QObject*)), this, SLOT(deleteDict()));
     dictionary->show();
 }
 
