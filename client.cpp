@@ -2,7 +2,7 @@
 
 Client::Client(QObject *parent) : QObject(parent)
 {
-socket = NULL;
+    socket = NULL;
 }
 
 bool Client::connectClient(QString ipAdress, int port)

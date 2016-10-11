@@ -79,7 +79,7 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawLine(140,200, 170, 230);
     }
 
-  /*
+
     int xPos = 190;
 
     for(int i = 0; i < wordLength; i++){
@@ -107,7 +107,7 @@ void GameView::paintEvent(QPaintEvent *event)
         xPos += 18;
     }
 
-    */
+
 }
 
 
@@ -129,7 +129,14 @@ void GameView::newGame(int wordLength)
 {
     this->wordLength = wordLength;
     this->usedCharacterList.clear();
-    this->characterArray;
+    this->characterArray [wordLength];
+
+    /*
+    for(int i = 0; i > wordLength; i++)
+    {
+        characterArray[i];
+    }
+    */
     this->counter = 0;
     update();
 }
