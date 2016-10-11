@@ -9,6 +9,7 @@
 #include <gameView.h>
 #include <endofgame.h>
 #include <QTime>
+#include <highscore.h>
 
 class GameController : public QObject
 {
@@ -42,23 +43,24 @@ private slots:
 
     void gameOver(bool win);
 
+    void timeIsUp();
+
 
 
 private:
     GameView *gameView;
     int failCounter;
-    int tryCounter;
     int correctCounter;
     int roundTime;
     int gameTime;
     QString word;
-    int guesses;
     QString mode;
     QString username;
     Dictionary *dictionary;
     QList<QString> dictionaryList;
     QList<QString> modeStringList;
-    QTimer timer;
+    QTimer *timer;
+    Highscore *highscore;
 
 
     EndOfGame *endOfGame;

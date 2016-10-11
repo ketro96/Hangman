@@ -24,10 +24,10 @@ void EndOfGame::showDialog(bool won, int score)
 
 void EndOfGame::on_buttonBox_accepted()
 {
-
+    emit buttonBoxAnswer(true);
 }
 
 void EndOfGame::on_buttonBox_rejected()
 {
-
+    emit buttonBoxAnswer(false);
 }

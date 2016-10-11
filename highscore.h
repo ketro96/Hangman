@@ -16,6 +16,7 @@ class Highscore : public QWidget
 public:
     explicit Highscore(QWidget *parent = 0);
     ~Highscore();
+    void addScore(QString username, int score);
 private slots:
     void getHighscore();
 
@@ -26,6 +27,8 @@ private slots:
     void resetHighscore();
 
     void on_pushButton_clicked();
+
+
 
 private:
     Ui::Highscore *ui;
