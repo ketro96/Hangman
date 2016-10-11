@@ -39,13 +39,9 @@ HEADERS  += hangman.h \
 FORMS    += hangman.ui \
     connectionsetup.ui \
     chat.ui \
-<<<<<<< HEAD
-    game.ui
-
-RESOURCES += \
-    resources.qrc
-=======
     dictionary.ui \
     highscore.ui \
     gameview.ui
->>>>>>> 4112141a32be3ad4bd42fca2b15d1bafaa18db12
+
+RESOURCES += \
+    resources.qrc
