@@ -7,7 +7,7 @@ Hangman::Hangman(QWidget *parent) :
     ui(new Ui::Hangman)
 {
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_DeleteOnClose);
+  //  this->setAttribute(Qt::WA_DeleteOnClose);
     ui->btnGoBack->hide();
     ui->btnGoBack->setIcon(QIcon(":/images/images/Back.png"));
     ui->btnSP_Easy->hide();
@@ -39,8 +39,11 @@ void Hangman::on_btnStartHost_clicked()
 {
     server = new Server();
     chat = new Chat("MP_HOST", username);
-        if(gameController) delete gameController;
+    ///Same for chat as gC?
     gameController = new GameController("MP_HOST", username);
+    connect(gameController, SIGNAL(deleted()), this, SLOT(enable()));
+    connect(gameController, SIGNAL(deleted()), this, SLOT(deleteController()));
+    connect(this, SIGNAL(destroyed(QObject*)), gameController, SLOT(closeView()));
     //connect gameView
     connect(server, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
     connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
@@ -53,8 +56,11 @@ void Hangman::on_btnStartHost_clicked()
     {
         //chat->disconnect()
         delete server;
+        server = NULL;
         delete chat;
+        chat = NULL;
         delete gameController;
+        gameController = NULL;
         QMessageBox::information(0,"Error","Could not start server.");
     }
 }
@@ -101,8 +107,11 @@ void Hangman::connectClient(QString ipAdress, int port)
         client->sendMessage("USER_"+username);
         ui->lblStatus->setText("Connected");
         chat = new Chat("MP_CLIENT", username);
-            if(gameController) delete gameController;
+        ///Same for chat as gC?
         gameController = new GameController("MP_CLIENT", username);
+        connect(gameController, SIGNAL(deleted()), this, SLOT(enable()));
+        connect(gameController, SIGNAL(deleted()), this, SLOT(deleteController()));
+        connect(this, SIGNAL(destroyed(QObject*)), gameController, SLOT(closeView()));
         //connect gameView
         connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
@@ -187,4 +196,5 @@ void Hangman::enable()
 void Hangman::deleteController()
 {
     delete gameController;
+    gameController = NULL;
 }

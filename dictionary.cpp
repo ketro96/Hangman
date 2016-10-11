@@ -22,8 +22,8 @@ Dictionary::~Dictionary()
 
 void Dictionary::readDB()
 {
-    QString dbPath = "/Users/Alexander/Programmieren/Hangman/hangme.sqlite";
-    //QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
+    //QString dbPath = "/Users/Alexander/Programmieren/Hangman/hangme.sqlite";
+    QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
     db = QSqlDatabase::addDatabase("QSQLITE", "DictionaryConnection"); //db ist im Header deklariert
     db.setDatabaseName(dbPath);
 }

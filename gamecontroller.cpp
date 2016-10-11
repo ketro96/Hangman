@@ -6,6 +6,7 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     this->username = username;
     gameView = NULL;
     dictionary = NULL;
+    endOfGame = NULL;
     qDebug() << mode;
     initializeGameController();
     endOfGame = new EndOfGame();
