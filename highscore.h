@@ -16,6 +16,8 @@ class Highscore : public QWidget
 public:
     explicit Highscore(QWidget *parent = 0);
     ~Highscore();
+    void addScore(QString username, int score);
+
 
 signals:
     void closed();

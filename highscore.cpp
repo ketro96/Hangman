@@ -26,7 +26,27 @@ void Highscore::getHighscore()
 {
     bool successful = false;
 
-    QSqlQuery query = queryDB("SELECT `score`, `nickname`  FROM 'Highscore' ORDER BY score DESC;", successful);
+    QSqlQuery query = queryDB("SELECT `nickname`, `score`  FROM 'Highscore' ORDER BY score DESC;", successful);
+    if (successful)
+    {
+        ui->lwHighscore->clear();
+        successful = query.first(); //jump to first item
+        while (successful)
+        {
+            ui->lwHighscore->addItem(query.value(0).toString() +"     "+ query.value(1).toString());
+            successful = query.next();
+        } //while successful
+    } else
+    { //Fehler beim Ausführen des SQL-Statements
+        QMessageBox::information(0,"Error", query.lastError().text());
+    } //else: Fehler
+}
+
+void Highscore::addScore(QString username, int score)
+{
+    bool successful = false;
+    // nickname is primary key -> problems because of unique ??
+    QSqlQuery query = queryDB("INSERT INTO 'Highscore' VALUES ('" +username+ "', " +QString::number(score)+ ");", successful);
     if (successful)
     {
         ui->lwHighscore->clear();

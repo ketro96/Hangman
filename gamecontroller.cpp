@@ -6,7 +6,9 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     this->username = username;
     gameView = NULL;
     dictionary = NULL;
+    highscore = NULL;
     endOfGame = NULL;
+    timer = NULL;
     qDebug() << mode;
     initializeGameController();
     endOfGame = new EndOfGame();
@@ -16,7 +18,10 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
 
 GameController::~GameController()
 {
+    timer->stop();
     delete dictionary;
+    delete highscore;
+    delete timer;
 }
 
 
@@ -28,6 +33,8 @@ void GameController::initializeGameController()
     connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
     this->word = "";
     this->dictionary = new Dictionary();
+    this->highscore = new Highscore();
+    this->timer = new QTimer(this);
 
     modeStringList.append("SP_EASY");
     modeStringList.append("SP_MEDIUM");
@@ -41,9 +48,11 @@ void GameController::initializeGameController()
         break;
     case 1:
         this->roundTime = 10;
+        setGameTimer(true);
         break;
     case 2:
         this->gameTime = 30;
+        setGameTimer(true);
         break;
     case 3:
         //client settings
@@ -65,16 +74,12 @@ void GameController::initializeNewGame(bool restart)
 {
     if(restart)
     {
-
-        this->tryCounter = 0;
-        this->roundTime = 0;
-        this->gameTime = 0;
-        this->guesses = 0;
         this->failCounter = 0;
         this->correctCounter = 0;
 
         getNextWord();
         gameView->newGame(word.length());
+        timer->start();
     }
     else
     {
@@ -89,43 +94,60 @@ void GameController::getNextWord()
     std::uniform_int_distribution dist(0, dictionaryArray->size() - 1);
     int StringIndex = dist(generator);
     */
-    //word = dictionaryList.at(0);
-    word = "Pinapple";
+
+    //randomize
+    word = dictionaryList.at(0);
 }
 
 int GameController::getScore()
 {
-    return 100;
+    return /*change 100 to difficutly of the current word*/ 100 * (6 - failCounter) / (word.length() * 0.5);
 }
 
 void GameController::setGameTimer(bool perRound)
 {
-    timer.setSingleShot(!perRound);
-    if(perRound)
-    {
-        timer.setInterval(roundTime * 100);
-        //connect(timer, SIGNAL(timeout()), this, SLOT());
+    timer->setSingleShot(!perRound);
+    timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
+    if(perRound){
+         connect(timer, SIGNAL(timeout()), this, SLOT(wrongCharacter()));
     }
-    else
-    {
-        timer.setInterval(gameTime * 100);
+    else{
+         connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
     }
 }
 
 void GameController::wrongCharacter()
 {
+    failCounter++;
+    if(failCounter > 5)
+    {
+        gameOver(false);
+    }
+    gameView->triggerPaintEvent(false);
 
+}
+
+void GameController::timeIsUp()
+{
+    gameOver(false);
 }
 
 void GameController::gameOver(bool win)
 {
-
+    timer->stop();
+    gameView->enableKeyPressEvents(false);
+    if(win){
+        highscore->addScore(this->username, getScore());
+    }
+    endOfGame->showDialog(win ? true : false, win ? getScore() : 0);
 }
 
 void GameController::checkKey(QString key)
 {
-    guesses++;
-
+    if(mode == "SP_MEDIUM"){
+        timer->stop();
+        timer->start();
+    }
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
@@ -134,33 +156,19 @@ void GameController::checkKey(QString key)
             gameView->addCharacter(key, posLastChar);
             posLastChar += 1;
         }
-        if(!gameView->addUsedCharacter(key))
-        {
+        if(!gameView->addUsedCharacter(key)){
             correctCounter += characterCount; //add the count of characters that where added
             gameView->triggerPaintEvent(true);
         }
-
         if(correctCounter >= word.length()){
-            gameView->enableKeyPressEvents(false);
-            endOfGame->showDialog(true, getScore());
+            gameOver(true);
         }
-
     }
     else{
-
-        if(!gameView->addUsedCharacter(key))
-        {
-            failCounter++;
-            if(failCounter > 5)
-            {
-                gameView->enableKeyPressEvents(false);
-                endOfGame->showDialog(false, 0);
-            }
-            gameView->triggerPaintEvent(false);
+        if(!gameView->addUsedCharacter(key)){
+            wrongCharacter();
         }
-
     }
-
 }
 
 void GameController::closeView()
