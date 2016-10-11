@@ -52,7 +52,7 @@ void GameController::initializeGameController()
         break;
     case 2:
         this->gameTime = 30;
-        setGameTimer(true);
+        setGameTimer(false);
         break;
     case 3:
         //client settings
@@ -96,7 +96,7 @@ void GameController::getNextWord()
     */
 
     //randomize
-    word = dictionaryList.at(0);
+    word = dictionaryList.at(1);
 }
 
 int GameController::getScore()
