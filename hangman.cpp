@@ -20,6 +20,7 @@ Hangman::Hangman(QWidget *parent) :
     gameController = NULL;
     dictionary = NULL;
     highscore = NULL;
+    about = NULL;
 }
 
 Hangman::~Hangman()
@@ -211,6 +212,11 @@ void Hangman::deleteDict()
     dictionary = NULL;
 }
 
+void Hangman::deleteAbout()
+{
+    about = NULL;
+}
+
 void Hangman::closeEvent(QCloseEvent *)
 {
     if(gameController) gameController->closeView();
@@ -226,4 +232,18 @@ void Hangman::closeEvent(QCloseEvent *)
     {
         if(dictionary->isVisible()) dictionary->close();
     }
+    if(about)
+    {
+        if(about->isVisible()) about->close();
+    }
+}
+
+void Hangman::on_actionAbout_triggered()
+{
+    this->setDisabled(true);
+    about = new About();
+    about->setAttribute(Qt::WA_DeleteOnClose);
+    connect(about, SIGNAL(destroyed(QObject*)), this, SLOT(enable()));
+    connect(about, SIGNAL(closed()), this, SLOT(deleteAbout()));
+    about->show();
 }

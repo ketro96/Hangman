@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     highscore.cpp \
     gamecontroller.cpp \
     gameview.cpp \
-    endofgame.cpp
+    endofgame.cpp \
+    about.cpp
 
 
 HEADERS  += hangman.h \
@@ -36,7 +37,8 @@ HEADERS  += hangman.h \
     highscore.h \
     gamecontroller.h \
     gameview.h \
-    endofgame.h
+    endofgame.h \
+    about.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
@@ -44,7 +46,8 @@ FORMS    += hangman.ui \
     dictionary.ui \
     highscore.ui \
     gameview.ui \
-    endofgame.ui
+    endofgame.ui \
+    about.ui
 
 
 RESOURCES += \
