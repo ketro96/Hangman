@@ -19,8 +19,10 @@ public:
 signals:
     void keyChecked(bool includesCharacter);
     void closed();
+
 public slots:
     void closeView();
+
 private slots:
     void getNextWord();
 
