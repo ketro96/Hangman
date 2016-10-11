@@ -6,13 +6,7 @@ GameView::GameView(QWidget *parent) :
     ui(new Ui::GameView)
 {
     ui->setupUi(this);
-
     this->regex = QRegularExpression("[A-Za-z]");
-
-    //delete me
-    this->wordLength = 5;
-    this->usedCharacterList = new QList<QString>();
-    this->counter = 0;
 }
 
 GameView::~GameView()
@@ -90,7 +84,7 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawLine(xPos, 300, xPos + 16, 300);
 
         painter.setFont(QFont("times",22));
-        //painter.drawText(xPos, 298, characterArray[i].toUpper());
+        painter.drawText(xPos, 298, characterArray[i].toUpper());
         xPos += 40;
     }
 
@@ -103,23 +97,48 @@ void GameView::paintEvent(QPaintEvent *event)
     painter.drawText(xPos, 350, "Benutzte Buchstaben:");
     xPos += 200;
 
-    for(int i = 0; i < usedCharacterList->count(); i++){
+    for(int i = 0; i < usedCharacterList.count(); i++){
 
-        painter.drawText(xPos, 350, usedCharacterList->at(i).toUpper());
+        painter.drawText(xPos, 350, usedCharacterList.at(i).toUpper());
         xPos += 18;
     }
 }
 
 
-void GameView::endOfGame(bool won){
+void GameView::endGame(bool won){
 
-   //show Dialog-> restart / end / show highscore
+
 }
 
-void GameView::triggerPaintEvent(bool includesCharacter, QString key)
+void GameView::triggerPaintEvent(bool includesCharacter)
 {
-    //if()
+    if(!includesCharacter)
+    {
+        counter++;
+    }
     update();
+}
+
+void GameView::newGame(int wordLength)
+{
+    this->wordLength = wordLength;
+    this->usedCharacterList.clear();
+    this->characterArray;
+    this->counter = 0;
+    update();
+}
+
+void GameView::addCharacter(QString key, int pos)
+{
+    characterArray[pos] = key[0];
+}
+
+
+void GameView::addUsedCharacter(QString key)
+{
+    if(!usedCharacterList.contains(key)){
+        usedCharacterList.append(key);
+    }
 }
 
 

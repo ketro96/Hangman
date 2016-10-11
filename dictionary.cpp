@@ -41,17 +41,17 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
     }
 }
 
-QList<QString> *Dictionary::getDictionaryItems()
+QList<QString> Dictionary::getDictionaryItems()
 {
     bool successful;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
-    QList<QString> *wordList = new QList<QString>();
+    QList<QString> wordList;
     if (successful)
     {
         successful = query.first(); //jump to first item
         while (successful)
         {
-            wordList->append(query.value(0).toString());
+            wordList.append(query.value(0).toString());
             ui->lwDictionary->addItem(query.value(0).toString());
             successful = query.next();
         } //while successful

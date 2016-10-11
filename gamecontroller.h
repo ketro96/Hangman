@@ -33,13 +33,11 @@ private:
     int roundTime;
     int gameTime;
     QString word;
-    QString *characterArray;
-    QList<QString> *usedCharacterList;
     int guesses;
     QString mode;
     QString username;
     Dictionary *dictionary;
-    QList<QString> *dictionaryList;
+    QList<QString> dictionaryList;
     QList<QString> *modeStringList;
 
 public slots:

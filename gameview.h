@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QDebug>
 #include <dictionary.h>
+#include <endofgame.h>
 
 namespace Ui {
 class GameView;
@@ -17,8 +18,12 @@ class GameView : public QWidget
 
 public:
     explicit GameView(QWidget *parent = 0);
-    void triggerPaintEvent(bool includesCharacter, QString key);
+    void triggerPaintEvent(bool includesCharacter);
     ~GameView();
+    void addUsedCharacter(QString key);
+    void addCharacter(QString key, int pos);
+    void newGame(int wordLength);
+    void endGame(bool won);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -26,14 +31,15 @@ protected:
 
 private slots:
     void guessed(QKeyEvent *e);
-    void endOfGame(bool won);
 
 private:
     Ui::GameView*ui;
     int wordLength;
-    QList<QString> *usedCharacterList;
+    QString characterArray;
+    QList<QString> usedCharacterList;
     int counter;
     QRegularExpression regex;
+    EndOfGame *endOfGame;
 
 signals:
     void keyPressed(QString key);

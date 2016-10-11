@@ -19,7 +19,7 @@ public:
     ~Dictionary();
 
 public slots:
-    QList<QString> *getDictionaryItems(); //return QString Array
+    QList<QString> getDictionaryItems(); //return QString Array
 
 private slots:
     void on_btnAdd_clicked();

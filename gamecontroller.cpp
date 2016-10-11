@@ -2,12 +2,10 @@
 
 GameController::GameController(QString mode, QString username, QObject *parent) : QObject(parent)
 {
-
     this->mode = mode;
     this->username = username;
     qDebug() << mode;
     initializeGameController();
-
 }
 
 void GameController::initializeGameController()
@@ -43,10 +41,8 @@ void GameController::initializeGameController()
         qDebug() << "Invalid gamemode";
         break;
     }
-    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-    //connect(this, SIGNAL(keyChecked(bool)), gameView, SLOT(triggerPaintEvent(bool, QString)));
-    //connect(gameView, SIGNAL(startNewGame()), this, SLOT(initializeNewGame()));
 
+    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
     dictionaryList = dictionary->getDictionaryItems();
     getNextWord();
     gameView->show();
@@ -60,10 +56,9 @@ void GameController::initializeNewGame()
     this->gameTime = 0;
     this->guesses = 0;
     this->counter = 0;
-    this->characterArray = new QString [word.length()];
-    this->usedCharacterList = new QList<QString>();
 
     getNextWord();
+    gameView->newGame(word.length());
 }
 
 void GameController::getNextWord()
@@ -73,41 +68,37 @@ void GameController::getNextWord()
     std::uniform_int_distribution dist(0, dictionaryArray->size() - 1);
     int StringIndex = dist(generator);
     */
-    //word = dictionaryArray[0];
+    word = dictionaryList.at(0);
 }
 
 void GameController::checkKey(QString key)
 {
     bool includesKey = false;
     guesses++;
+    gameView->addUsedCharacter(key);
 
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;
         for(int i = 0; i < word.count(key, Qt::CaseInsensitive); i++){
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
-            characterArray[posLastChar] = key;
+            gameView->addCharacter(key, posLastChar);
             posLastChar += 1;
         }
-        if(!usedCharacterList->contains(key)){
-            usedCharacterList->append(key);
-        }
+        gameView->addUsedCharacter(key);
+
         if(counter > 6){
-            //endOfGame(true);
+            gameView->endGame(true);
         }
+        includesKey = true;
     }
     else{
         counter++;
-        if(counter < 7){
+        if(counter > 6){
 
-            if(!usedCharacterList->contains(key)){
-                usedCharacterList->append(key);
-            }
-        }
-        else{
-            //endOfGame(false);
+            gameView->endGame(false);
         }
     }
-
+    gameView->triggerPaintEvent(includesKey);
 
 }
 
