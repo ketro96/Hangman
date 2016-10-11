@@ -22,7 +22,7 @@ signals:
 void closed();
 
 public slots:
-    QList<QString> getDictionaryItems(); //return QString Array
+    QList<QString> getDictionaryItems(bool uiIsShown); //return QString List
 
 private slots:
     void on_btnAdd_clicked();
@@ -33,7 +33,7 @@ private slots:
 
     void addDictionaryItems(QString word, int difficutly);
 
-    void deleteDictionaryItems(int id);
+    void deleteDictionaryItems(QString item);
 
     void readDB();
 

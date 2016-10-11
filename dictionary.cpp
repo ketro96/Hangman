@@ -7,7 +7,7 @@ Dictionary::Dictionary(QWidget *parent) :
 {
     ui->setupUi(this);
     readDB();
-    getDictionaryItems();
+    getDictionaryItems(true);
     this->regex = QRegularExpression("^[A-Za-z]{3,20}+$");
     ui->rbGroup->setId(ui->rbEasy, 0);
     ui->rbGroup->setId(ui->rbMedium, 1);
@@ -53,7 +53,7 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
     }
 }
 
-QList<QString> Dictionary::getDictionaryItems()
+QList<QString> Dictionary::getDictionaryItems(bool uiIsShown)
 {
     bool successful = false;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
@@ -64,7 +64,9 @@ QList<QString> Dictionary::getDictionaryItems()
         while (successful)
         {
             wordList.append(query.value(0).toString());
-            ui->lwDictionary->addItem(query.value(0).toString());
+            if(uiIsShown){
+                ui->lwDictionary->addItem(query.value(0).toString());
+            }
             successful = query.next();
         } //while successful
     } else
@@ -80,8 +82,9 @@ void Dictionary::addDictionaryItems(QString word, int difficutly)
     QSqlQuery query = queryDB("INSERT INTO 'Dictionary' VALUES ('" +word+ "', " +QString::number(difficutly)+ ");", successful);
     if (successful)
     {
-        getDictionaryItems();
+        ui->lwDictionary->clear();
         ui->lineEdit->clear();
+        getDictionaryItems(true);
     } else
     { //Fehler beim Ausführen des SQL-Statements
         QMessageBox::information(0,"Error", query.lastError().text());
@@ -100,13 +103,14 @@ void Dictionary::on_btnAdd_clicked()
     }
 }
 
-void Dictionary::deleteDictionaryItems(int id)
+void Dictionary::deleteDictionaryItems(QString item)
 {
     bool successful = false;
-    QSqlQuery query = queryDB("DELETE FROM Dictionary WHERE rowid = (SELECT COUNT(*) FROM Dictionary b WHERE " +QString::number(id)+ " >= b.rowid ORDER BY rowid);", successful);
+    QSqlQuery query = queryDB("DELETE FROM Dictionary WHERE `word` LIKE '" +item+ "';", successful);
     if (successful)
     {
-        getDictionaryItems();
+        ui->lwDictionary->clear();
+        getDictionaryItems(true);
     } else
     { //Fehler beim Ausführen des SQL-Statements
         QMessageBox::information(0,"Error", query.lastError().text());
@@ -115,7 +119,7 @@ void Dictionary::deleteDictionaryItems(int id)
 
 void Dictionary::on_btnDelete_clicked()
 {
-    //deleteDictionaryItems(ui->lwDictionary->SelectRows +1);
+    deleteDictionaryItems(ui->lwDictionary->selectedItems().at(0)->text());
 }
 
 void Dictionary::closeEvent(QCloseEvent *)
