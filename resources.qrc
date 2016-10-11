@@ -2,4 +2,7 @@
     <qresource prefix="/images">
         <file>images/Back.png</file>
     </qresource>
+    <qresource prefix="/db">
+        <file>db/hangme.sqlite</file>
+    </qresource>
 </RCC>

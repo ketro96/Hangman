@@ -10,19 +10,20 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     qDebug() << mode;
     initializeGameController();
     endOfGame = new EndOfGame();
+    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
+    endOfGame->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GameController::~GameController()
 {
     delete dictionary;
-    delete gameView;
-    if(endOfGame) delete endOfGame;
 }
 
 
 void GameController::initializeGameController()
 {
     this->gameView = new GameView();
+    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
     gameView->setAttribute(Qt::WA_DeleteOnClose);
     connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
     this->word = "";
@@ -54,9 +55,6 @@ void GameController::initializeGameController()
         qDebug() << "Invalid gamemode";
         break;
     }
-
-    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
     dictionaryList = dictionary->getDictionaryItems();
     getNextWord();
     gameView->show();
@@ -145,5 +143,5 @@ void GameController::closeView()
 
 void GameController::viewDestroyed()
 {
-    emit deleted();
+    emit closed();
 }

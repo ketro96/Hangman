@@ -23,7 +23,8 @@ Dictionary::~Dictionary()
 void Dictionary::readDB()
 {
     //QString dbPath = "/Users/Alexander/Programmieren/Hangman/hangme.sqlite";
-    QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
+    //QString dbPath = ":/db/db/hangme.sqlite";
+        QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
     db = QSqlDatabase::addDatabase("QSQLITE", "DictionaryConnection"); //db ist im Header deklariert
     db.setDatabaseName(dbPath);
 }
@@ -56,7 +57,7 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
 
 QList<QString> Dictionary::getDictionaryItems()
 {
-    bool successful;
+    bool successful = false;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
     QList<QString> wordList;
     if (successful)
@@ -77,7 +78,7 @@ QList<QString> Dictionary::getDictionaryItems()
 
 void Dictionary::addDictionaryItems(QString word, int difficutly)
 {
-    bool successful;
+    bool successful = false;
     QSqlQuery query = queryDB("INSERT INTO 'Dictionary' VALUES ('" +word+ "', " +QString::number(difficutly)+ ");", successful);
     if (successful)
     {
@@ -103,7 +104,7 @@ void Dictionary::on_btnAdd_clicked()
 
 void Dictionary::deleteDictionaryItems(int id)
 {
-    bool successful;
+    bool successful = false;
     QSqlQuery query = queryDB("DELETE FROM Dictionary WHERE rowid = (SELECT COUNT(*) FROM Dictionary b WHERE " +QString::number(id)+ " >= b.rowid ORDER BY rowid);", successful);
     if (successful)
     {

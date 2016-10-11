@@ -54,6 +54,13 @@ private slots:
 
     void deleteController();
 
+    void deleteDict();
+
+    void deleteHighscore();
+
+protected:
+    void  closeEvent(QCloseEvent*);
+
 private:
     Ui::Hangman *ui;
     Server *server;

@@ -16,7 +16,10 @@ public:
     explicit GameController(QString mode="", QString username="", QObject *parent = 0);
     ~GameController();
 signals:
-
+    void keyChecked(bool includesCharacter);
+    void closed();
+public slots:
+    void closeView();
 private slots:
     void getNextWord();
 
@@ -48,12 +51,6 @@ private:
 
     EndOfGame *endOfGame;
 
-public slots:
-void closeView();
-
-signals:
-    void keyChecked(bool includesCharacter);
-    void deleted();
 };
 
 #endif // GAMECONTROLLER_H
