@@ -94,18 +94,6 @@ void GameView::paintEvent(QPaintEvent *event)
     xPos =20;
     painter.setRenderHint(QPainter::Antialiasing, false);
     painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
-
-
-    painter.setFont(QFont("arial",20));
-    painter.drawText(xPos, 350, "Benutzte Buchstaben:");
-    xPos += 200;
-
-    for(int i = 0; i < usedCharacterList.count(); i++){
-
-        painter.drawText(xPos, 350, usedCharacterList.at(i).toUpper());
-        xPos += 18;
-    }
-
 }
 
 void GameView::enableKeyPressEvents(bool enable)
@@ -125,7 +113,7 @@ void GameView::triggerPaintEvent(bool includesCharacter)
 void GameView::newGame(int wordLength)
 {
     this->wordLength = wordLength;
-    ui->lblUsedCharacters->clear();
+    ui->lblUsedCharacters->setText("Used characters: ");
     this->usedCharacterList.clear();
     this->characterArray [wordLength];
 
@@ -150,7 +138,7 @@ bool GameView::addUsedCharacter(QString key)
     bool alreadyExists = true;
     if(!usedCharacterList.contains(key)){
         usedCharacterList.append(key);
-        QString usedCharacters = "";
+        QString usedCharacters = "Used characters: ";
         foreach(key, usedCharacterList)
         {
             usedCharacters.append(key.toUpper());
