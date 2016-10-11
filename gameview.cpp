@@ -7,6 +7,7 @@ GameView::GameView(QWidget *parent) :
 {
     ui->setupUi(this);
     this->regex = QRegularExpression("[A-Za-z]");
+    endOfGame = NULL;
 }
 
 GameView::~GameView()
@@ -16,6 +17,8 @@ GameView::~GameView()
 
 void GameView::paintEvent(QPaintEvent *event)
 {
+
+
     //create a QPainter and pass a pointer to the device.
     //A paint device can be a QWidget, a QPixmap or a QImage
     QPainter painter(this);
@@ -76,6 +79,7 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawLine(140,200, 170, 230);
     }
 
+  /*
     int xPos = 190;
 
     for(int i = 0; i < wordLength; i++){
@@ -102,6 +106,8 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawText(xPos, 350, usedCharacterList.at(i).toUpper());
         xPos += 18;
     }
+
+    */
 }
 
 

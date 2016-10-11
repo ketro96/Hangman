@@ -4,24 +4,34 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
 {
     this->mode = mode;
     this->username = username;
+    gameView = NULL;
+    dictionary = NULL;
     qDebug() << mode;
     initializeGameController();
 }
 
+GameController::~GameController()
+{
+    delete dictionary;
+    delete gameView;
+}
+
+
 void GameController::initializeGameController()
 {
     this->gameView = new GameView();
+    gameView->setAttribute(Qt::WA_DeleteOnClose);
+    connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
     this->word = "";
     this->dictionary = new Dictionary();
 
-    this->modeStringList = new QList<QString>();
-    modeStringList->append("SP_EASY");
-    modeStringList->append("SP_MEDIUM");
-    modeStringList->append("SP_HARD");
-    modeStringList->append("MP_CLIENT");
-    modeStringList->append("MP_HOST");
+    modeStringList.append("SP_EASY");
+    modeStringList.append("SP_MEDIUM");
+    modeStringList.append("SP_HARD");
+    modeStringList.append("MP_CLIENT");
+    modeStringList.append("MP_HOST");
 
-    switch (modeStringList->indexOf(this->mode)) {
+    switch (modeStringList.indexOf(this->mode)) {
     case 0:
         //standard settings
         break;
@@ -43,7 +53,7 @@ void GameController::initializeGameController()
     }
 
     connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-    dictionaryList = dictionary->getDictionaryItems();
+   // dictionaryList = dictionary->getDictionaryItems();
     getNextWord();
     gameView->show();
     initializeNewGame();
@@ -68,7 +78,7 @@ void GameController::getNextWord()
     std::uniform_int_distribution dist(0, dictionaryArray->size() - 1);
     int StringIndex = dist(generator);
     */
-    word = dictionaryList.at(0);
+    word = "Diaplaysd";
 }
 
 void GameController::checkKey(QString key)
@@ -102,3 +112,12 @@ void GameController::checkKey(QString key)
 
 }
 
+void GameController::closeView()
+{
+    gameView->close();
+}
+
+void GameController::viewDestroyed()
+{
+    emit deleted();
+}

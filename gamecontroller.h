@@ -13,7 +13,7 @@ class GameController : public QObject
     Q_OBJECT
 public:
     explicit GameController(QString mode="", QString username="", QObject *parent = 0);
-
+    ~GameController();
 signals:
 
 private slots:
@@ -24,6 +24,8 @@ private slots:
     void initializeNewGame();
 
     void checkKey(QString key);
+
+    void viewDestroyed();
 
 
 private:
@@ -38,12 +40,14 @@ private:
     QString username;
     Dictionary *dictionary;
     QList<QString> dictionaryList;
-    QList<QString> *modeStringList;
+    QList<QString> modeStringList;
 
 public slots:
+void closeView();
 
 signals:
     void keyChecked(bool includesCharacter);
+    void deleted();
 };
 
 #endif // GAMECONTROLLER_H

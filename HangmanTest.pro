@@ -45,3 +45,8 @@ FORMS    += hangman.ui \
     highscore.ui \
     gameview.ui \
     endofgame.ui
+
+
+RESOURCES += \
+    resources.qrc
+

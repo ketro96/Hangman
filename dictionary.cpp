@@ -16,14 +16,25 @@ Dictionary::Dictionary(QWidget *parent) :
 
 Dictionary::~Dictionary()
 {
+    closeDB();
     delete ui;
 }
 
 void Dictionary::readDB()
 {
     QString dbPath = "/Users/Alexander/Programmieren/Hangman/hangme.sqlite";
-    db = QSqlDatabase::addDatabase("QSQLITE"); //db ist im Header deklariert
+    //QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
+    db = QSqlDatabase::addDatabase("QSQLITE", "DictionaryConnection"); //db ist im Header deklariert
     db.setDatabaseName(dbPath);
+}
+
+void Dictionary::closeDB()
+{
+    QString connection;
+    connection = db.connectionName();
+    db.close();
+    db = QSqlDatabase();
+    db.removeDatabase(connection);
 }
 
 QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
@@ -31,11 +42,13 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
     if (!db.open())
     {
         QMessageBox::information(0,"Error","Failed to load Database.");
+        QSqlQuery emtpyQuery;
+        return emtpyQuery;
         // close UI
 
     } else
     {
-        QSqlQuery query;
+        QSqlQuery query(db);
         successful = query.exec(queryString);
         return query;
     }

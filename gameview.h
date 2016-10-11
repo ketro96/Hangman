@@ -5,7 +5,6 @@
 #include <QtGui>
 #include <QStringList>
 #include <QDebug>
-#include <dictionary.h>
 #include <endofgame.h>
 
 namespace Ui {

@@ -34,6 +34,8 @@ private slots:
 
     void readDB();
 
+    void closeDB();
+
 private:
     Ui::Dictionary *ui;
     QSqlDatabase db;

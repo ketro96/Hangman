@@ -50,6 +50,10 @@ private slots:
 
     void on_actionHighscore_triggered();
 
+    void enable();
+
+    void deleteController();
+
 private:
     Ui::Hangman *ui;
     Server *server;
