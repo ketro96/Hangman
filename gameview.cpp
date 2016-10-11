@@ -129,9 +129,9 @@ void GameView::newGame(int wordLength)
     this->usedCharacterList.clear();
     this->characterArray [wordLength];
 
-    for(int i = 0; i > wordLength; i++)
+    for(int i = 0; i < wordLength; i++)
     {
-        characterArray[i] = "a"[0];
+        characterArray[i] = ""[0];
     }
 
     this->counter = 0;

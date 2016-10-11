@@ -89,14 +89,7 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    /*
-    std::default_random_engine generator;
-    std::uniform_int_distribution dist(0, dictionaryArray->size() - 1);
-    int StringIndex = dist(generator);
-    */
-
-    //randomize
-    word = dictionaryList.at(1);
+    word = dictionaryList.at(rand() % dictionaryList.size());
 }
 
 int GameController::getScore()
