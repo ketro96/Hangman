@@ -125,6 +125,7 @@ void GameView::triggerPaintEvent(bool includesCharacter)
 void GameView::newGame(int wordLength)
 {
     this->wordLength = wordLength;
+    ui->lblUsedCharacters->clear();
     this->usedCharacterList.clear();
     this->characterArray [wordLength];
 
@@ -149,6 +150,12 @@ bool GameView::addUsedCharacter(QString key)
     bool alreadyExists = true;
     if(!usedCharacterList.contains(key)){
         usedCharacterList.append(key);
+        QString usedCharacters = "";
+        foreach(key, usedCharacterList)
+        {
+            usedCharacters.append(key.toUpper());
+        }
+        ui->lblUsedCharacters->setText(usedCharacters);
         alreadyExists = false;
     }
     return alreadyExists;
