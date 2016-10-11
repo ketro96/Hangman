@@ -8,6 +8,7 @@
 #include <random>
 #include <gameView.h>
 #include <endofgame.h>
+#include <QTime>
 
 class GameController : public QObject
 {
@@ -31,6 +32,7 @@ private slots:
     int getScore();
 
 
+
 private:
     GameView *gameView;
     int failCounter;
@@ -46,6 +48,7 @@ private:
     QList<QString> dictionaryList;
     QList<QString> modeStringList;
 
+
     EndOfGame *endOfGame;
 
 public slots:
@@ -54,6 +57,7 @@ void closeView();
 signals:
     void keyChecked(bool includesCharacter);
     void deleted();
+
 };
 
 #endif // GAMECONTROLLER_H

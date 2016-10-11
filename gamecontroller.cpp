@@ -99,6 +99,8 @@ int GameController::getScore()
     return 100;
 }
 
+
+
 void GameController::checkKey(QString key)
 {
     bool includesKey = false;
