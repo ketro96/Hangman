@@ -11,6 +11,7 @@
 #include <dictionary.h>
 #include <highscore.h>
 #include <gamecontroller.h>
+#include <about.h>
 
 
 namespace Ui {
@@ -58,6 +59,10 @@ private slots:
 
     void deleteHighscore();
 
+    void on_actionAbout_triggered();
+
+    void deleteAbout();
+
 protected:
     void  closeEvent(QCloseEvent*);
 
@@ -70,6 +75,7 @@ private:
     QString username = "";
     Dictionary *dictionary;
     Highscore *highscore;
+    About *about;
 
 };
 

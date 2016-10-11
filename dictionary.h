@@ -18,6 +18,9 @@ public:
     explicit Dictionary(QWidget *parent = 0);
     ~Dictionary();
 
+signals:
+void closed();
+
 public slots:
     QList<QString> getDictionaryItems(); //return QString Array
 
@@ -35,6 +38,9 @@ private slots:
     void readDB();
 
     void closeDB();
+
+protected:
+    void  closeEvent(QCloseEvent*);
 
 private:
     Ui::Dictionary *ui;

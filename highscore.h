@@ -17,6 +17,11 @@ public:
     explicit Highscore(QWidget *parent = 0);
     ~Highscore();
     void addScore(QString username, int score);
+
+
+signals:
+    void closed();
+
 private slots:
     void getHighscore();
 
@@ -28,7 +33,8 @@ private slots:
 
     void on_pushButton_clicked();
 
-
+protected:
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::Highscore *ui;

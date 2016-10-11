@@ -68,7 +68,8 @@ QSqlQuery Highscore::queryDB(QString queryString, bool &successful)
     {
         QMessageBox::information(0,"Error","Failed to load Database.");
         // close UI
-        //return NULL;
+        QSqlQuery emptyQuery;
+        return emptyQuery;
 
     } else
     {
@@ -100,4 +101,9 @@ void Highscore::on_pushButton_clicked()
     } else {
 
     }
+}
+
+void Highscore::closeEvent(QCloseEvent *)
+{
+    emit closed();
 }
