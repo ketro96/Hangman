@@ -7,8 +7,10 @@
 #include <client.h>
 #include <server.h>
 #include <chat.h>
-#include <game.h>
 #include <connectionsetup.h>
+#include <dictionary.h>
+#include <highscore.h>
+#include <gamecontroller.h>
 
 
 namespace Ui {
@@ -37,19 +39,27 @@ private slots:
 
     void on_btnMultiplayer_clicked();
 
+    void on_actionDictionary_triggered();
+
     void on_btnSP_Easy_clicked();
 
     void on_btnSP_Medium_clicked();
 
     void on_btnSP_Hard_clicked();
 
+
+    void on_actionHighscore_triggered();
+
 private:
     Ui::Hangman *ui;
     Server *server;
     Client *client;
     Chat *chat;
-    Game *game;
+    GameController *gameController;
     QString username = "";
+    Dictionary *dictionary;
+    Highscore *highscore;
+
 };
 
 #endif // HANGMAN_H

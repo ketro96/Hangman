@@ -20,19 +20,32 @@ SOURCES += main.cpp\
     server.cpp \
     client.cpp \
     chat.cpp \
-    game.cpp
+    dictionary.cpp \
+    highscore.cpp \
+    gamecontroller.cpp \
+    gameview.cpp
+
 
 HEADERS  += hangman.h \
     connectionsetup.h \
     server.h \
     client.h \
     chat.h \
-    game.h
+    dictionary.h \
+    highscore.h \
+    gamecontroller.h \
+    gameview.h
 
 FORMS    += hangman.ui \
     connectionsetup.ui \
     chat.ui \
+<<<<<<< HEAD
     game.ui
 
 RESOURCES += \
     resources.qrc
+=======
+    dictionary.ui \
+    highscore.ui \
+    gameview.ui
+>>>>>>> 4112141a32be3ad4bd42fca2b15d1bafaa18db12
