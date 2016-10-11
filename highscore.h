@@ -16,6 +16,10 @@ class Highscore : public QWidget
 public:
     explicit Highscore(QWidget *parent = 0);
     ~Highscore();
+
+signals:
+    void closed();
+
 private slots:
     void getHighscore();
 
@@ -26,6 +30,9 @@ private slots:
     void resetHighscore();
 
     void on_pushButton_clicked();
+
+protected:
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::Highscore *ui;

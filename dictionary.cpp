@@ -117,3 +117,8 @@ void Dictionary::on_btnDelete_clicked()
 {
     //deleteDictionaryItems(ui->lwDictionary->SelectRows +1);
 }
+
+void Dictionary::closeEvent(QCloseEvent *)
+{
+    emit closed();
+}
