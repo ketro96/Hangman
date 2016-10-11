@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background:rgb(255, 255, 255)</string>
+  </property>
   <widget class="QLabel" name="lblAboutUs">
    <property name="geometry">
     <rect>
@@ -233,11 +236,14 @@
   <widget class="QPushButton" name="btnEasterEgg">
    <property name="geometry">
     <rect>
-     <x>334</x>
+     <x>350</x>
      <y>0</y>
-     <width>71</width>
-     <height>61</height>
+     <width>51</width>
+     <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgba(x, x, x, 10)</string>
    </property>
    <property name="text">
     <string/>
