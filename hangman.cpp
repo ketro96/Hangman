@@ -103,7 +103,6 @@ void Hangman::connectClient(QString ipAdress, int port)
     if(client->connectClient(ipAdress, port))
     {
         client->sendMessage("USER_"+username);
-        ui->lblStatus->setText("Connected");
         chat = new Chat("MP_CLIENT", username);
         ///Same for chat as gC?
         this->setDisabled(true);
@@ -118,7 +117,7 @@ void Hangman::connectClient(QString ipAdress, int port)
     }
     else
     {
-        ui->lblStatus->setText("Could not connect...");
+         QMessageBox::information(0,"Error","Could not connect to server.");
     }
 }
 
@@ -158,16 +157,16 @@ void Hangman::on_actionHighscore_triggered()
 
 void Hangman::on_actionDictionary_triggered()
 {
-        this->setDisabled(true);
+    this->setDisabled(true);
     dictionary = new Dictionary();
-        connect(dictionary, SIGNAL(closed()), this, SLOT(enable()));
-        connect(dictionary, SIGNAL(closed()), this, SLOT(deleteDict()));
+    connect(dictionary, SIGNAL(closed()), this, SLOT(enable()));
+    connect(dictionary, SIGNAL(closed()), this, SLOT(deleteDict()));
     dictionary->show();
 }
 
 void Hangman::on_btnSP_Easy_clicked()
 {
-this->setDisabled(true);
+    this->setDisabled(true);
     gameController = new GameController("SP_EASY", username);
     connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
     connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
@@ -175,7 +174,7 @@ this->setDisabled(true);
 
 void Hangman::on_btnSP_Medium_clicked()
 {
-             this->setDisabled(true);
+    this->setDisabled(true);
     gameController = new GameController("SP_MEDIUM", username);
     connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
     connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
@@ -183,7 +182,7 @@ void Hangman::on_btnSP_Medium_clicked()
 
 void Hangman::on_btnSP_Hard_clicked()
 {
-this->setDisabled(true);
+    this->setDisabled(true);
     gameController = new GameController("SP_HARD", username);
     connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
     connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
@@ -191,7 +190,7 @@ this->setDisabled(true);
 
 void Hangman::enable()
 {
-  this->setEnabled(true);
+    this->setEnabled(true);
 }
 
 void Hangman::deleteController()
@@ -214,15 +213,18 @@ void Hangman::deleteDict()
 
 void Hangman::closeEvent(QCloseEvent *)
 {
-if(gameController) gameController->closeView();
-if(chat->isVisible()) chat->close();
-if(highscore)
-{
-    if(highscore->isVisible()) highscore->close();
-}
-if(dictionary)
-{
-    if(dictionary->isVisible()) dictionary->close();
-}
-//if(highscore) highscore->
+    if(gameController) gameController->closeView();
+    if(chat)
+    {
+        if(chat->isVisible()) chat->close();
+    }
+    if(highscore)
+    {
+        if(highscore->isVisible()) highscore->close();
+    }
+    if(dictionary)
+    {
+        if(dictionary->isVisible()) dictionary->close();
+    }
+    //if(highscore) highscore->
 }
