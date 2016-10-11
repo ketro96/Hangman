@@ -33,3 +33,6 @@ FORMS    += hangman.ui \
     connectionsetup.ui \
     chat.ui \
     game.ui
+
+RESOURCES += \
+    resources.qrc

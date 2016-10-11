@@ -8,6 +8,7 @@ Hangman::Hangman(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->btnGoBack->hide();
+    ui->btnGoBack->setIcon(QIcon(":/images/images/Back.png"));
     ui->btnSP_Easy->hide();
     ui->btnSP_Medium->hide();
     ui->btnSP_Hard->hide();
