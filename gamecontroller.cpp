@@ -6,22 +6,24 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     this->username = username;
     gameView = NULL;
     dictionary = NULL;
+    endOfGame = NULL;
     qDebug() << mode;
     initializeGameController();
     endOfGame = new EndOfGame();
+    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
+    endOfGame->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GameController::~GameController()
 {
     delete dictionary;
-    delete gameView;
-    if(endOfGame) delete endOfGame;
 }
 
 
 void GameController::initializeGameController()
 {
     this->gameView = new GameView();
+    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
     gameView->setAttribute(Qt::WA_DeleteOnClose);
     connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
     this->word = "";
@@ -53,9 +55,6 @@ void GameController::initializeGameController()
         qDebug() << "Invalid gamemode";
         break;
     }
-
-    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
     dictionaryList = dictionary->getDictionaryItems();
     getNextWord();
     gameView->show();
@@ -99,7 +98,29 @@ int GameController::getScore()
     return 100;
 }
 
+void GameController::setGameTimer(bool perRound)
+{
+    timer.setSingleShot(!perRound);
+    if(perRound)
+    {
+        timer.setInterval(roundTime * 100);
+        //connect(timer, SIGNAL(timeout()), this, SLOT());
+    }
+    else
+    {
+        timer.setInterval(gameTime * 100);
+    }
+}
 
+void GameController::wrongCharacter()
+{
+
+}
+
+void GameController::gameOver(bool win)
+{
+
+}
 
 void GameController::checkKey(QString key)
 {
@@ -146,5 +167,5 @@ void GameController::closeView()
 
 void GameController::viewDestroyed()
 {
-    emit deleted();
+    emit closed();
 }

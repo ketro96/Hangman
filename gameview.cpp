@@ -141,7 +141,6 @@ void GameView::newGame(int wordLength)
 
 void GameView::addCharacter(QString key, int pos)
 {
-    if(characterArray.contains("key"))
     characterArray[pos] = key[0];
 }
 

@@ -17,14 +17,15 @@ Highscore::~Highscore()
 
 void Highscore::readDB()
 {
-    QString dbPath = "/Users/Alexander/Programmieren/Hangman/hangme.sqlite";
+    QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
     db = QSqlDatabase::addDatabase("QSQLITE"); //db ist im Header deklariert
     db.setDatabaseName(dbPath);
 }
 
 void Highscore::getHighscore()
 {
-    bool successful;
+    bool successful = false;
+
     QSqlQuery query = queryDB("SELECT `score`, `nickname`  FROM 'Highscore' ORDER BY score DESC;", successful);
     if (successful)
     {
@@ -59,7 +60,7 @@ QSqlQuery Highscore::queryDB(QString queryString, bool &successful)
 
 void Highscore::resetHighscore()
 {
-    bool successful;
+    bool successful = false;
     QSqlQuery query = queryDB("DELETE FROM 'Highscore'", successful);
     if (successful)
     {
@@ -73,10 +74,10 @@ void Highscore::resetHighscore()
 void Highscore::on_pushButton_clicked()
 {
     QMessageBox::StandardButton reset;
-      reset = QMessageBox::question(this, "Reset Highscore Table", "Are you sure to reset your Highscore Table?", QMessageBox::Yes|QMessageBox::No);
-      if (reset == QMessageBox::Yes) {
+    reset = QMessageBox::question(this, "Reset Highscore Table", "Are you sure to reset your Highscore Table?", QMessageBox::Yes|QMessageBox::No);
+    if (reset == QMessageBox::Yes) {
         resetHighscore();
-      } else {
+    } else {
 
-      }
+    }
 }
