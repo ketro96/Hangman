@@ -47,6 +47,7 @@ private slots:
 
     void updateTimerTimeLeftLabel();
 
+
 private:
     GameView *gameView;
     int failCounter;

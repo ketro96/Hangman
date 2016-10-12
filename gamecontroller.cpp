@@ -85,17 +85,21 @@ void GameController::initializeNewGame(bool restart)
 
         if(gameDifficulty == 2)
         {
+            updateLabelTimer->stop();
             this->timerTimeLeft = roundTime +1;
+            updateTimerTimeLeftLabel();
+            updateLabelTimer->start();
 
         }
         else if (gameDifficulty == 3)
         {
+            updateLabelTimer->stop();
             this->timerTimeLeft = gameTime +1;
+            updateTimerTimeLeftLabel();
+            updateLabelTimer->start();
         }
-        updateTimerTimeLeftLabel();
         getNextWord();
         gameView->newGame(word.length());
-        updateLabelTimer->start();
         timer->start();
     }
     else
@@ -149,11 +153,15 @@ void GameController::wrongCharacter()
     {
         gameOver(false);
     }
+
     gameView->triggerPaintEvent(false);
-    updateLabelTimer->stop();
-    this->timerTimeLeft = roundTime +1;
-    updateTimerTimeLeftLabel();
-    updateLabelTimer->start();
+    if(gameDifficulty == 2)
+    {
+        updateLabelTimer->stop();
+        this->timerTimeLeft = roundTime +1;
+        updateTimerTimeLeftLabel();
+        updateLabelTimer->start();
+    }
 
 }
 
@@ -178,14 +186,6 @@ void GameController::gameOver(bool win)
 
 void GameController::checkKey(QString key)
 {
-    if(mode == "SP_MEDIUM"){
-        timer->stop();
-        timer->start();
-        updateLabelTimer->stop();
-        this->timerTimeLeft = roundTime +1;
-        updateTimerTimeLeftLabel();
-        updateLabelTimer->start();
-    }
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
@@ -197,6 +197,14 @@ void GameController::checkKey(QString key)
         if(!gameView->addUsedCharacter(key)){
             correctCounter += characterCount; //add the count of characters that where added
             gameView->triggerPaintEvent(true);
+            if(mode == "SP_MEDIUM"){
+                timer->stop();
+                timer->start();
+                updateLabelTimer->stop();
+                this->timerTimeLeft = roundTime +1;
+                updateTimerTimeLeftLabel();
+                updateLabelTimer->start();
+            }
         }
         if(correctCounter >= word.length()){
             gameOver(true);
@@ -205,6 +213,14 @@ void GameController::checkKey(QString key)
     else{
         if(!gameView->addUsedCharacter(key)){
             wrongCharacter();
+            if(mode == "SP_MEDIUM"){
+                timer->stop();
+                timer->start();
+                updateLabelTimer->stop();
+                this->timerTimeLeft = roundTime +1;
+                updateTimerTimeLeftLabel();
+                updateLabelTimer->start();
+            }
         }
     }
 }
