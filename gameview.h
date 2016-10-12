@@ -42,6 +42,7 @@ private:
     QRegularExpression regex;
     bool keyPressEventsEnabled;
 
+
 signals:
     void keyPressed(QString key);
 

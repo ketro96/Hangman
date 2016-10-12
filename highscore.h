@@ -33,6 +33,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void closeDB();
+
 protected:
     void closeEvent(QCloseEvent *);
 

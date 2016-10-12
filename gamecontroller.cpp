@@ -7,13 +7,9 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     gameView = NULL;
     dictionary = NULL;
     highscore = NULL;
-    endOfGame = NULL;
     timer = NULL;
     qDebug() << mode;
     endOfGame = NULL;
-    endOfGame = new EndOfGame();
-    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
-    endOfGame->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GameController::~GameController()
@@ -32,6 +28,7 @@ void GameController::initializeGameController(bool accepted)
     modeStringList.append("SP_HARD");
     modeStringList.append("MP_CLIENT");
     modeStringList.append("MP_HOST");
+    this->timer = new QTimer(this);
 
     switch (modeStringList.indexOf(this->mode)) {
     case 0:
@@ -65,8 +62,6 @@ void GameController::initializeGameController(bool accepted)
         this->word = "";
         this->dictionary = new Dictionary();
         this->highscore = new Highscore();
-        this->timer = new QTimer(this);
-
 
         dictionaryMap = dictionary->getDictionaryItemObject();
         getNextWord();
@@ -94,17 +89,18 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    word = dictionaryMap.key(rand() % dictionaryMap.size() -1);
+    this->word = dictionaryMap.keys().at(0);
+
 }
 
 int GameController::getScore()
 {
-    return 100 * dictionaryMap.value(word) * (6 - failCounter) / (word.length() * 0.5);
+    return 100 * (dictionaryMap.value(word)+1) * (6 - failCounter) / (word.length() * 0.5);
 }
 
 void GameController::setGameTimer(bool perRound)
 {
-    timer->setSingleShot(!perRound);
+    //timer->setSingleShot(!perRound);
     timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
     if(perRound){
          connect(timer, SIGNAL(timeout()), this, SLOT(wrongCharacter()));
@@ -112,6 +108,17 @@ void GameController::setGameTimer(bool perRound)
     else{
          connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
     }
+}
+
+unsigned int GameController::myrand( unsigned int n, unsigned int m )
+{
+    unsigned int i = qrand() % m; /* or (qrand() & (m-1)) */
+    while ( i >= n )
+    {
+        i = qrand() % m;
+    }
+
+    return i;
 }
 
 void GameController::wrongCharacter()
@@ -137,7 +144,10 @@ void GameController::gameOver(bool win)
     if(win){
         highscore->addScore(this->username, getScore());
     }
-    endOfGame->showDialog(win ? true : false, win ? getScore() : 0);
+    endOfGame = new EndOfGame();
+    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
+    endOfGame->setAttribute(Qt::WA_DeleteOnClose);
+    endOfGame->showDialog(win, win ? getScore() : 0);
 }
 
 void GameController::checkKey(QString key)

@@ -6,8 +6,6 @@ EndOfGame::EndOfGame(QWidget *parent) :
     ui(new Ui::EndOfGame)
 {
     ui->setupUi(this);
-
-
 }
 
 EndOfGame::~EndOfGame()
