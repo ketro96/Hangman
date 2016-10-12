@@ -12,6 +12,7 @@
 #include <highscore.h>
 #include <gamecontroller.h>
 #include <about.h>
+#include <gamehelp.h>
 
 namespace Ui {
 class HangMe;
@@ -63,7 +64,11 @@ private slots:
 
     void deleteAbout();
 
+    void deleteGameHelp();
+
     void serverFailed(QString title, QString errorMessage);
+
+    void on_actionGame_Help_triggered();
 
 protected:
     void  closeEvent(QCloseEvent*);
@@ -78,6 +83,7 @@ private:
     Dictionary *dictionary;
     Highscore *highscore;
     About *about;
+    GameHelp *gameHelp;
 };
 
 #endif // HANGME_H

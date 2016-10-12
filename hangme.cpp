@@ -20,6 +20,7 @@ HangMe::HangMe(QWidget *parent) :
     dictionary = NULL;
     highscore = NULL;
     about = NULL;
+    gameHelp = NULL;
 }
 
 HangMe::~HangMe()
@@ -31,6 +32,7 @@ HangMe::~HangMe()
     if(gameController) delete gameController;
     if(dictionary) delete dictionary;
     if(highscore) delete highscore;
+
 }
 
 void HangMe::on_btnStartHost_clicked()
@@ -232,6 +234,11 @@ void HangMe::deleteAbout()
     about = NULL;
 }
 
+void HangMe::deleteGameHelp()
+{
+    gameHelp = NULL;
+}
+
 void HangMe::closeEvent(QCloseEvent *)
 {
     if(gameController) gameController->closeView();
@@ -251,6 +258,10 @@ void HangMe::closeEvent(QCloseEvent *)
     {
         if(about->isVisible()) about->close();
     }
+    if(gameHelp)
+    {
+        if(gameHelp->isVisible()) gameHelp->close();
+    }
 }
 
 void HangMe::on_actionAbout_triggered()
@@ -261,4 +272,14 @@ void HangMe::on_actionAbout_triggered()
     connect(about, SIGNAL(destroyed(QObject*)), this, SLOT(enable()));
     connect(about, SIGNAL(closed()), this, SLOT(deleteAbout()));
     about->show();
+}
+
+void HangMe::on_actionGame_Help_triggered()
+{
+    this->setDisabled(true);
+    gameHelp = new GameHelp();
+    gameHelp->setAttribute(Qt::WA_DeleteOnClose);
+    connect(gameHelp, SIGNAL(destroyed(QObject*)), this, SLOT(enable()));
+    connect(gameHelp, SIGNAL(closed()), this, SLOT(deleteGameHelp()));
+    gameHelp->show();
 }
