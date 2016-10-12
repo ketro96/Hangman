@@ -18,7 +18,8 @@ bool Client::connectClient(QString ipAdress, int port)
     }
     if(!connected)
     {
-        QMessageBox::information(0,"Not connected to host",socket->errorString());
+        QMessageBox::information(0,"Connection failed",socket->errorString());
+        emit closed();
     }
     return connected;
 }

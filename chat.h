@@ -26,6 +26,7 @@ signals:
     void sendMessage(QString message);
     void gameRequest();
     void gameAnswer(bool accepted);
+    void closed();
 
 private slots:
     void on_btnSend_clicked();
@@ -33,6 +34,9 @@ private slots:
     void on_edtChat_returnPressed();
     void sendChatMessage();
     void on_btnRequestGame_clicked();
+
+protected:
+    void closeEvent(QCloseEvent *);
 
 private:
     QString mode;

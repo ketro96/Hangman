@@ -47,8 +47,6 @@ private slots:
 
     void createRandomNumber();
 
-
-
 private:
     GameView *gameView;
     int failCounter;

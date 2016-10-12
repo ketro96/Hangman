@@ -34,7 +34,12 @@ void Chat::newServerInfo(QString ipAdress, QString port)
 
 void Chat::getMessage(QString message)
 {
-    ui->lwChat->addItem(message);
+    QListWidgetItem *messageItem = new QListWidgetItem(message);
+    if(message.contains(username+": "))
+    {
+       /// messageItem->setForeground(Qt::blue);
+    }
+    ui->lwChat->addItem(messageItem);
     ui->lwChat->scrollToBottom();
 }
 
@@ -64,7 +69,9 @@ void Chat::sendChatMessage()
     if(mode=="MP_HOST")
     {
         message.prepend(username+": ");
-        ui->lwChat->addItem(message);
+        QListWidgetItem *messageItem = new QListWidgetItem(message);
+       /// messageItem->setForeground(Qt::blue);
+        ui->lwChat->addItem(messageItem);
         ui->lwChat->scrollToBottom();
     }
     message.prepend("CHAT_");
@@ -94,4 +101,9 @@ void Chat::gameStarted(bool started)
         ui->btnRequestGame->setDisabled(started);
         ui->btnRequestGame->setStyleSheet("background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));");
     }
+}
+
+void Chat::closeEvent(QCloseEvent *)
+{
+    emit closed();
 }

@@ -111,6 +111,7 @@ void Highscore::closeDB()
     db = QSqlDatabase();
     db.removeDatabase(connection);
 }
+
 void Highscore::closeEvent(QCloseEvent *)
 {
     emit closed();

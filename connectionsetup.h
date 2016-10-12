@@ -21,6 +21,10 @@ private slots:
 
 signals:
     void connectClient(QString ipAdress, int port);
+    void closed();
+
+protected:
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::ConnectionSetup *ui;
