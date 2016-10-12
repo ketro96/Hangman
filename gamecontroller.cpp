@@ -62,6 +62,7 @@ void GameController::initializeGameController(bool accepted)
         this->word = "";
         this->dictionary = new Dictionary();
         this->highscore = new Highscore();
+        this->lastWordPos = 0;
 
         dictionaryMap = dictionary->getDictionaryItemObject();
         getNextWord();
@@ -89,33 +90,18 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    this->word = dictionaryMap.keys().at(0);
 
-}
-
-void GameController::createRandomNumber()
-{
-    /*
     QTime time = QTime::currentTime();
-        qsrand((uint)time.msec());
-        QList<int> *zufallsListe = new QList<int>();
-
-        bool btmp = true;
-
-        while(btmp)
-        {
-            int temp = qrand() % ((max) - min) + min;
-            if(!zufallsListe->contains(temp))
-            {
-                zufallsListe->append(temp);
-            }
-            if(zufallsListe->length() > max - 1)
-            {
-                btmp = false;
-            }
-        }
-        return zufallsListe;
-        */
+    qsrand((uint)time.msec());
+    int pos = qrand() % ((dictionaryMap.size()) - 2) + 2;
+    pos -= 2;
+    if(pos == lastWordPos)
+    {
+        pos++;
+    }
+    this->word = dictionaryMap.keys().at(pos);
+    lastWordPos = pos;
+    qDebug() << pos;
 }
 
 int GameController::getScore()

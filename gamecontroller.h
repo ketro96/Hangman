@@ -45,8 +45,6 @@ private slots:
 
     void timeIsUp();
 
-    void createRandomNumber();
-
 
 
 private:
@@ -63,7 +61,7 @@ private:
     QList<QString> modeStringList;
     QTimer *timer;
     Highscore *highscore;
-
+    int lastWordPos;
     EndOfGame *endOfGame;
 };
 
