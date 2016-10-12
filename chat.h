@@ -23,6 +23,8 @@ private slots:
     void on_edtChat_returnPressed();
     void sendChatMessage();
 
+    void on_btnRequestGame_clicked();
+
 signals:
     void sendMessage(QString message);
 private:
