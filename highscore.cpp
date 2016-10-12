@@ -19,7 +19,7 @@ Highscore::~Highscore()
 void Highscore::readDB()
 {
     QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
-    db = QSqlDatabase::addDatabase("QSQLITE", "HighscoreConnection"); //db ist im Header deklariert
+    db = QSqlDatabase::addDatabase("QSQLITE"); //db ist im Header deklariert
     db.setDatabaseName(dbPath);
 }
 
