@@ -13,9 +13,12 @@ public:
     Server(QObject *parent = 0);
 public slots:
     bool startServer();
+    void gameAccepted(bool accepted);
+
 private slots:
     void readClientData();
     void disconnectClient();
+    void sendToClient(QTcpSocket *client, QString message);
     void sendToAllClients(QString message);
 
 protected:
@@ -31,6 +34,7 @@ private:
     QList<QTcpSocket *> connectedClients;
     QMap<QTcpSocket *, QString> clientMap;
     QTcpSocket *currentOpponent;
+    bool busy;
 };
 
 #endif

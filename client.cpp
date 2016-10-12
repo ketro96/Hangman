@@ -15,15 +15,11 @@ bool Client::connectClient(QString ipAdress, int port)
     if(socket->waitForConnected(10000))
     {
         connected = true;
-        QMessageBox::information(0,"Connected","Connected");
     }
     if(!connected)
     {
-        QMessageBox::information(0,"Not connected","Could not connect to host.");
-        qDebug() << "Client connection error:";
-        qDebug() << socket->errorString();
+        QMessageBox::information(0,"Not connected to host",socket->errorString());
     }
-
     return connected;
 }
 
@@ -32,7 +28,6 @@ void Client::sendMessage(QString message)
     // send
     socket->write(message.toUtf8());
     socket->waitForBytesWritten(1000);
-    //socket->waitForReadyRead(-1);
 }
 
 void Client::sendRequest()
@@ -85,6 +80,7 @@ void Client::clientReadyRead()
 void Client::disconnected()
 {
     socket->deleteLater();
+    emit disconnect();
     ///Programm Absturz?? bei delete? vlt funkt mit deletelater -> testen
     QMessageBox::information(0,"Disconnect","Lost connection to host.");
 }

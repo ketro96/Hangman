@@ -29,6 +29,7 @@ signals:
     void gameAnswer(bool accepted);
     void receivedGameMessage(QString dataString);
     void receivedCharMessage(QString dataString);
+    void disconnect();
 
 private:
     QTcpSocket *socket;

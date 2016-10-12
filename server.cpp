@@ -1,8 +1,10 @@
 #include "server.h"
 
 Server::Server(QObject *parent) :
-     QTcpServer(parent)
+    QTcpServer(parent)
 {
+    currentOpponent = NULL;
+    busy = false;
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
@@ -63,7 +65,15 @@ void Server::readClientData()
         if(dataString.mid(5)=="REQUEST")
         {
             QString username = clientMap.value(client);
-            emit receivedRequestMessage(username);
+            currentOpponent = client;
+            if(busy)
+            {
+                sendToClient(currentOpponent, "GAME_DENY");
+            }
+            else
+            {
+                emit receivedRequestMessage(username);
+            }
         }
         else
         {
@@ -106,6 +116,19 @@ void Server::readClientData()
     }
 }
 
+void Server::gameAccepted(bool accepted)
+{
+    if(accepted)
+    {
+        sendToClient(currentOpponent, "GAME_ACCEPT");
+        busy = true;
+    }
+    else
+    {
+        sendToClient(currentOpponent, "GAME_DENY");
+    }
+}
+
 void Server::sendToAllClients(QString message)
 {   
     QByteArray messageData = message.toUtf8();
@@ -119,13 +142,27 @@ void Server::sendToAllClients(QString message)
     }
 }
 
+void Server::sendToClient(QTcpSocket *client, QString message)
+{
+    QByteArray messageData = message.toUtf8();
+    client->write(messageData);
+    client->flush();
+    client->waitForBytesWritten(3000);
+}
+
 void Server::disconnectClient()
 {
     QTcpSocket *client = qobject_cast<QTcpSocket *>(sender());
 
     if (!client)
         return;
-
+    if(currentOpponent)
+    {
+        if(client == currentOpponent)
+        {
+            busy = false;
+        }
+    }
     connectedClients.removeAll(client);
     //clientMap.remove()
     client->deleteLater();

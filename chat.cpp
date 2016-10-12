@@ -40,16 +40,16 @@ void Chat::getMessage(QString message)
 
 void Chat::getRequestMessage(QString username)
 {
-        QMessageBox::StandardButton reply;
-        reply = QMessageBox::question(this, "Game Request", "Dou you want to play against "+username+" ?",
-                                      QMessageBox::Yes|QMessageBox::No);
-        if (reply == QMessageBox::Yes) {
-            emit gameAnswer(true);
-        }
-        else
-        {
-            emit gameAnswer(false);
-        }
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Game Request", "Dou you want to play against "+username+" ?",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        emit gameAnswer(true);
+    }
+    else
+    {
+        emit gameAnswer(false);
+    }
 }
 
 
@@ -75,4 +75,23 @@ void Chat::sendChatMessage()
 void Chat::on_btnRequestGame_clicked()
 {
     emit gameRequest();
+}
+
+void Chat::disconnect()
+{
+    gameStarted(false);
+}
+
+void Chat::gameStarted(bool started)
+{
+    if(started)
+    {
+        ui->btnRequestGame->setDisabled(started);
+        ui->btnRequestGame->setStyleSheet("background:gray;");
+    }
+    else
+    {
+        ui->btnRequestGame->setDisabled(started);
+        ui->btnRequestGame->setStyleSheet("background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));");
+    }
 }
