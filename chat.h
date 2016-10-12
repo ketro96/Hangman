@@ -17,16 +17,18 @@ public:
     ~Chat();
 public slots:
     void getMessage(QString message);
+
+signals:
+    void sendMessage(QString message);
+    void gameRequest();
+
 private slots:
     void on_btnSend_clicked();
     void newServerInfo(QString ipAdress, QString port);
     void on_edtChat_returnPressed();
     void sendChatMessage();
-
     void on_btnRequestGame_clicked();
 
-signals:
-    void sendMessage(QString message);
 private:
     QString mode;
     QString username;

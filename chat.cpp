@@ -28,7 +28,7 @@ void Chat::on_btnSend_clicked()
 
 void Chat::newServerInfo(QString ipAdress, QString port)
 {
-        ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port+" .");
+        ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port);
 }
 
 
@@ -60,5 +60,5 @@ void Chat::sendChatMessage()
 
 void Chat::on_btnRequestGame_clicked()
 {
-
+    emit gameRequest();
 }
