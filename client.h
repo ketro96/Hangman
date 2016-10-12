@@ -19,6 +19,7 @@ public slots:
     bool connectClient(QString ipAdress, int port);
     void sendMessage(QString message);
     void sendRequest();
+    void endGame();
 
 private slots:
     void clientReadyRead();

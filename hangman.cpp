@@ -47,6 +47,7 @@ void Hangman::on_btnStartHost_clicked()
     if(server->startServer())
     {
         gameController = new GameController("MP_HOST", username);
+        connect(server, SIGNAL(receivedGameMessage(QString)), gameController, SLOT(getGameMessage(QString)));
         connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
         connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
         connect(chat, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool)));
@@ -113,6 +114,7 @@ void Hangman::connectClient(QString ipAdress, int port)
         gameController = new GameController("MP_CLIENT", username);
         connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
         connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
+        connect(gameController, SIGNAL(closed()), client, SLOT(endGame()));
         connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
         connect(chat, SIGNAL(gameRequest()), client, SLOT(sendRequest()));

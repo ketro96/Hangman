@@ -24,6 +24,7 @@ signals:
 public slots:
     void closeView();
     void initializeGameController(bool accepted);
+    void getGameMessage(QString message);
 
 private slots:
     void getNextWord();

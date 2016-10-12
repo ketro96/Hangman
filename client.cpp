@@ -77,6 +77,11 @@ void Client::clientReadyRead()
     }
 }
 
+void Client::endGame()
+{
+    sendMessage("GAME_END");
+}
+
 void Client::disconnected()
 {
     socket->deleteLater();

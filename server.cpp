@@ -39,7 +39,6 @@ bool Server::startServer()
                 ipAddressesList.at(i).toIPv4Address())
         {
             ipAddress = ipAddressesList.at(i).toString();
-            qDebug() << "Server started1";
             emit serverInfo(ipAddress, QString::number(this->serverPort()));
             break;
         }
@@ -48,7 +47,6 @@ bool Server::startServer()
     if (ipAddress.isEmpty())
     {
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-        qDebug() << "Server started2";
         emit serverInfo(ipAddress, QString::number(this->serverPort()));
     }
     return true;
@@ -75,9 +73,15 @@ void Server::readClientData()
                 emit receivedRequestMessage(username);
             }
         }
+        else if(dataString.mid(5)=="END")
+        {
+            busy = false;
+            emit receivedGameMessage(dataString.mid(5));
+        }
         else
         {
             emit receivedGameMessage(dataString.mid(5));
+
         }
         /*
          * START
