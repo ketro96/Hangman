@@ -12,13 +12,14 @@ Highscore::Highscore(QWidget *parent) :
 
 Highscore::~Highscore()
 {
+    closeDB();
     delete ui;
 }
 
 void Highscore::readDB()
 {
     QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
-    db = QSqlDatabase::addDatabase("QSQLITE"); //db ist im Header deklariert
+    db = QSqlDatabase::addDatabase("QSQLITE", "HighscoreConnection"); //db ist im Header deklariert
     db.setDatabaseName(dbPath);
 }
 
@@ -102,7 +103,14 @@ void Highscore::on_pushButton_clicked()
 
     }
 }
-
+void Highscore::closeDB()
+{
+    QString connection;
+    connection = db.connectionName();
+    db.close();
+    db = QSqlDatabase();
+    db.removeDatabase(connection);
+}
 void Highscore::closeEvent(QCloseEvent *)
 {
     emit closed();

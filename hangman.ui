@@ -480,7 +480,7 @@ color: rgb(255, 255, 255)</string>
      <x>0</x>
      <y>0</y>
      <width>432</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFIle">
@@ -527,6 +527,9 @@ color: rgb(255, 255, 255)</string>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
  </widget>

@@ -7,13 +7,9 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     gameView = NULL;
     dictionary = NULL;
     highscore = NULL;
-    endOfGame = NULL;
     timer = NULL;
     qDebug() << mode;
     endOfGame = NULL;
-    endOfGame = new EndOfGame();
-    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
-    endOfGame->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GameController::~GameController()
@@ -148,6 +144,9 @@ void GameController::gameOver(bool win)
     if(win){
         highscore->addScore(this->username, getScore());
     }
+    endOfGame = new EndOfGame();
+    connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
+    endOfGame->setAttribute(Qt::WA_DeleteOnClose);
     endOfGame->showDialog(win, win ? getScore() : 0);
 }
 
