@@ -61,6 +61,7 @@ private:
     Highscore *highscore;
     int lastWordPos;
     EndOfGame *endOfGame;
+    int gameDifficulty;
 };
 
 #endif // GAMECONTROLLER_H
