@@ -14,10 +14,9 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
 
 GameController::~GameController()
 {
-    timer->stop();
-    delete dictionary;
-    delete highscore;
-    delete timer;
+    if(timer) timer->stop(); delete timer;
+    if(dictionary) delete dictionary;
+    if(highscore) delete highscore;
 }
 
 
@@ -57,8 +56,8 @@ void GameController::initializeGameController(bool accepted)
     {
         this->gameView = new GameView();
         connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-        gameView->setAttribute(Qt::WA_DeleteOnClose);
         connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
+        gameView->setAttribute(Qt::WA_DeleteOnClose);
         this->word = "";
         this->dictionary = new Dictionary();
         this->highscore = new Highscore();
@@ -190,10 +189,15 @@ void GameController::getGameMessage(QString message)
 
 void GameController::closeView()
 {
-    gameView->close();
+    if(gameView)
+    {
+        gameView->close();
+    }
 }
 
 void GameController::viewDestroyed()
 {
+    gameView = NULL;
     emit closed();
 }
+

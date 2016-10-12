@@ -37,17 +37,17 @@ void HangMe::on_btnStartHost_clicked()
 {
     server = new Server();
     chat = new Chat("MP_HOST", username);
-    ///Same for chat as gC?
     connect(server, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
     connect(server, SIGNAL(receivedRequestMessage(QString)), chat, SLOT(getRequestMessage(QString)));
     connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
+    connect(chat, SIGNAL(closed()), this, SLOT(enable()));
     connect(server, SIGNAL(serverInfo(QString,QString)), chat, SLOT(newServerInfo(QString, QString)));
     if(server->startServer())
     {
         gameController = new GameController("MP_HOST", username);
         connect(server, SIGNAL(receivedGameMessage(QString)), gameController, SLOT(getGameMessage(QString)));
-        connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
         connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
+        connect(chat, SIGNAL(closed()), gameController, SLOT(closeView()));
         connect(chat, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool)));
         connect(chat, SIGNAL(gameAnswer(bool)), server, SLOT(gameAccepted(bool)));
         this->setDisabled(true);
@@ -70,8 +70,10 @@ void HangMe::on_btnFindHost_clicked()
 {
     client = new Client();
     ConnectionSetup *connectionSetup = new ConnectionSetup();
-    //connect(client, SIGNAL(receivedMessage(QString)), this, SLOT(getMessage(QString)));
+    this->setDisabled(true);
+    connect(connectionSetup, SIGNAL(closed()), this, SLOT(enable()));
     connect(connectionSetup, SIGNAL(connectClient(QString, int)), this, SLOT(connectClient(QString,int)));
+    connect(client, SIGNAL(closed()), this, SLOT(enable()));
     connectionSetup->show();
 }
 
@@ -107,7 +109,6 @@ void HangMe::connectClient(QString ipAdress, int port)
     {
         client->sendMessage("USER_"+username);
         chat = new Chat("MP_CLIENT", username);
-        ///Same for chat as gC?
         this->setDisabled(true);
         gameController = new GameController("MP_CLIENT", username);
         connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
@@ -116,15 +117,13 @@ void HangMe::connectClient(QString ipAdress, int port)
         connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
         connect(chat, SIGNAL(gameRequest()), client, SLOT(sendRequest()));
+        connect(chat, SIGNAL(closed()), this, SLOT(enable()));
+        connect(chat, SIGNAL(closed()), gameController, SLOT(closeView()));
         connect(client, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool)));
         connect(client, SIGNAL(gameAnswer(bool)), chat, SLOT(gameStarted(bool)));
         connect(client, SIGNAL(disconnect()), gameController, SLOT(closeView()));
         connect(client, SIGNAL(disconnect()), chat, SLOT(disconnect()));
         chat->show();
-    }
-    else
-    {
-        QMessageBox::information(0,"Error","Could not connect to server.");
     }
 }
 

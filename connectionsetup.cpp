@@ -28,3 +28,8 @@ void ConnectionSetup::on_buttonBox_accepted()
     emit connectClient(ipAdress, port);
 }
 
+void ConnectionSetup::closeEvent(QCloseEvent *)
+{
+    emit closed();
+}
+

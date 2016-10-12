@@ -45,8 +45,6 @@ private slots:
 
     void timeIsUp();
 
-
-
 private:
     GameView *gameView;
     int failCounter;
