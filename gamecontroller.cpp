@@ -47,7 +47,7 @@ void GameController::initializeGameController(bool accepted)
         //client settings
         break;
     case 4:
-         //host setting
+        //host setting
         break;
     default:
         qDebug() << "Invalid gamemode";
@@ -103,10 +103,10 @@ void GameController::setGameTimer(bool perRound)
     //timer->setSingleShot(!perRound);
     timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
     if(perRound){
-         connect(timer, SIGNAL(timeout()), this, SLOT(wrongCharacter()));
+        connect(timer, SIGNAL(timeout()), this, SLOT(wrongCharacter()));
     }
     else{
-         connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
+        connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
     }
 }
 
@@ -176,6 +176,15 @@ void GameController::checkKey(QString key)
         if(!gameView->addUsedCharacter(key)){
             wrongCharacter();
         }
+    }
+}
+
+void GameController::getGameMessage(QString message)
+{
+    if(message == "END")
+    {
+        QMessageBox::information(0,"End of game","Your opponent disconnected.");
+        closeView();
     }
 }
 
