@@ -91,11 +91,13 @@ void GameView::paintEvent(QPaintEvent *event)
 
         painter.setFont(QFont("times",22));
 
+        painter.drawText(xPos, 298, characterArray[i].toUpper());
+        /*
         if(!characterArray[0].isNull())
         {
-            painter.drawText(xPos, 298, characterArray[i].toUpper());
-        }
 
+        }
+        */
         xPos += 40;
     }
 }

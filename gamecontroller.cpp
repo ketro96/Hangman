@@ -93,13 +93,13 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    //word = dictionaryMap.key(rand() % dictionaryMap.size() -1);
-    word = "Diplay";
+    this->word = dictionaryMap.keys().at(0);
+
 }
 
 int GameController::getScore()
 {
-    return 100 * dictionaryMap.value(word) * (6 - failCounter) / (word.length() * 0.5);
+    return 100 * (dictionaryMap.value(word)+1) * (6 - failCounter) / (word.length() * 0.5);
 }
 
 void GameController::setGameTimer(bool perRound)
@@ -112,6 +112,17 @@ void GameController::setGameTimer(bool perRound)
     else{
          connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
     }
+}
+
+unsigned int GameController::myrand( unsigned int n, unsigned int m )
+{
+    unsigned int i = qrand() % m; /* or (qrand() & (m-1)) */
+    while ( i >= n )
+    {
+        i = qrand() % m;
+    }
+
+    return i;
 }
 
 void GameController::wrongCharacter()
@@ -137,7 +148,7 @@ void GameController::gameOver(bool win)
     if(win){
         highscore->addScore(this->username, getScore());
     }
-    endOfGame->showDialog(win ? true : false, win ? getScore() : 0);
+    endOfGame->showDialog(win, win ? getScore() : 0);
 }
 
 void GameController::checkKey(QString key)
