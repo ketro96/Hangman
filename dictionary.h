@@ -22,7 +22,7 @@ signals:
 void closed();
 
 public slots:
-    QList<QString> getDictionaryItems(bool uiIsShown); //return QString List
+    QList<QString> getDictionaryItemObject(); //return QString List
 
 private slots:
     void on_btnAdd_clicked();
@@ -38,6 +38,8 @@ private slots:
     void readDB();
 
     void closeDB();
+
+    void getDictionaryItems(); //show in UI
 
 protected:
     void  closeEvent(QCloseEvent*);

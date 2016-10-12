@@ -64,7 +64,7 @@ void GameController::initializeGameController()
         qDebug() << "Invalid gamemode";
         break;
     }
-    dictionaryList = dictionary->getDictionaryItems(false);
+    dictionaryList = dictionary->getDictionaryItemObject();
     getNextWord();
     gameView->show();
     initializeNewGame(true);
