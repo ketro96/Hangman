@@ -95,6 +95,7 @@ void GameController::getNextWord()
 
 void GameController::createRandomNumber()
 {
+    /*
     QTime time = QTime::currentTime();
         qsrand((uint)time.msec());
         QList<int> *zufallsListe = new QList<int>();
@@ -114,6 +115,7 @@ void GameController::createRandomNumber()
             }
         }
         return zufallsListe;
+        */
 }
 
 int GameController::getScore()
@@ -131,17 +133,6 @@ void GameController::setGameTimer(bool perRound)
     else{
         connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
     }
-}
-
-unsigned int GameController::myrand( unsigned int n, unsigned int m )
-{
-    unsigned int i = qrand() % m; /* or (qrand() & (m-1)) */
-    while ( i >= n )
-    {
-        i = qrand() % m;
-    }
-
-    return i;
 }
 
 void GameController::wrongCharacter()
