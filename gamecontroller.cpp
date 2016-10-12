@@ -32,6 +32,7 @@ void GameController::initializeGameController(bool accepted)
     modeStringList.append("SP_HARD");
     modeStringList.append("MP_CLIENT");
     modeStringList.append("MP_HOST");
+    this->timer = new QTimer(this);
 
     switch (modeStringList.indexOf(this->mode)) {
     case 0:
@@ -65,8 +66,6 @@ void GameController::initializeGameController(bool accepted)
         this->word = "";
         this->dictionary = new Dictionary();
         this->highscore = new Highscore();
-        this->timer = new QTimer(this);
-
 
         dictionaryMap = dictionary->getDictionaryItemObject();
         getNextWord();
@@ -94,7 +93,8 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    word = dictionaryMap.key(rand() % dictionaryMap.size() -1);
+    //word = dictionaryMap.key(rand() % dictionaryMap.size() -1);
+    word = "Diplay";
 }
 
 int GameController::getScore()
@@ -104,7 +104,7 @@ int GameController::getScore()
 
 void GameController::setGameTimer(bool perRound)
 {
-    timer->setSingleShot(!perRound);
+    //timer->setSingleShot(!perRound);
     timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
     if(perRound){
          connect(timer, SIGNAL(timeout()), this, SLOT(wrongCharacter()));

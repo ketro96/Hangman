@@ -5,10 +5,13 @@ GameView::GameView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameView)
 {
-    ui->setupUi(this);
+
     this->regex = QRegularExpression("[A-Za-z]");
-    characterArray [1];
+    characterArray = {""};
     enableKeyPressEvents(false);
+    counter = 0;
+    wordLength = 0;
+    ui->setupUi(this);
 }
 
 GameView::~GameView()
@@ -87,13 +90,14 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.drawLine(xPos, 300, xPos + 16, 300);
 
         painter.setFont(QFont("times",22));
-        painter.drawText(xPos, 298, characterArray[i].toUpper());
+
+        if(!characterArray[0].isNull())
+        {
+            painter.drawText(xPos, 298, characterArray[i].toUpper());
+        }
+
         xPos += 40;
     }
-
-    xPos =20;
-    painter.setRenderHint(QPainter::Antialiasing, false);
-    painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
 }
 
 void GameView::enableKeyPressEvents(bool enable)
