@@ -115,11 +115,11 @@ void Hangman::connectClient(QString ipAdress, int port)
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
         onnect(chat, SIGNAL(gameRequest()), client, SLOT(sendRequest()));
         connect(client, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool));
-        chat->show();
+                chat->show();
     }
     else
     {
-         QMessageBox::information(0,"Error","Could not connect to server.");
+        QMessageBox::information(0,"Error","Could not connect to server.");
     }
 }
 
@@ -174,6 +174,7 @@ void Hangman::on_btnSP_Easy_clicked()
     gameController = new GameController("SP_EASY", username);
     connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
     connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
+    gameController->initializeGameController(true);
 }
 
 void Hangman::on_btnSP_Medium_clicked()
@@ -182,6 +183,7 @@ void Hangman::on_btnSP_Medium_clicked()
     gameController = new GameController("SP_MEDIUM", username);
     connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
     connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
+    gameController->initializeGameController(true);
 }
 
 void Hangman::on_btnSP_Hard_clicked()
@@ -190,6 +192,7 @@ void Hangman::on_btnSP_Hard_clicked()
     gameController = new GameController("SP_HARD", username);
     connect(gameController, SIGNAL(closed()), this, SLOT(enable()));
     connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
+    gameController->initializeGameController(true);
 }
 
 void Hangman::enable()
