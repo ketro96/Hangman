@@ -10,6 +10,7 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     endOfGame = NULL;
     timer = NULL;
     qDebug() << mode;
+    endOfGame = NULL;
     endOfGame = new EndOfGame();
     connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
     endOfGame->setAttribute(Qt::WA_DeleteOnClose);
@@ -40,24 +41,21 @@ void GameController::initializeGameController(bool accepted)
     case 1:
         this->roundTime = 10;
         setGameTimer(true);
-        accepted = true;
         break;
     case 2:
         this->gameTime = 30;
         setGameTimer(false);
-        accepted = true;
         break;
     case 3:
         //client settings
         break;
     case 4:
          //host setting
-        accepted = true;
         break;
     default:
         qDebug() << "Invalid gamemode";
         break;
-
+    }
     if(accepted)
     {
         this->gameView = new GameView();
@@ -69,7 +67,7 @@ void GameController::initializeGameController(bool accepted)
         this->highscore = new Highscore();
         this->timer = new QTimer(this);
 
-        }
+
         dictionaryMap = dictionary->getDictionaryItemObject();
         getNextWord();
         gameView->show();
@@ -96,7 +94,7 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    word = dictionaryMap.key(rand() % dictionaryMap.size());
+    word = dictionaryMap.key(rand() % dictionaryMap.size() -1);
 }
 
 int GameController::getScore()
