@@ -22,6 +22,7 @@ public:
     void addCharacter(QString key, int pos);
     void newGame(int wordLength);
     void enableKeyPressEvents(bool enable);
+    void showTimerTimeLeft(QString time);
 
 signals:
     void openChat();

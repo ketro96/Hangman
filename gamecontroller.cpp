@@ -8,6 +8,7 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     dictionary = NULL;
     highscore = NULL;
     timer = NULL;
+    updateLabelTimer = NULL;
     qDebug() << mode;
     endOfGame = NULL;
 }
@@ -15,6 +16,7 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
 GameController::~GameController()
 {
     if(timer) timer->stop(); delete timer;
+    if(updateLabelTimer) updateLabelTimer->stop(); delete updateLabelTimer;
     if(dictionary) delete dictionary;
     if(highscore) delete highscore;
 }
@@ -28,6 +30,7 @@ void GameController::initializeGameController(bool accepted)
     modeStringList.append("MP_CLIENT");
     modeStringList.append("MP_HOST");
     this->timer = new QTimer(this);
+    this->updateLabelTimer = new QTimer(this);
 
     switch (modeStringList.indexOf(this->mode)) {
     case 0:
@@ -80,8 +83,19 @@ void GameController::initializeNewGame(bool restart)
         this->failCounter = 0;
         this->correctCounter = 0;
 
+        if(gameDifficulty == 2)
+        {
+            this->timerTimeLeft = roundTime +1;
+
+        }
+        else if (gameDifficulty == 3)
+        {
+            this->timerTimeLeft = gameTime +1;
+        }
+        updateTimerTimeLeftLabel();
         getNextWord();
         gameView->newGame(word.length());
+        updateLabelTimer->start();
         timer->start();
     }
     else
@@ -113,12 +127,19 @@ void GameController::setGameTimer(bool perRound)
 {
     //timer->setSingleShot(!perRound);
     timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
+    updateLabelTimer->setInterval(1000);
+    connect(updateLabelTimer, SIGNAL(timeout()), this, SLOT(updateTimerTimeLeftLabel()));
     if(perRound){
         connect(timer, SIGNAL(timeout()), this, SLOT(wrongCharacter()));
     }
     else{
         connect(timer, SIGNAL(timeout()), this, SLOT(timeIsUp()));
     }
+}
+
+void GameController::updateTimerTimeLeftLabel()
+{
+    gameView->showTimerTimeLeft("Time left: " + QString::number(timerTimeLeft-=1));
 }
 
 void GameController::wrongCharacter()
@@ -129,6 +150,10 @@ void GameController::wrongCharacter()
         gameOver(false);
     }
     gameView->triggerPaintEvent(false);
+    updateLabelTimer->stop();
+    this->timerTimeLeft = roundTime +1;
+    updateTimerTimeLeftLabel();
+    updateLabelTimer->start();
 
 }
 
@@ -139,6 +164,7 @@ void GameController::timeIsUp()
 
 void GameController::gameOver(bool win)
 {
+    updateLabelTimer->stop();
     timer->stop();
     gameView->enableKeyPressEvents(false);
     if(win){
@@ -155,6 +181,10 @@ void GameController::checkKey(QString key)
     if(mode == "SP_MEDIUM"){
         timer->stop();
         timer->start();
+        updateLabelTimer->stop();
+        this->timerTimeLeft = roundTime +1;
+        updateTimerTimeLeftLabel();
+        updateLabelTimer->start();
     }
     if(word.contains(key, Qt::CaseInsensitive)){
         int posLastChar = 0;

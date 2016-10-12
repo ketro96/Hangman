@@ -45,6 +45,8 @@ private slots:
 
     void timeIsUp();
 
+    void updateTimerTimeLeftLabel();
+
 private:
     GameView *gameView;
     int failCounter;
@@ -62,6 +64,8 @@ private:
     int lastWordPos;
     EndOfGame *endOfGame;
     int gameDifficulty;
+    QTimer *updateLabelTimer;
+    int timerTimeLeft;
 };
 
 #endif // GAMECONTROLLER_H

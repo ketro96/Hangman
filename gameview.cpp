@@ -116,6 +116,11 @@ void GameView::triggerPaintEvent(bool includesCharacter)
     update();
 }
 
+void GameView::showTimerTimeLeft(QString time)
+{
+    ui->lblTimer->setText(time);
+}
+
 void GameView::newGame(int wordLength)
 {
     this->wordLength = wordLength;
