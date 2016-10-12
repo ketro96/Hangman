@@ -23,11 +23,10 @@ signals:
 
 public slots:
     void closeView();
+    void initializeGameController(bool accepted);
 
 private slots:
     void getNextWord();
-
-    void initializeGameController();
 
     void initializeNewGame(bool restart);
 
@@ -57,7 +56,7 @@ private:
     QString mode;
     QString username;
     Dictionary *dictionary;
-    QList<QString> dictionaryList;
+    QMap<QString, int> dictionaryMap;
     QList<QString> modeStringList;
     QTimer *timer;
     Highscore *highscore;

@@ -22,7 +22,7 @@ signals:
 void closed();
 
 public slots:
-    QList<QString> getDictionaryItemObject(); //return QString List
+    QMap<QString, int> getDictionaryItemObject(); //return QString List
 
 private slots:
     void on_btnAdd_clicked();

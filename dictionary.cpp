@@ -57,15 +57,12 @@ void Dictionary::getDictionaryItems()
 {
     bool successful = false;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
-    QList<QString> wordList;
     if (successful)
     {
         successful = query.first(); //jump to first item
         while (successful)
         {
-            wordList.append(query.value(0).toString());
             ui->lwDictionary->addItem(query.value(0).toString());
-
             successful = query.next();
         } //while successful
     } else
@@ -74,25 +71,26 @@ void Dictionary::getDictionaryItems()
     } //else: Fehler
 }
 
-QList<QString> Dictionary::getDictionaryItemObject()
+QMap<QString, int> Dictionary::getDictionaryItemObject()
 {
     bool successful = false;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
-    QList<QString> wordList;
+    //QList<QString> wordList;
+    QMap<QString, int> wordMap;
     if (successful)
     {
         successful = query.first(); //jump to first item
         while (successful)
         {
-            wordList.append(query.value(0).toString());
-
+            //wordList.append(query.value(0).toString());
+            wordMap.insert(query.value(0).toString(), query.value(1).toInt());
             successful = query.next();
         } //while successful
     } else
     { //Fehler beim Ausführen des SQL-Statements
         QMessageBox::information(0,"Error", query.lastError().text());
     } //else: Fehler
-    return wordList;
+    return wordMap;
 }
 
 void Dictionary::addDictionaryItems(QString word, int difficutly)

@@ -10,7 +10,6 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
     endOfGame = NULL;
     timer = NULL;
     qDebug() << mode;
-    initializeGameController();
     endOfGame = new EndOfGame();
     connect(endOfGame, SIGNAL(buttonBoxAnswer(bool)), this, SLOT(initializeNewGame(bool)));
     endOfGame->setAttribute(Qt::WA_DeleteOnClose);
@@ -25,17 +24,8 @@ GameController::~GameController()
 }
 
 
-void GameController::initializeGameController()
+void GameController::initializeGameController(bool accepted)
 {
-    this->gameView = new GameView();
-    connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
-    gameView->setAttribute(Qt::WA_DeleteOnClose);
-    connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
-    this->word = "";
-    this->dictionary = new Dictionary();
-    this->highscore = new Highscore();
-    this->timer = new QTimer(this);
-
     modeStringList.append("SP_EASY");
     modeStringList.append("SP_MEDIUM");
     modeStringList.append("SP_HARD");
@@ -45,29 +35,46 @@ void GameController::initializeGameController()
     switch (modeStringList.indexOf(this->mode)) {
     case 0:
         //standard settings
+        accepted = true;
         break;
     case 1:
         this->roundTime = 10;
         setGameTimer(true);
+        accepted = true;
         break;
     case 2:
         this->gameTime = 30;
         setGameTimer(false);
+        accepted = true;
         break;
     case 3:
         //client settings
         break;
     case 4:
          //host setting
+        accepted = true;
         break;
     default:
         qDebug() << "Invalid gamemode";
         break;
+
+    if(accepted)
+    {
+        this->gameView = new GameView();
+        connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
+        gameView->setAttribute(Qt::WA_DeleteOnClose);
+        connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
+        this->word = "";
+        this->dictionary = new Dictionary();
+        this->highscore = new Highscore();
+        this->timer = new QTimer(this);
+
+        }
+        dictionaryMap = dictionary->getDictionaryItemObject();
+        getNextWord();
+        gameView->show();
+        initializeNewGame(true);
     }
-    dictionaryList = dictionary->getDictionaryItemObject();
-    getNextWord();
-    gameView->show();
-    initializeNewGame(true);
 }
 
 void GameController::initializeNewGame(bool restart)
@@ -89,12 +96,12 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-    word = dictionaryList.at(rand() % dictionaryList.size());
+    word = dictionaryMap.key(rand() % dictionaryMap.size());
 }
 
 int GameController::getScore()
 {
-    return /*change 100 to difficutly of the current word*/ 100 * (6 - failCounter) / (word.length() * 0.5);
+    return 100 * dictionaryMap.value(word) * (6 - failCounter) / (word.length() * 0.5);
 }
 
 void GameController::setGameTimer(bool perRound)
