@@ -12,7 +12,7 @@ bool Client::connectClient(QString ipAdress, int port)
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     socket->connectToHost(ipAdress, port);
     bool connected = false;
-    if(socket->waitForConnected(10000))
+    if(socket->waitForConnected(30000))
     {
         connected = true;
     }

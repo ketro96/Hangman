@@ -25,6 +25,7 @@ protected:
     void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
 signals:
     void serverInfo(QString ipAdress, QString port);
+    void serverFailInfo(QString title, QString errorMessage);
     void receivedChatMessage(QString message);
     void receivedGameMessage(QString message);
     void receivedRequestMessage(QString message);

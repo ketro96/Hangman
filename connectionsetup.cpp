@@ -13,10 +13,10 @@ ConnectionSetup::~ConnectionSetup()
     delete ui;
 }
 
-
+//Rejected setup
 void ConnectionSetup::on_buttonBox_rejected()
 {
-    //go back
+    emit closed();
 }
 
 

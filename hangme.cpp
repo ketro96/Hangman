@@ -42,6 +42,7 @@ void HangMe::on_btnStartHost_clicked()
     connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
     connect(chat, SIGNAL(closed()), this, SLOT(enable()));
     connect(server, SIGNAL(serverInfo(QString,QString)), chat, SLOT(newServerInfo(QString, QString)));
+    connect(server, SIGNAL(serverFailInfo(QString,QString)), this, SLOT(serverFailed(QString, QString)));
     if(server->startServer())
     {
         gameController = new GameController("MP_HOST", username);
@@ -55,14 +56,12 @@ void HangMe::on_btnStartHost_clicked()
     }
     else
     {
-        //chat->disconnect()
         delete server;
         server = NULL;
         delete chat;
         chat = NULL;
         delete gameController;
         gameController = NULL;
-        QMessageBox::information(0,"Error","Could not start server.");
     }
 }
 
@@ -75,6 +74,11 @@ void HangMe::on_btnFindHost_clicked()
     connect(connectionSetup, SIGNAL(connectClient(QString, int)), this, SLOT(connectClient(QString,int)));
     connect(client, SIGNAL(closed()), this, SLOT(enable()));
     connectionSetup->show();
+}
+
+void HangMe::serverFailed(QString title, QString errorMessage)
+{
+    QMessageBox::information(0,title,errorMessage);
 }
 
 void HangMe::on_btnSingleplayer_clicked()

@@ -19,17 +19,14 @@ void Server::incomingConnection(qintptr socketDescriptor)
 
 bool Server::startServer()
 {
-    if (!this->listen())
+    if (!this->listen(QHostAddress::Any, 80))
     {
-        emit serverInfo(this->errorString(), "");
+        emit serverFailInfo("Could not start Server", this->errorString());
         this->close();
-        qDebug() << "Could not start Server";
         return false;
     }
     else
     {
-        //connect(this, SIGNAL(newConnection()), this, SLOT(newClient()));
-    }
     QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // use the first non-localhost IPv4 address
@@ -50,6 +47,7 @@ bool Server::startServer()
         emit serverInfo(ipAddress, QString::number(this->serverPort()));
     }
     return true;
+    }
 }
 
 void Server::readClientData()

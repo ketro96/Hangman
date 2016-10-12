@@ -63,6 +63,8 @@ private slots:
 
     void deleteAbout();
 
+    void serverFailed(QString title, QString errorMessage);
+
 protected:
     void  closeEvent(QCloseEvent*);
 
