@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Hangman</class>
- <widget class="QMainWindow" name="Hangman">
+ <class>HangMe</class>
+ <widget class="QMainWindow" name="HangMe">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,96 +17,6 @@
    <string notr="true">background:rgb(255, 255, 255)</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="btnSingleplayer">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>201</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
-font: 25 20pt &quot;Segoe UI Light&quot;;
-color: rgb(255, 255, 255)</string>
-    </property>
-    <property name="text">
-     <string>Singleplayer</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnStartHost">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>201</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
-font: 25 20pt &quot;Segoe UI Light&quot;;
-color: rgb(255, 255, 255)</string>
-    </property>
-    <property name="text">
-     <string>Host a game</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnFindHost">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>60</y>
-      <width>201</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
-font: 25 20pt &quot;Segoe UI Light&quot;;
-color: rgb(255, 255, 255)</string>
-    </property>
-    <property name="text">
-     <string>Connect to host</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnSP_Easy">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>131</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
-font: 25 20pt &quot;Segoe UI Light&quot;;
-color: rgb(255, 255, 255)</string>
-    </property>
-    <property name="text">
-     <string>Easy</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnSP_Medium">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>60</y>
-      <width>131</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
-font: 25 20pt &quot;Segoe UI Light&quot;;
-color: rgb(255, 255, 255)</string>
-    </property>
-    <property name="text">
-     <string>Medium</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnSP_Hard">
     <property name="geometry">
      <rect>
@@ -126,23 +36,43 @@ color: rgb(255, 255, 255)
      <string>Hard</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnGoBack">
+   <widget class="QLabel" name="lblLogo">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>31</width>
-      <height>21</height>
+      <x>50</x>
+      <y>0</y>
+      <width>311</width>
+      <height>61</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
-     <string notr="true">image: url(:/images/images/Back.png);background:rgb(255, 255, 255)</string>
+     <string notr="true">image: url(:/images/images/HangMeLogo.png);</string>
     </property>
     <property name="text">
      <string/>
     </property>
-    <property name="flat">
-     <bool>true</bool>
+   </widget>
+   <widget class="QPushButton" name="btnSP_Easy">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
+font: 25 20pt &quot;Segoe UI Light&quot;;
+color: rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string>Easy</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnMultiplayer">
@@ -443,36 +373,106 @@ color: rgb(255, 255, 255)</string>
      <string>Multiplayer</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblLogo">
+   <widget class="QPushButton" name="btnStartHost">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>0</y>
-      <width>311</width>
-      <height>61</height>
+      <x>10</x>
+      <y>60</y>
+      <width>201</width>
+      <height>71</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>25</pointsize>
-     </font>
+    <property name="styleSheet">
+     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
+font: 25 20pt &quot;Segoe UI Light&quot;;
+color: rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string>Host a game</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnGoBack">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">image: url(:/images/images/HangMeLogo.png);</string>
+     <string notr="true">image: url(:/images/images/Back.png);background:rgb(255, 255, 255)</string>
     </property>
     <property name="text">
      <string/>
     </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
    </widget>
-   <zorder>btnFindHost</zorder>
-   <zorder>btnSP_Easy</zorder>
-   <zorder>btnSP_Medium</zorder>
+   <widget class="QPushButton" name="btnSingleplayer">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>201</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
+font: 25 20pt &quot;Segoe UI Light&quot;;
+color: rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string>Singleplayer</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnFindHost">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>60</y>
+      <width>201</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
+font: 25 20pt &quot;Segoe UI Light&quot;;
+color: rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string>Connect to host</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSP_Medium">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>60</y>
+      <width>131</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
+font: 25 20pt &quot;Segoe UI Light&quot;;
+color: rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string>Medium</string>
+    </property>
+   </widget>
    <zorder>btnSP_Hard</zorder>
-   <zorder>btnGoBack</zorder>
-   <zorder>btnMultiplayer</zorder>
-   <zorder>btnStartHost</zorder>
-   <zorder>btnSingleplayer</zorder>
    <zorder>lblLogo</zorder>
+   <zorder>btnSP_Easy</zorder>
+   <zorder>btnStartHost</zorder>
+   <zorder>btnGoBack</zorder>
+   <zorder>btnFindHost</zorder>
+   <zorder>btnSP_Medium</zorder>
+   <zorder>btnMultiplayer</zorder>
+   <zorder>btnSingleplayer</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -480,10 +480,10 @@ color: rgb(255, 255, 255)</string>
      <x>0</x>
      <y>0</y>
      <width>432</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFIle">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
@@ -497,7 +497,7 @@ color: rgb(255, 255, 255)</string>
     <addaction name="actionGame_Help"/>
     <addaction name="actionAbout"/>
    </widget>
-   <addaction name="menuFIle"/>
+   <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -509,16 +509,6 @@ color: rgb(255, 255, 255)</string>
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionHighscore">
-   <property name="text">
-    <string>Highscore</string>
-   </property>
-  </action>
-  <action name="actionDictionary">
-   <property name="text">
-    <string>Dictionary</string>
-   </property>
-  </action>
   <action name="actionGame_Help">
    <property name="text">
     <string>Game Help</string>
@@ -528,8 +518,15 @@ color: rgb(255, 255, 255)</string>
    <property name="text">
     <string>About</string>
    </property>
-   <property name="visible">
-    <bool>true</bool>
+  </action>
+  <action name="actionDictionary">
+   <property name="text">
+    <string>Dictionary</string>
+   </property>
+  </action>
+  <action name="actionHighscore">
+   <property name="text">
+    <string>Highscore</string>
    </property>
   </action>
  </widget>

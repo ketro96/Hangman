@@ -1,5 +1,5 @@
-#ifndef HANGMAN_H
-#define HANGMAN_H
+#ifndef HANGME_H
+#define HANGME_H
 
 #include <QMainWindow>
 #include <QInputDialog>
@@ -13,18 +13,18 @@
 #include <gamecontroller.h>
 #include <about.h>
 
-
 namespace Ui {
-class Hangman;
+class HangMe;
 }
 
-class Hangman : public QMainWindow
+class HangMe : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Hangman(QWidget *parent = 0);
-    ~Hangman();
+    explicit HangMe(QWidget *parent = 0);
+    ~HangMe();
+
 public slots:
     void connectClient(QString ipAdress, int port);
 
@@ -67,7 +67,7 @@ protected:
     void  closeEvent(QCloseEvent*);
 
 private:
-    Ui::Hangman *ui;
+    Ui::HangMe *ui;
     Server *server;
     Client *client;
     Chat *chat;
@@ -76,7 +76,6 @@ private:
     Dictionary *dictionary;
     Highscore *highscore;
     About *about;
-
 };
 
-#endif // HANGMAN_H
+#endif // HANGME_H

@@ -1,55 +1,51 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-09-22T09:39:27
+# Project created by QtCreator 2016-10-12T17:27:55
 #
 #-------------------------------------------------
 
 QT       += core gui
 QT       += network
 QT       += sql
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = HangmanTest
+TARGET = HangMe
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        hangman.cpp \
-    connectionsetup.cpp \
-    server.cpp \
-    client.cpp \
+        hangme.cpp \
+    about.cpp \
     chat.cpp \
+    client.cpp \
+    connectionsetup.cpp \
     dictionary.cpp \
-    highscore.cpp \
+    endofgame.cpp \
     gamecontroller.cpp \
     gameview.cpp \
-    endofgame.cpp \
-    about.cpp
+    highscore.cpp \
+    server.cpp
 
-
-HEADERS  += hangman.h \
-    connectionsetup.h \
-    server.h \
-    client.h \
+HEADERS  += hangme.h \
+    about.h \
     chat.h \
+    client.h \
+    connectionsetup.h \
     dictionary.h \
-    highscore.h \
+    endofgame.h \
     gamecontroller.h \
     gameview.h \
-    endofgame.h \
-    about.h
+    highscore.h \
+    server.h
 
-FORMS    += hangman.ui \
-    connectionsetup.ui \
+FORMS    += hangme.ui \
+    about.ui \
     chat.ui \
+    connectionsetup.ui \
     dictionary.ui \
-    highscore.ui \
-    gameview.ui \
     endofgame.ui \
-    about.ui
-
+    gameview.ui \
+    highscore.ui
 
 RESOURCES += \
     resources.qrc
-

@@ -1,10 +1,9 @@
-#include "hangman.h"
-#include "ui_hangman.h"
+#include "hangme.h"
+#include "ui_hangme.h"
 
-
-Hangman::Hangman(QWidget *parent) :
+HangMe::HangMe(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::Hangman)
+    ui(new Ui::HangMe)
 {
     ui->setupUi(this);
     ui->btnGoBack->hide();
@@ -23,7 +22,7 @@ Hangman::Hangman(QWidget *parent) :
     about = NULL;
 }
 
-Hangman::~Hangman()
+HangMe::~HangMe()
 {
     delete ui;
     if(server) delete server;
@@ -34,8 +33,7 @@ Hangman::~Hangman()
     if(highscore) delete highscore;
 }
 
-
-void Hangman::on_btnStartHost_clicked()
+void HangMe::on_btnStartHost_clicked()
 {
     server = new Server();
     chat = new Chat("MP_HOST", username);
@@ -68,7 +66,7 @@ void Hangman::on_btnStartHost_clicked()
     }
 }
 
-void Hangman::on_btnFindHost_clicked()
+void HangMe::on_btnFindHost_clicked()
 {
     client = new Client();
     ConnectionSetup *connectionSetup = new ConnectionSetup();
@@ -77,7 +75,7 @@ void Hangman::on_btnFindHost_clicked()
     connectionSetup->show();
 }
 
-void Hangman::on_btnSingleplayer_clicked()
+void HangMe::on_btnSingleplayer_clicked()
 {
     if(getUsername())
     {
@@ -91,7 +89,7 @@ void Hangman::on_btnSingleplayer_clicked()
     //start Singleplayer gameView
 }
 
-void Hangman::on_btnMultiplayer_clicked()
+void HangMe::on_btnMultiplayer_clicked()
 {
     if(getUsername())
     {
@@ -103,7 +101,7 @@ void Hangman::on_btnMultiplayer_clicked()
     }
 }
 
-void Hangman::connectClient(QString ipAdress, int port)
+void HangMe::connectClient(QString ipAdress, int port)
 {
     if(client->connectClient(ipAdress, port))
     {
@@ -130,7 +128,7 @@ void Hangman::connectClient(QString ipAdress, int port)
     }
 }
 
-bool Hangman::getUsername()
+bool HangMe::getUsername()
 {
     bool ok = false;
     username = QInputDialog::getText(this, tr("Who are you?"),
@@ -143,7 +141,7 @@ bool Hangman::getUsername()
     return ok;
 }
 
-void Hangman::on_btnGoBack_clicked()
+void HangMe::on_btnGoBack_clicked()
 {
     ui->btnGoBack->hide();
     ui->btnSP_Easy->hide();
@@ -155,7 +153,7 @@ void Hangman::on_btnGoBack_clicked()
     ui->btnMultiplayer->show();
 }
 
-void Hangman::on_actionHighscore_triggered()
+void HangMe::on_actionHighscore_triggered()
 {
     this->setDisabled(true);
     highscore = new Highscore();
@@ -165,7 +163,7 @@ void Hangman::on_actionHighscore_triggered()
     highscore->show();
 }
 
-void Hangman::on_actionDictionary_triggered()
+void HangMe::on_actionDictionary_triggered()
 {
     this->setDisabled(true);
     dictionary = new Dictionary();
@@ -175,7 +173,7 @@ void Hangman::on_actionDictionary_triggered()
     dictionary->show();
 }
 
-void Hangman::on_btnSP_Easy_clicked()
+void HangMe::on_btnSP_Easy_clicked()
 {
     this->setDisabled(true);
     gameController = new GameController("SP_EASY", username);
@@ -184,7 +182,7 @@ void Hangman::on_btnSP_Easy_clicked()
     gameController->initializeGameController(true);
 }
 
-void Hangman::on_btnSP_Medium_clicked()
+void HangMe::on_btnSP_Medium_clicked()
 {
     this->setDisabled(true);
     gameController = new GameController("SP_MEDIUM", username);
@@ -193,7 +191,7 @@ void Hangman::on_btnSP_Medium_clicked()
     gameController->initializeGameController(true);
 }
 
-void Hangman::on_btnSP_Hard_clicked()
+void HangMe::on_btnSP_Hard_clicked()
 {
     this->setDisabled(true);
     gameController = new GameController("SP_HARD", username);
@@ -202,33 +200,33 @@ void Hangman::on_btnSP_Hard_clicked()
     gameController->initializeGameController(true);
 }
 
-void Hangman::enable()
+void HangMe::enable()
 {
     this->setEnabled(true);
 }
 
-void Hangman::deleteController()
+void HangMe::deleteController()
 {
     delete gameController;
     gameController = NULL;
 }
 
-void Hangman::deleteHighscore()
+void HangMe::deleteHighscore()
 {
     highscore = NULL;
 }
 
-void Hangman::deleteDict()
+void HangMe::deleteDict()
 {
     dictionary = NULL;
 }
 
-void Hangman::deleteAbout()
+void HangMe::deleteAbout()
 {
     about = NULL;
 }
 
-void Hangman::closeEvent(QCloseEvent *)
+void HangMe::closeEvent(QCloseEvent *)
 {
     if(gameController) gameController->closeView();
     if(chat)
@@ -249,7 +247,7 @@ void Hangman::closeEvent(QCloseEvent *)
     }
 }
 
-void Hangman::on_actionAbout_triggered()
+void HangMe::on_actionAbout_triggered()
 {
     this->setDisabled(true);
     about = new About();
