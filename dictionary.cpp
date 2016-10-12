@@ -8,7 +8,7 @@ Dictionary::Dictionary(QWidget *parent) :
     ui->setupUi(this);
     readDB();
     getDictionaryItems();
-    this->regex = QRegularExpression("^[A-Za-z]{3,20}+$");
+    this->regex = QRegularExpression("^[A-Za-z]{3,13}+$");
     ui->rbGroup->setId(ui->rbEasy, 0);
     ui->rbGroup->setId(ui->rbMedium, 1);
     ui->rbGroup->setId(ui->rbHard, 2);
