@@ -24,6 +24,7 @@ GameController::~GameController()
 
 void GameController::initializeGameController(bool accepted)
 {
+    qDebug() << "init";
     modeStringList.append("SP_EASY");
     modeStringList.append("SP_MEDIUM");
     modeStringList.append("SP_HARD");
@@ -61,6 +62,9 @@ void GameController::initializeGameController(bool accepted)
     if(accepted)
     {
         this->gameView = new GameView();
+       /// TEST
+        gameView->setWindowTitle(mode);
+        qDebug() << "Init gc";
         connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
         connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
         gameView->setAttribute(Qt::WA_DeleteOnClose);
@@ -244,6 +248,7 @@ void GameController::closeView()
 
 void GameController::viewDestroyed()
 {
+    qDebug()  << mode+"-view destroyed";
     gameView = NULL;
     emit closed();
 }

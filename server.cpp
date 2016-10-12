@@ -165,7 +165,7 @@ void Server::sendToClient(QTcpSocket *client, QString message)
 
 void Server::endGame()
 {
-    qDebug() << "Server ended game";
+    qDebug() << "Server sends end_game";
     sendToClient(currentOpponent, "GAME_END");
 }
 

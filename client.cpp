@@ -47,6 +47,7 @@ void Client::clientReadyRead()
     {
         if(dataString.mid(5)=="ACCEPT")
         {
+            qDebug() << "send gameAnswer true";
             emit gameAnswer(true);
         }
         else if(dataString.mid(5)=="DENY")
@@ -84,7 +85,7 @@ void Client::clientReadyRead()
 
 void Client::endGame()
 {
-    qDebug() << "Client ended game";
+    qDebug() << "Client sends end_game";
     sendMessage("GAME_END");
 }
 
@@ -93,5 +94,6 @@ void Client::disconnected()
     socket->deleteLater();
     emit disconnect();
     ///Programm Absturz?? bei delete? vlt funkt mit deletelater -> testen
+    qDebug() << "disconnected and socket deleted";
     QMessageBox::information(0,"Disconnect","Lost connection to host.");
 }
