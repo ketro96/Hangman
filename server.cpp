@@ -19,7 +19,7 @@ void Server::incomingConnection(qintptr socketDescriptor)
 
 bool Server::startServer()
 {
-    if (!this->listen(QHostAddress::Any, 80))
+    if (!this->listen(QHostAddress::Any, 1993))
     {
         emit serverFailInfo("Could not start Server", this->errorString());
         this->close();
