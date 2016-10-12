@@ -44,6 +44,8 @@ private slots:
 
     void timeIsUp();
 
+    void createRandomNumber();
+
 
 
 private:
@@ -60,7 +62,6 @@ private:
     QList<QString> modeStringList;
     QTimer *timer;
     Highscore *highscore;
-    unsigned int myrand( unsigned int n, unsigned int m);
 
     EndOfGame *endOfGame;
 };

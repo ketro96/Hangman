@@ -93,6 +93,29 @@ void GameController::getNextWord()
 
 }
 
+void GameController::createRandomNumber()
+{
+    QTime time = QTime::currentTime();
+        qsrand((uint)time.msec());
+        QList<int> *zufallsListe = new QList<int>();
+
+        bool btmp = true;
+
+        while(btmp)
+        {
+            int temp = qrand() % ((max) - min) + min;
+            if(!zufallsListe->contains(temp))
+            {
+                zufallsListe->append(temp);
+            }
+            if(zufallsListe->length() > max - 1)
+            {
+                btmp = false;
+            }
+        }
+        return zufallsListe;
+}
+
 int GameController::getScore()
 {
     return 100 * (dictionaryMap.value(word)+1) * (6 - failCounter) / (word.length() * 0.5);
