@@ -82,6 +82,10 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>edtIpAdress</tabstop>
+  <tabstop>edtPort</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

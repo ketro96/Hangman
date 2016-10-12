@@ -53,6 +53,10 @@ void Client::clientReadyRead()
         {
             emit gameAnswer(false);
         }
+        else if(dataString.mid(5)=="END")
+        {
+            emit receivedGameMessage(dataString.mid(5));
+        }
         /*
          * START
          * FAIL
@@ -80,6 +84,7 @@ void Client::clientReadyRead()
 
 void Client::endGame()
 {
+    qDebug() << "Client ended game";
     sendMessage("GAME_END");
 }
 
