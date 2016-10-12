@@ -60,5 +60,5 @@ void Chat::sendChatMessage()
 
 void Chat::on_btnRequestGame_clicked()
 {
-
+    emit gameRequest();
 }

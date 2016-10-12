@@ -67,6 +67,24 @@ color: rgb(255, 255, 255)</string>
     <string>send</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnRequestGame">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>10</y>
+     <width>291</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background:qlineargradient(spread:pad, x1:0.483318, y1:0.011, x2:0.483318, y2:1, stop:0 rgba(49, 97, 255, 255), stop:1 rgba(52, 157, 255, 255));
+font: 25 13pt &quot;Segoe UI Light&quot;;
+color: rgb(255, 255, 255)</string>
+   </property>
+   <property name="text">
+    <string>Request a game</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
