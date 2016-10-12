@@ -35,6 +35,12 @@ void Client::sendMessage(QString message)
     //socket->waitForReadyRead(-1);
 }
 
+void Client::sendRequest()
+{
+    // send
+    sendMessage("GAME_REQUEST");
+}
+
 void Client::clientReadyRead()
 {
     QByteArray newData = socket->readAll();
@@ -43,6 +49,14 @@ void Client::clientReadyRead()
     qDebug() << dataString;
     if(dataString.left(5)=="GAME_")
     {
+        if(dataString.mid(5)=="ACCEPT")
+        {
+            emit gameAnswer(true);
+        }
+        else if(dataString.mid(5)=="DENY")
+        {
+            emit gameAnswer(false);
+        }
         /*
          * START
          * FAIL

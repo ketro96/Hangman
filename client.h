@@ -18,6 +18,7 @@ public:
 public slots:
     bool connectClient(QString ipAdress, int port);
     void sendMessage(QString message);
+    void sendRequest();
 
 private slots:
     void clientReadyRead();
@@ -25,6 +26,7 @@ private slots:
 
 signals:
     void receivedChatMessage(QString dataString);
+    void gameAnswer(bool accepted);
     void receivedGameMessage(QString dataString);
     void receivedCharMessage(QString dataString);
 
