@@ -21,6 +21,7 @@ public slots:
     void getRequestMessage(QString username);
     void gameStarted(bool started);
     void disconnect();
+    void gameClosed();
 
 signals:
     void sendMessage(QString message);

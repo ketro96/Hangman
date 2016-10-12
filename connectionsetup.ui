@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Connect to a host</string>
+   <string>Connection Setup</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background:rgb(255, 255, 255)</string>
@@ -82,6 +82,10 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>edtIpAdress</tabstop>
+  <tabstop>edtPort</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

@@ -19,7 +19,8 @@ void Server::incomingConnection(qintptr socketDescriptor)
 
 bool Server::startServer()
 {
-    if (!this->listen(QHostAddress::Any, 44444))
+
+    if (!this->listen(QHostAddress::Any, 1993))
     {
         emit serverFailInfo("Could not start Server", this->errorString());
         this->close();
@@ -27,27 +28,32 @@ bool Server::startServer()
     }
     else
     {
-    QString ipAddress;
-    QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
-    // use the first non-localhost IPv4 address
-    for (int i = 0; i < ipAddressesList.size(); ++i)
-    {
-        if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
-                ipAddressesList.at(i).toIPv4Address())
+        QString ipAddress;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        // use the first non-localhost IPv4 address
+        for (int i = 0; i < ipAddressesList.size(); ++i)
         {
-            ipAddress = ipAddressesList.at(i).toString();
-            emit serverInfo(ipAddress, QString::number(this->serverPort()));
-            break;
+            if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
+                    ipAddressesList.at(i).toIPv4Address())
+            {
+                ipAddress = ipAddressesList.at(i).toString();
+                emit serverInfo(ipAddress, QString::number(this->serverPort()));
+                break;
+            }
         }
+        // if we did not find one, use IPv4 localhost
+        if (ipAddress.isEmpty())
+        {
+            ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+            emit serverInfo(ipAddress, QString::number(this->serverPort()));
+        }
+        return true;
     }
-    // if we did not find one, use IPv4 localhost
-    if (ipAddress.isEmpty())
-    {
-        ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-        emit serverInfo(ipAddress, QString::number(this->serverPort()));
-    }
-    return true;
-    }
+}
+
+void Server::closeServer()
+{
+    this->close();
 }
 
 void Server::readClientData()
@@ -74,6 +80,7 @@ void Server::readClientData()
         else if(dataString.mid(5)=="END")
         {
             busy = false;
+            currentOpponent = NULL;
             emit receivedGameMessage(dataString.mid(5));
         }
         else
@@ -128,6 +135,7 @@ void Server::gameAccepted(bool accepted)
     else
     {
         sendToClient(currentOpponent, "GAME_DENY");
+        busy = false;
     }
 }
 
@@ -146,10 +154,19 @@ void Server::sendToAllClients(QString message)
 
 void Server::sendToClient(QTcpSocket *client, QString message)
 {
-    QByteArray messageData = message.toUtf8();
-    client->write(messageData);
-    client->flush();
-    client->waitForBytesWritten(3000);
+    if(client)
+    {
+        QByteArray messageData = message.toUtf8();
+        client->write(messageData);
+        client->flush();
+        client->waitForBytesWritten(3000);
+    }
+}
+
+void Server::endGame()
+{
+    qDebug() << "Server ended game";
+    sendToClient(currentOpponent, "GAME_END");
 }
 
 void Server::disconnectClient()
@@ -162,6 +179,8 @@ void Server::disconnectClient()
     {
         if(client == currentOpponent)
         {
+            qDebug() << "Client disconnected from game";
+            currentOpponent = NULL;
             busy = false;
         }
     }

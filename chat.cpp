@@ -37,7 +37,7 @@ void Chat::getMessage(QString message)
     QListWidgetItem *messageItem = new QListWidgetItem(message);
     if(message.contains(username+": "))
     {
-       /// messageItem->setForeground(Qt::blue);
+        /// messageItem->setForeground(Qt::blue);
     }
     ui->lwChat->addItem(messageItem);
     ui->lwChat->scrollToBottom();
@@ -70,7 +70,7 @@ void Chat::sendChatMessage()
     {
         message.prepend(username+": ");
         QListWidgetItem *messageItem = new QListWidgetItem(message);
-       /// messageItem->setForeground(Qt::blue);
+        /// messageItem->setForeground(Qt::blue);
         ui->lwChat->addItem(messageItem);
         ui->lwChat->scrollToBottom();
     }
@@ -85,6 +85,11 @@ void Chat::on_btnRequestGame_clicked()
 }
 
 void Chat::disconnect()
+{
+    gameStarted(false);
+}
+
+void Chat::gameClosed()
 {
     gameStarted(false);
 }

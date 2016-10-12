@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Dictionary</string>
   </property>
   <widget class="QListWidget" name="lwDictionary">
    <property name="geometry">

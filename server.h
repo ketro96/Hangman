@@ -14,6 +14,8 @@ public:
 public slots:
     bool startServer();
     void gameAccepted(bool accepted);
+    void closeServer();
+    void endGame();
 
 private slots:
     void readClientData();
@@ -23,6 +25,7 @@ private slots:
 
 protected:
     void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
+
 signals:
     void serverInfo(QString ipAdress, QString port);
     void serverFailInfo(QString title, QString errorMessage);

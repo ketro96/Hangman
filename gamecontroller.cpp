@@ -213,7 +213,7 @@ void GameController::getGameMessage(QString message)
 {
     if(message == "END")
     {
-        QMessageBox::information(0,"End of game","Your opponent disconnected.");
+        QMessageBox::information(0,"Game Over","Your opponent disconnected.");
         closeView();
     }
 }

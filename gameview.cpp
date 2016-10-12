@@ -5,7 +5,7 @@ GameView::GameView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameView)
 {
-
+    this->setWindowTitle("HangMe");
     this->regex = QRegularExpression("[A-Za-z]");
     characterArray = {""};
     enableKeyPressEvents(false);
