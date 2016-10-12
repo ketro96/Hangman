@@ -32,14 +32,17 @@ void GameController::initializeGameController(bool accepted)
     switch (modeStringList.indexOf(this->mode)) {
     case 0:
         //standard settings
+        gameDifficulty = 1;
         accepted = true;
         break;
     case 1:
         this->roundTime = 10;
+        gameDifficulty = 2;
         setGameTimer(true);
         break;
     case 2:
         this->gameTime = 30;
+        gameDifficulty = 3;
         setGameTimer(false);
         break;
     case 3:
@@ -89,23 +92,21 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
-
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
-    int pos = qrand() % ((dictionaryMap.size()) - 2) + 2;
-    pos -= 2;
+    int pos = qrand() % ((dictionaryMap.size() + 3) - 3) + 3;
+    pos -= 3;
     if(pos == lastWordPos)
     {
-        pos++;
+        pos >= dictionaryMap.size()-1 ? pos-- : pos++;
     }
     this->word = dictionaryMap.keys().at(pos);
     lastWordPos = pos;
-    qDebug() << pos;
 }
 
 int GameController::getScore()
 {
-    return 100 * (dictionaryMap.value(word)+1) * (6 - failCounter) / (word.length() * 0.5);
+    return 100 * (dictionaryMap.value(word)+1) * (6 - failCounter) / (word.length() * 0.5) * gameDifficulty;
 }
 
 void GameController::setGameTimer(bool perRound)
