@@ -156,3 +156,4 @@ void GameView::guessed(QKeyEvent *e){
         emit keyPressed(e->text());
     }
 }
+

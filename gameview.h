@@ -23,6 +23,9 @@ public:
     void newGame(int wordLength);
     void enableKeyPressEvents(bool enable);
 
+signals:
+    void openChat();
+
 protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *e){guessed(e);}
@@ -31,7 +34,7 @@ private slots:
     void guessed(QKeyEvent *e);
 
 private:
-    Ui::GameView*ui;
+    Ui::GameView *ui;
     int wordLength;
     QString characterArray;
     QList<QString> usedCharacterList;

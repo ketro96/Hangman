@@ -7,6 +7,12 @@ Chat::Chat(QString mode, QString username, QWidget *parent) :
 {
     ui->setupUi(this);
     this->mode = mode;
+    ui->btnRequestGame->hide();
+    if(mode == "MP_CLIENT")
+    {
+        ui->lblHostInfo->hide();
+        ui->btnRequestGame->show();
+    }
     this->username = username;
 }
 
@@ -50,4 +56,9 @@ void Chat::sendChatMessage()
     message.prepend("CHAT_");
     ui->edtChat->clear();
     emit sendMessage(message);
+}
+
+void Chat::on_btnRequestGame_clicked()
+{
+
 }
