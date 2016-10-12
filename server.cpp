@@ -60,6 +60,15 @@ void Server::readClientData()
     qDebug() << dataString;
     if(dataString.left(5)=="GAME_")
     {
+        if(dataString.mid(5)=="REQUEST")
+        {
+            QString username = clientMap.value(client);
+            emit receivedRequestMessage(username);
+        }
+        else
+        {
+            emit receivedGameMessage(dataString.mid(5));
+        }
         /*
          * START
          * FAIL
@@ -67,7 +76,6 @@ void Server::readClientData()
          * WIN
          * LOSE
          */
-        emit receivedGameMessage(dataString.mid(5));
     }
     else if(dataString.left(5)=="CHAR_")
     {

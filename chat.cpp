@@ -28,7 +28,7 @@ void Chat::on_btnSend_clicked()
 
 void Chat::newServerInfo(QString ipAdress, QString port)
 {
-        ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port);
+    ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port);
 }
 
 
@@ -36,6 +36,20 @@ void Chat::getMessage(QString message)
 {
     ui->lwChat->addItem(message);
     ui->lwChat->scrollToBottom();
+}
+
+void Chat::getRequestMessage(QString username)
+{
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Game Request", "Dou you want to play against "+username+" ?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            emit gameAnswer(true);
+        }
+        else
+        {
+            emit gameAnswer(false);
+        }
 }
 
 

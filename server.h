@@ -21,10 +21,12 @@ private slots:
 protected:
     void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
 signals:
-     void serverInfo(QString ipAdress, QString port);
-     void receivedChatMessage(QString message);
-     void receivedGameMessage(QString message);
-     void receivedCharMessage(QString message);
+    void serverInfo(QString ipAdress, QString port);
+    void receivedChatMessage(QString message);
+    void receivedGameMessage(QString message);
+    void receivedRequestMessage(QString message);
+    void receivedCharMessage(QString message);
+
 private:
     QList<QTcpSocket *> connectedClients;
     QMap<QTcpSocket *, QString> clientMap;

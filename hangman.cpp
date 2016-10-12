@@ -41,6 +41,7 @@ void Hangman::on_btnStartHost_clicked()
     chat = new Chat("MP_HOST", username);
     ///Same for chat as gC?
     connect(server, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
+    connect(server, SIGNAL(receivedRequestMessage(QString)), chat, SLOT(getRequestMessage(QString)));
     connect(chat, SIGNAL(sendMessage(QString)), server, SLOT(sendToAllClients(QString)));
     connect(server, SIGNAL(serverInfo(QString,QString)), chat, SLOT(newServerInfo(QString, QString)));
     if(server->startServer())
