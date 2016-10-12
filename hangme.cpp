@@ -50,7 +50,7 @@ void HangMe::on_btnStartHost_clicked()
         connect(gameController, SIGNAL(closed()), server, SLOT(endGame()));
         connect(gameController, SIGNAL(closed()), this, SLOT(deleteController()));
         connect(chat, SIGNAL(closed()), gameController, SLOT(closeView()));
-        connect(gameController, SIGNAL(closed()), server, SLOT(closeServer()));
+        connect(chat, SIGNAL(closed()), server, SLOT(closeServer()));
         connect(chat, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool)));
         connect(chat, SIGNAL(gameAnswer(bool)), server, SLOT(gameAccepted(bool)));
         this->setDisabled(true);
