@@ -18,7 +18,7 @@ public:
     ~Chat();
 public slots:
     void getMessage(QString message);
-    void getRequestMessage(QString message);
+    void getRequestMessage(QString username);
 
 signals:
     void sendMessage(QString message);
