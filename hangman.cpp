@@ -113,9 +113,9 @@ void Hangman::connectClient(QString ipAdress, int port)
         //connect gameView
         connect(client, SIGNAL(receivedChatMessage(QString)), chat, SLOT(getMessage(QString)));
         connect(chat, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
-        onnect(chat, SIGNAL(gameRequest()), client, SLOT(sendRequest()));
-        connect(client, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool));
-                chat->show();
+        connect(chat, SIGNAL(gameRequest()), client, SLOT(sendRequest()));
+        connect(client, SIGNAL(gameAnswer(bool)), gameController, SLOT(initializeGameController(bool)));
+        chat->show();
     }
     else
     {
