@@ -1,3 +1,9 @@
+// =================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : SQL access on word dictionary
+// =================================================
+
 #include "dictionary.h"
 #include "ui_dictionary.h"
 

@@ -1,3 +1,9 @@
+// =========================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Show highscore dialog and ask for restart
+// =========================================================
+
 #include "endofgame.h"
 #include "ui_endofgame.h"
 

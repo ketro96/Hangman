@@ -1,3 +1,9 @@
+// =================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Draws Hangman and words on canvas
+// =================================================
+
 #include "gameview.h"
 #include "ui_gameView.h"
 
@@ -92,12 +98,6 @@ void GameView::paintEvent(QPaintEvent *event)
         painter.setFont(QFont("times",22));
 
         painter.drawText(xPos, 298, characterArray[i].toUpper());
-        /*
-        if(!characterArray[0].isNull())
-        {
-
-        }
-        */
         xPos += 40;
     }
 }

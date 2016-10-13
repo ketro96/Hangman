@@ -24,15 +24,10 @@ signals:
 
 private slots:
     void getHighscore();
-
     void readDB();
-
     QSqlQuery queryDB(QString queryString, bool &successful);
-
     void resetHighscore();
-
     void on_pushButton_clicked();
-
     void closeDB();
 
 protected:

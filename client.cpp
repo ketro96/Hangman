@@ -1,3 +1,9 @@
+// =================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Connect to server and send data
+// =================================================
+
 #include "client.h"
 
 Client::Client(QObject *parent) : QObject(parent)

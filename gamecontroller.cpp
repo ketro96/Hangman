@@ -1,3 +1,9 @@
+// =======================================================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Backend class that controls the view and manages client/server requests
+// =======================================================================================
+
 #include "gamecontroller.h"
 
 GameController::GameController(QString mode, QString username, QObject *parent) : QObject(parent)

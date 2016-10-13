@@ -1,3 +1,9 @@
+// =================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Show about dialog
+// =================================================
+
 #include "about.h"
 #include "ui_about.h"
 

@@ -26,19 +26,12 @@ public slots:
 
 private slots:
     void on_btnAdd_clicked();
-
     void on_btnDelete_clicked();
-
     QSqlQuery queryDB(QString queryString, bool &successful);
-
     void addDictionaryItems(QString word, int difficutly);
-
     void deleteDictionaryItems(QString item);
-
     void readDB();
-
     void closeDB();
-
     void getDictionaryItems(); //show in UI
 
 protected:

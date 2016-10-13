@@ -31,43 +31,24 @@ public slots:
 
 private slots:
     void on_btnStartHost_clicked();
-
     void on_btnFindHost_clicked();
-
     void on_btnSingleplayer_clicked();
-
     bool getUsername();
     void on_btnGoBack_clicked();
-
     void on_btnMultiplayer_clicked();
-
     void on_actionDictionary_triggered();
-
     void on_btnSP_Easy_clicked();
-
     void on_btnSP_Medium_clicked();
-
     void on_btnSP_Hard_clicked();
-
-
     void on_actionHighscore_triggered();
-
     void enable();
-
     void deleteController();
-
     void deleteDict();
-
     void deleteHighscore();
-
     void on_actionAbout_triggered();
-
     void deleteAbout();
-
     void deleteGameHelp();
-
     void serverFailed(QString title, QString errorMessage);
-
     void on_actionGame_Help_triggered();
 
 protected:

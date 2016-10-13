@@ -1,3 +1,9 @@
+// ===============================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Start HangMe
+// ===============================================
+
 #include "hangme.h"
 #include <QApplication>
 

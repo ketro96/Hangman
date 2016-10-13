@@ -1,3 +1,9 @@
+// =========================================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Backend for main GUI that connects classes with each other
+// =========================================================================
+
 #include "hangme.h"
 #include "ui_hangme.h"
 

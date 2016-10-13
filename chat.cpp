@@ -1,3 +1,9 @@
+// =================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Message to server and other clients
+// =================================================
+
 #include "chat.h"
 #include "ui_chat.h"
 

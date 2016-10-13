@@ -1,3 +1,9 @@
+// =========================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Shows a help dialog that explains the game
+// =========================================================
+
 #include "gamehelp.h"
 #include "ui_gamehelp.h"
 

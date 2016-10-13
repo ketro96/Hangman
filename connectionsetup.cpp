@@ -1,3 +1,9 @@
+// =================================================
+// AUTHOR       : Alexander Höhn & Adrian Werner
+// CREATE DATE  : 2016-10-12
+// PURPOSE      : Get server IP and port
+// =================================================
+
 #include "connectionsetup.h"
 #include "ui_connectionsetup.h"
 

@@ -17,15 +17,14 @@ public:
     void showDialog(bool won, int score);
 
 private slots:
-
     void on_buttonBox_accepted();
-
     void on_buttonBox_rejected();
 
 
 
 signals:
     void buttonBoxAnswer(bool restartGame);
+
 private:
     Ui::EndOfGame *ui;
 };
