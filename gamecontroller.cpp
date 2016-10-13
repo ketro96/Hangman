@@ -342,6 +342,7 @@ void GameController::serverCheckKey(QString key)
     {
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
+        qDebug() << "servercharacterCount: "+characterCount;
         for(int i = 0; i < characterCount; i++)
         {
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
@@ -352,6 +353,7 @@ void GameController::serverCheckKey(QString key)
         if(!gameView->addUsedCharacter(key))
         {
             serverCorrectCounter += characterCount; //add the count of characters that where added
+            qDebug() << "serverCorrectCounter: "+serverCorrectCounter;
             gameView->triggerPaintEvent(true);
         }
         if(serverCorrectCounter >= word.length())
@@ -378,17 +380,18 @@ void GameController::clientCheckKey(QString key)
     {
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
+        qDebug() << "servercharacterCount: "+characterCount;
         for(int i = 0; i < characterCount; i++)
         {
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
             emit gameMessage("#GAME_CHAR_"+key+"_"+QString::number(posLastChar));
-            emit gameMessage("#GAME_FCHAR_"+key);
             gameView->addCharacter(key, posLastChar);
             posLastChar += 1;
         }
         if(!gameView->addUsedCharacter(key))
         {
             clientCorrectCounter += characterCount; //add the count of characters that where added
+            qDebug() << "clientCorrectCounter: "+serverCorrectCounter;
             gameView->triggerPaintEvent(true);
         }
         if(clientCorrectCounter >= word.length())
@@ -437,12 +440,12 @@ void GameController::getGameMessage(QString message)
     else if(message.left(5) == "CHAR_" && mode == "MP_CLIENT")
     {
         gameView->addCharacter(message.mid(5,1),message.mid(7).toInt());
+        gameView->addUsedCharacter(message.mid(5,1));
         gameView->triggerPaintEvent(true);
     }
     else if(message.left(6) == "FCHAR_")
     {
         gameView->addUsedCharacter(message.mid(6,1));
-        gameView->triggerPaintEvent(true);
         gameView->triggerPaintEvent(false);
     }
     else if(message.left(5) == "CHAR_" && mode == "MP_HOST")
