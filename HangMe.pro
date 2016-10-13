@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     gamecontroller.cpp \
     gameview.cpp \
     highscore.cpp \
-    server.cpp
+    server.cpp \
+    gamehelp.cpp
 
 HEADERS  += hangme.h \
     about.h \
@@ -36,7 +37,8 @@ HEADERS  += hangme.h \
     gamecontroller.h \
     gameview.h \
     highscore.h \
-    server.h
+    server.h \
+    gamehelp.h
 
 FORMS    += hangme.ui \
     about.ui \
@@ -45,7 +47,8 @@ FORMS    += hangme.ui \
     dictionary.ui \
     endofgame.ui \
     gameview.ui \
-    highscore.ui
+    highscore.ui \
+    gamehelp.ui
 
 RESOURCES += \
     resources.qrc
