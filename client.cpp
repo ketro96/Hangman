@@ -11,6 +11,7 @@ Client::Client(QObject *parent) : QObject(parent)
     socket = NULL;
 }
 
+//Create socket and try to connect to server
 bool Client::connectClient(QString ipAdress, int port)
 {
     socket = new QTcpSocket(this);
@@ -30,20 +31,22 @@ bool Client::connectClient(QString ipAdress, int port)
     return connected;
 }
 
+//Write message on socket
 void Client::sendMessage(QString message)
 {
-    // send
     socket->write(message.toUtf8());
     socket->waitForBytesWritten(3000);
     delay(100);
 }
 
+//Send a game request
 void Client::sendRequest()
 {
     // send
     sendMessage("#GAME_REQUEST");
 }
 
+//Read messages from server and emit matching signals
 void Client::clientReadyRead()
 {
     QByteArray newData = socket->readAll();
@@ -86,11 +89,13 @@ void Client::clientReadyRead()
 
 }
 
+//Send a game aborted message
 void Client::endGame()
 {
     sendMessage("#GAME_END");
 }
 
+//Client disconnected from server
 void Client::disconnected()
 {
     socket->deleteLater();
@@ -98,6 +103,7 @@ void Client::disconnected()
     QMessageBox::information(0,"Disconnect","Lost connection to host.");
 }
 
+//Delay for tcp messages to avoid chains of messages
 void Client::delay(int millisecondsToWait)
 {
     QTime dieTime = QTime::currentTime().addMSecs(millisecondsToWait);

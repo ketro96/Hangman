@@ -26,6 +26,7 @@ Dictionary::~Dictionary()
     delete ui;
 }
 
+//Load database
 void Dictionary::readDB()
 {
     QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
@@ -33,6 +34,7 @@ void Dictionary::readDB()
     db.setDatabaseName(dbPath);
 }
 
+//Close all database connections
 void Dictionary::closeDB()
 {
     QString connection;
@@ -42,6 +44,7 @@ void Dictionary::closeDB()
     db.removeDatabase(connection);
 }
 
+//Query sample
 QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
 {
     if (!db.open())
@@ -59,6 +62,8 @@ QSqlQuery Dictionary::queryDB(QString queryString, bool &successful)
     }
 }
 
+
+//Load items from database
 void Dictionary::getDictionaryItems()
 {
     bool successful = false;
@@ -72,11 +77,12 @@ void Dictionary::getDictionaryItems()
             successful = query.next();
         } //while successful
     } else
-    { //Fehler beim Ausführen des SQL-Statements
+    { //Error executing SQL statement
         QMessageBox::information(0,"Error", query.lastError().text());
-    } //else: Fehler
+    }
 }
 
+//Return map of words
 QMap<QString, int> Dictionary::getDictionaryItemObject()
 {
     bool successful = false;
@@ -93,12 +99,13 @@ QMap<QString, int> Dictionary::getDictionaryItemObject()
             successful = query.next();
         } //while successful
     } else
-    { //Fehler beim Ausführen des SQL-Statements
+    { //Error executing SQL statement
         QMessageBox::information(0,"Error", query.lastError().text());
-    } //else: Fehler
+    }
     return wordMap;
 }
 
+//Add new words + difficulty to database
 void Dictionary::addDictionaryItems(QString word, int difficutly)
 {
     bool successful = false;
@@ -109,11 +116,12 @@ void Dictionary::addDictionaryItems(QString word, int difficutly)
         ui->lineEdit->clear();
         getDictionaryItems();
     } else
-    { //Fehler beim Ausführen des SQL-Statements
+    { //Error executing SQL statement
         QMessageBox::information(0,"Error", query.lastError().text());
-    } //else: Fehler
+    }
 }
 
+//Get word from ui
 void Dictionary::on_btnAdd_clicked()
 {
     QRegularExpressionMatch match = regex.match(ui->lineEdit->text());
@@ -126,6 +134,7 @@ void Dictionary::on_btnAdd_clicked()
     }
 }
 
+//Delete word from database
 void Dictionary::deleteDictionaryItems(QString item)
 {
     bool successful = false;
@@ -135,9 +144,9 @@ void Dictionary::deleteDictionaryItems(QString item)
         ui->lwDictionary->clear();
         getDictionaryItems();
     } else
-    { //Fehler beim Ausführen des SQL-Statements
+    { //Error executing SQL statement
         QMessageBox::information(0,"Error", query.lastError().text());
-    } //else: Fehler
+    }
 }
 
 void Dictionary::on_btnDelete_clicked()

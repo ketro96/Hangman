@@ -7,6 +7,7 @@
 #include "hangme.h"
 #include "ui_hangme.h"
 
+//Initialiize variables
 HangMe::HangMe(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::HangMe)
@@ -29,6 +30,7 @@ HangMe::HangMe(QWidget *parent) :
     gameHelp = NULL;
 }
 
+//delete pointers if they exist
 HangMe::~HangMe()
 {
     delete ui;
@@ -41,6 +43,7 @@ HangMe::~HangMe()
 
 }
 
+//Initailize server, chat and gamecontroller, start server and connect signals to slots
 void HangMe::on_btnStartHost_clicked()
 {
     server = new Server();
@@ -76,6 +79,7 @@ void HangMe::on_btnStartHost_clicked()
     }
 }
 
+//Open connection setup
 void HangMe::on_btnFindHost_clicked()
 {
     client = new Client();
@@ -92,6 +96,7 @@ void HangMe::serverFailed(QString title, QString errorMessage)
     QMessageBox::information(0,title,errorMessage);
 }
 
+//Update UI
 void HangMe::on_btnSingleplayer_clicked()
 {
     if(getUsername())
@@ -106,6 +111,7 @@ void HangMe::on_btnSingleplayer_clicked()
     //start Singleplayer gameView
 }
 
+//Update UI
 void HangMe::on_btnMultiplayer_clicked()
 {
     if(getUsername())
@@ -118,6 +124,7 @@ void HangMe::on_btnMultiplayer_clicked()
     }
 }
 
+//Initailize sclient, chat and gamecontroller, connect client and connect signals to slots
 void HangMe::connectClient(QString ipAdress, int port)
 {
     if(client->connectClient(ipAdress, port))
@@ -144,6 +151,7 @@ void HangMe::connectClient(QString ipAdress, int port)
     }
 }
 
+//Open username dialog and save it
 bool HangMe::getUsername()
 {
     bool ok = false;
@@ -157,6 +165,7 @@ bool HangMe::getUsername()
     return ok;
 }
 
+//Update UI - Go back
 void HangMe::on_btnGoBack_clicked()
 {
     ui->btnGoBack->hide();
@@ -247,6 +256,7 @@ void HangMe::deleteGameHelp()
     gameHelp = NULL;
 }
 
+//Reset pointers to NULL and close open dialogs
 void HangMe::closeEvent(QCloseEvent *)
 {
     if(gameController) gameController->closeView();

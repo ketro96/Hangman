@@ -90,6 +90,7 @@ void GameController::initializeGameController(bool accepted)
         gameView->show();
         initializeNewGame(true);
     }
+    //Initialize attributes for server, connect signals and open game view
     else if(accepted && mode == "MP_HOST")
     {
         this->gameView = new GameView();
@@ -102,30 +103,19 @@ void GameController::initializeGameController(bool accepted)
         dictionaryMap = dictionary->getDictionaryItemObject();
         //set current word
         getNextWord();
-
-        /// TEST
-        gameView->setWindowTitle(mode);
-        ///TEST
-
         gameView->setTurn("Your turn");
         gameView->show();
         initializeNewGame(true);
     }
+    //Set attributes for client, connect signals and open game view
     else if(accepted && mode == "MP_CLIENT")
     {
         this->gameView = new GameView();
-        /// TEST
-        gameView->setWindowTitle(mode);
-        ///TEST
         connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(clientSendKey(QString)));
         connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
         gameView->setAttribute(Qt::WA_DeleteOnClose);
         gameView->setTurn("Opponent's turn");
         gameView->show();
-    }
-    else
-    {
-
     }
 }
 
@@ -262,6 +252,7 @@ void GameController::gameOver(bool win)
     endOfGame->showDialog(win, win ? getScore() : 0);
 }
 
+//Display Win/Lose message and send message to client
 void GameController::serverGameOver(bool win)
 {
     if(win)
@@ -414,6 +405,7 @@ void GameController::clientSendKey(QString key)
     emit gameMessage("#GAME_CHAR_"+key);
 }
 
+//Get mesages from client/server and call matching functions
 void GameController::getGameMessage(QString message)
 {
     if(message == "END")

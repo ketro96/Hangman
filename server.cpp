@@ -206,6 +206,7 @@ void Server::disconnectClient()
     client->deleteLater();
 }
 
+//Delay for tcp messages to avoid chains of messages
 void Server::delay(int millisecondsToWait)
 {
     QTime dieTime = QTime::currentTime().addMSecs(millisecondsToWait);

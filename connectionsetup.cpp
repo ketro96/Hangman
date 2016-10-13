@@ -25,7 +25,7 @@ void ConnectionSetup::on_buttonBox_rejected()
     emit closed();
 }
 
-
+//Get IP and port from ui and emit connect signal
 void ConnectionSetup::on_buttonBox_accepted()
 {
     QString ipAdress = ui->edtIpAdress->text();

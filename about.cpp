@@ -19,6 +19,7 @@ About::~About()
     delete ui;
 }
 
+//Change background to black and text to white
 void About::on_btnEasterEgg_clicked()
 {
     this->setStyleSheet("background-color:black;");

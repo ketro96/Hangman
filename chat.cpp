@@ -32,12 +32,13 @@ void Chat::on_btnSend_clicked()
     sendChatMessage();
 }
 
+//Set IP and port info
 void Chat::newServerInfo(QString ipAdress, QString port)
 {
     ui->lblHostInfo->setText("This server is hosted on "+ipAdress+":"+port);
 }
 
-
+//Display new message on ListWidget
 void Chat::getMessage(QString message)
 {
     QListWidgetItem *messageItem = new QListWidgetItem(message);
@@ -50,6 +51,7 @@ void Chat::getMessage(QString message)
     ui->lwChat->scrollToBottom();
 }
 
+//Receive game request and open dialog(yes/no)
 void Chat::getRequestMessage(QString username)
 {
     QMessageBox::StandardButton reply;
@@ -64,12 +66,12 @@ void Chat::getRequestMessage(QString username)
     }
 }
 
-
 void Chat::on_edtChat_returnPressed()
 {
     sendChatMessage();
 }
 
+//Get message from ui and send signal
 void Chat::sendChatMessage()
 {
     QString message = ui->edtChat->text();
@@ -102,6 +104,7 @@ void Chat::gameClosed()
     gameStarted(false);
 }
 
+//Disable/Enable request button
 void Chat::gameStarted(bool started)
 {
     if(started)
