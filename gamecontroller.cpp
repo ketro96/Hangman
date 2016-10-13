@@ -38,6 +38,7 @@ GameController::~GameController()
 
 void GameController::initializeGameController(bool accepted)
 {
+    //Check wich type of game was startet
     modeStringList.append("SP_EASY");
     modeStringList.append("SP_MEDIUM");
     modeStringList.append("SP_HARD");
@@ -121,6 +122,7 @@ void GameController::initializeGameController(bool accepted)
 
 void GameController::initializeNewGame(bool restart)
 {
+    //Initialize attributes for starting or restarting a game
     if(restart)
     {
         this->failCounter = 0;
@@ -160,6 +162,7 @@ void GameController::initializeNewGame(bool restart)
 
 void GameController::getNextWord()
 {
+    //Grab next random word of the dictionary
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
     int pos = qrand() % ((dictionaryMap.size() + 3) - 3) + 3;
@@ -174,11 +177,13 @@ void GameController::getNextWord()
 
 int GameController::getScore()
 {
+    //Calculate the game score; 100 * word difficulty * guesses left / 0.5* length of the word * game level difficult
     return 100 * (dictionaryMap.value(word)+1) * (6 - failCounter) / (word.length() * 0.5) * gameDifficulty;
 }
 
 void GameController::setGameTimer(bool perRound)
 {
+    //Set and connect the timer for level 2 and 3
     timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
     updateLabelTimer->setInterval(1000);
     connect(updateLabelTimer, SIGNAL(timeout()), this, SLOT(updateTimerTimeLeftLabel()));
@@ -192,6 +197,7 @@ void GameController::setGameTimer(bool perRound)
 
 void GameController::updateTimerTimeLeftLabel()
 {
+    //Update the time left label on the gameView
     gameView->showTimerTimeLeft("Time left: " + QString::number(timerTimeLeft-=1));
 }
 
@@ -289,6 +295,7 @@ void GameController::checkKey(QString key)
             gameView->triggerPaintEvent(true);
             if(mode == "SP_MEDIUM")
             {
+                //Restart the timer
                 timer->stop();
                 timer->start();
                 updateLabelTimer->stop();
@@ -303,6 +310,7 @@ void GameController::checkKey(QString key)
         }
     }
     else{
+        //Add character to list if not added yet
         if(!gameView->addUsedCharacter(key))
         {
             wrongCharacter();

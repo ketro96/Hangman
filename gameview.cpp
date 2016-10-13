@@ -90,6 +90,7 @@ void GameView::paintEvent(QPaintEvent *event)
 
     int xPos = 190;
 
+    //create a line for every character
     for(int i = 0; i < wordLength; i++){
         painter.setRenderHint(QPainter::Antialiasing, false);
         painter.setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap));
@@ -97,6 +98,7 @@ void GameView::paintEvent(QPaintEvent *event)
 
         painter.setFont(QFont("times",22));
 
+        //paint all yet known characters
         painter.drawText(xPos, 298, characterArray[i].toUpper());
         xPos += 40;
     }

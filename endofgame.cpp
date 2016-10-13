@@ -19,6 +19,7 @@ EndOfGame::~EndOfGame()
     delete ui;
 }
 
+//show endOfGame dialog with win or lose message
 void EndOfGame::showDialog(bool won, int score)
 {
     ui->lblPoints->setText(QString::number(score));
