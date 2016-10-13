@@ -52,7 +52,6 @@ private:
     int clientFailCounter;
     int correctCounter;
     int serverCorrectCounter;
-    int clientCorrectCounter;
     int serverCheckCount;
     int roundTime;
     int gameTime;

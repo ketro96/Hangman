@@ -15,7 +15,7 @@ Client::Client(QObject *parent) : QObject(parent)
 bool Client::connectClient(QString ipAdress, int port)
 {
     socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::QueuedConnection); //Ohne Directconnection? DC = Multithreaded?
+    connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::QueuedConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     socket->connectToHost(ipAdress, port);
     bool connected = false;

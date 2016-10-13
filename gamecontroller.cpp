@@ -130,7 +130,6 @@ void GameController::initializeNewGame(bool restart)
         this->clientFailCounter = 0;
         this->correctCounter = 0;
         this->serverCorrectCounter = 0;
-        this->clientCorrectCounter = 0;
 
         if(gameDifficulty == 2)
         {
@@ -342,7 +341,6 @@ void GameController::serverCheckKey(QString key)
     {
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
-        qDebug() << "servercharacterCount: "+characterCount;
         for(int i = 0; i < characterCount; i++)
         {
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
@@ -353,7 +351,6 @@ void GameController::serverCheckKey(QString key)
         if(!gameView->addUsedCharacter(key))
         {
             serverCorrectCounter += characterCount; //add the count of characters that where added
-            qDebug() << "serverCorrectCounter: "+serverCorrectCounter;
             gameView->triggerPaintEvent(true);
         }
         if(serverCorrectCounter >= word.length())
@@ -380,7 +377,6 @@ void GameController::clientCheckKey(QString key)
     {
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
-        qDebug() << "servercharacterCount: "+characterCount;
         for(int i = 0; i < characterCount; i++)
         {
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
@@ -390,11 +386,10 @@ void GameController::clientCheckKey(QString key)
         }
         if(!gameView->addUsedCharacter(key))
         {
-            clientCorrectCounter += characterCount; //add the count of characters that where added
-            qDebug() << "clientCorrectCounter: "+serverCorrectCounter;
+            serverCorrectCounter += characterCount; //add the count of characters that where added
             gameView->triggerPaintEvent(true);
         }
-        if(clientCorrectCounter >= word.length())
+        if(serverCorrectCounter >= word.length())
         {
             serverGameOver(false);
         }
