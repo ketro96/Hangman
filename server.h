@@ -4,6 +4,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QNetworkInterface>
+#include <QTime>
 
 class Server : public QTcpServer
 {
@@ -16,12 +17,14 @@ public slots:
     void gameAccepted(bool accepted);
     void closeServer();
     void endGame();
+    void sendToOpponent(QString message);
 
 private slots:
     void readClientData();
     void disconnectClient();
     void sendToClient(QTcpSocket *client, QString message);
     void sendToAllClients(QString message);
+    void delay(int millisecondsToWait);
 
 protected:
     void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;

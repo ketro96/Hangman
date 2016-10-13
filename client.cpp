@@ -8,7 +8,7 @@ Client::Client(QObject *parent) : QObject(parent)
 bool Client::connectClient(QString ipAdress, int port)
 {
     socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::DirectConnection); //Ohne Directconnection? DC = Multithreaded?
+    connect(socket, SIGNAL(readyRead()), this, SLOT(clientReadyRead()),Qt::QueuedConnection); //Ohne Directconnection? DC = Multithreaded?
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     socket->connectToHost(ipAdress, port);
     bool connected = false;
@@ -28,72 +28,76 @@ void Client::sendMessage(QString message)
 {
     // send
     socket->write(message.toUtf8());
-    socket->waitForBytesWritten(1000);
+    socket->waitForBytesWritten(3000);
+    delay(100);
 }
 
 void Client::sendRequest()
 {
     // send
-    sendMessage("GAME_REQUEST");
+    sendMessage("#GAME_REQUEST");
 }
 
 void Client::clientReadyRead()
 {
     QByteArray newData = socket->readAll();
-
+    QStringList splitList;
     QString dataString(newData);
-    qDebug() << dataString;
-    if(dataString.left(5)=="GAME_")
+
+    if(dataString.contains("#GAME_") || dataString.contains("#CHAT_"))
     {
-        if(dataString.mid(5)=="ACCEPT")
+        //Clear tcp stream complications
+        splitList =  dataString.split("#");
+        foreach (QString message, splitList)
         {
-            qDebug() << "send gameAnswer true";
-            emit gameAnswer(true);
+            if(message.left(5)=="CHAT_")
+            {
+
+                emit receivedChatMessage(message.mid(5));
+            }
+            else
+            {
+                if(message.mid(5)=="ACCEPT")
+                {
+                    emit gameAnswer(true);
+                }
+                else if(message.mid(5)=="DENY")
+                {
+                    emit gameAnswer(false);
+                }
+                else
+                {
+                    emit receivedGameMessage(message.mid(5));
+                }
+            }
         }
-        else if(dataString.mid(5)=="DENY")
-        {
-            emit gameAnswer(false);
-        }
-        else if(dataString.mid(5)=="END")
-        {
-            emit receivedGameMessage(dataString.mid(5));
-        }
-        /*
-         * START
-         * FAIL
-         * SUCCESS
-         * WIN
-         * LOSE
-         */
-        emit receivedGameMessage(dataString.mid(5));
-    }
-    else if(dataString.left(5)=="CHAR_")
-    {
-        //LENGTH
-        emit receivedCharMessage(dataString.mid(5));
-    }
-    else if(dataString.left(5)=="CHAT_")
-    {
-        //MESSAGE
-        emit receivedChatMessage(dataString.mid(5));
     }
     else
     {
-        qDebug() << "Received invalid Message.";
+        //qDebug() << "Received invalid Message.";
+        //Received invalid Message.
     }
+
 }
 
 void Client::endGame()
 {
-    qDebug() << "Client sends end_game";
-    sendMessage("GAME_END");
+    sendMessage("#GAME_END");
 }
 
 void Client::disconnected()
 {
     socket->deleteLater();
     emit disconnect();
-    ///Programm Absturz?? bei delete? vlt funkt mit deletelater -> testen
-    qDebug() << "disconnected and socket deleted";
     QMessageBox::information(0,"Disconnect","Lost connection to host.");
 }
+
+void Client::delay(int millisecondsToWait)
+{
+    QTime dieTime = QTime::currentTime().addMSecs(millisecondsToWait);
+    while( QTime::currentTime() < dieTime )
+    {
+        //wait for socket to write
+    }
+}
+

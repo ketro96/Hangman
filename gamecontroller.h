@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QStringList>
-#include <QDebug>
 #include <dictionary.h>
 #include <random>
 #include <gameView.h>
@@ -20,6 +19,7 @@ public:
 signals:
     void keyChecked(bool includesCharacter);
     void closed();
+    void gameMessage(QString message);
 
 public slots:
     void closeView();
@@ -28,32 +28,35 @@ public slots:
 
 private slots:
     void getNextWord();
-
     void initializeNewGame(bool restart);
-
     void checkKey(QString key);
-
+    void serverCheckKey(QString key);
+    void clientCheckKey(QString key);
+    void clientSendKey(QString key);
     void viewDestroyed();
-
     int getScore();
-
     void setGameTimer(bool perRound);
-
     void wrongCharacter();
-
+    void serverWrongCharacter();
+    void clientWrongCharacter();
     void gameOver(bool win);
-
+    void serverGameOver(bool win);
     void timeIsUp();
-
     void updateTimerTimeLeftLabel();
 
 
 private:
     GameView *gameView;
     int failCounter;
+    int serverFailCounter;
+    int clientFailCounter;
     int correctCounter;
+    int serverCorrectCounter;
+    int clientCorrectCounter;
+    int serverCheckCount;
     int roundTime;
     int gameTime;
+    bool gameEnded;
     QString word;
     QString mode;
     QString username;

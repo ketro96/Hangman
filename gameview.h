@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QtGui>
 #include <QStringList>
-#include <QDebug>
 
 namespace Ui {
 class GameView;
@@ -23,6 +22,7 @@ public:
     void newGame(int wordLength);
     void enableKeyPressEvents(bool enable);
     void showTimerTimeLeft(QString time);
+    void setTurn(QString user);
 
 signals:
     void openChat();

@@ -47,6 +47,7 @@ void HangMe::on_btnStartHost_clicked()
     {
         gameController = new GameController("MP_HOST", username);
         connect(server, SIGNAL(receivedGameMessage(QString)), gameController, SLOT(getGameMessage(QString)));
+        connect(gameController, SIGNAL(gameMessage(QString)), server, SLOT(sendToOpponent(QString)));
         connect(gameController, SIGNAL(closed()), server, SLOT(endGame()));
         connect(chat, SIGNAL(closed()), gameController, SLOT(closeView()));
         connect(chat, SIGNAL(closed()), server, SLOT(closeServer()));
@@ -113,10 +114,11 @@ void HangMe::connectClient(QString ipAdress, int port)
 {
     if(client->connectClient(ipAdress, port))
     {
-        client->sendMessage("USER_"+username);
+        client->sendMessage("#USER_"+username);
         chat = new Chat("MP_CLIENT", username);
         this->setDisabled(true);
         gameController = new GameController("MP_CLIENT", username);
+        connect(gameController, SIGNAL(gameMessage(QString)), client, SLOT(sendMessage(QString)));
         connect(gameController, SIGNAL(closed()), client, SLOT(endGame()));
         connect(gameController, SIGNAL(closed()), chat, SLOT(gameClosed()));
         connect(client, SIGNAL(receivedGameMessage(QString)), gameController, SLOT(getGameMessage(QString)));

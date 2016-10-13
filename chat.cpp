@@ -35,10 +35,11 @@ void Chat::newServerInfo(QString ipAdress, QString port)
 void Chat::getMessage(QString message)
 {
     QListWidgetItem *messageItem = new QListWidgetItem(message);
+    /** Set own user messsages blue
     if(message.contains(username+": "))
     {
-        /// messageItem->setForeground(Qt::blue);
-    }
+         messageItem->setForeground(Qt::blue);
+    }**/
     ui->lwChat->addItem(messageItem);
     ui->lwChat->scrollToBottom();
 }
@@ -70,11 +71,12 @@ void Chat::sendChatMessage()
     {
         message.prepend(username+": ");
         QListWidgetItem *messageItem = new QListWidgetItem(message);
+        ///Set own user messages = blue
         /// messageItem->setForeground(Qt::blue);
         ui->lwChat->addItem(messageItem);
         ui->lwChat->scrollToBottom();
     }
-    message.prepend("CHAT_");
+    message.prepend("#CHAT_");
     ui->edtChat->clear();
     emit sendMessage(message);
 }

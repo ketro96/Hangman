@@ -143,7 +143,7 @@ void GameView::addCharacter(QString key, int pos)
     characterArray[pos] = key[0];
 }
 
-
+//return true if character already used
 bool GameView::addUsedCharacter(QString key)
 {
     bool alreadyExists = true;
@@ -168,3 +168,7 @@ void GameView::guessed(QKeyEvent *e){
     }
 }
 
+void GameView::setTurn(QString user)
+{
+   ui->lblTurn->setText(user);
+}

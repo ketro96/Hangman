@@ -4,18 +4,26 @@ GameController::GameController(QString mode, QString username, QObject *parent) 
 {
     this->mode = mode;
     this->username = username;
+    gameEnded = false;
+    serverCheckCount = 0;
     gameView = NULL;
     dictionary = NULL;
     highscore = NULL;
     timer = NULL;
     updateLabelTimer = NULL;
-    qDebug() << mode;
     endOfGame = NULL;
 }
 
 GameController::~GameController()
 {
-    if(timer) timer->stop(); delete timer;
+    if(timer)
+    {
+        if(timer->isActive())
+        {
+            timer->stop();
+        }
+        delete timer;
+    }
     if(updateLabelTimer) updateLabelTimer->stop(); delete updateLabelTimer;
     if(dictionary) delete dictionary;
     if(highscore) delete highscore;
@@ -24,7 +32,6 @@ GameController::~GameController()
 
 void GameController::initializeGameController(bool accepted)
 {
-    qDebug() << "init";
     modeStringList.append("SP_EASY");
     modeStringList.append("SP_MEDIUM");
     modeStringList.append("SP_HARD");
@@ -37,7 +44,6 @@ void GameController::initializeGameController(bool accepted)
     case 0:
         //standard settings
         gameDifficulty = 1;
-        accepted = true;
         break;
     case 1:
         this->roundTime = 10;
@@ -51,20 +57,20 @@ void GameController::initializeGameController(bool accepted)
         break;
     case 3:
         //client settings
+        gameDifficulty = 1;
         break;
     case 4:
         //host setting
+        gameDifficulty = 1;
         break;
     default:
-        qDebug() << "Invalid gamemode";
+        accepted = false;
+        //Invalid gamemode
         break;
     }
-    if(accepted)
+    if(accepted && mode != "MP_CLIENT" && mode != "MP_HOST")
     {
         this->gameView = new GameView();
-       /// TEST
-        gameView->setWindowTitle(mode);
-        qDebug() << "Init gc";
         connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(checkKey(QString)));
         connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
         gameView->setAttribute(Qt::WA_DeleteOnClose);
@@ -78,6 +84,43 @@ void GameController::initializeGameController(bool accepted)
         gameView->show();
         initializeNewGame(true);
     }
+    else if(accepted && mode == "MP_HOST")
+    {
+        this->gameView = new GameView();
+        connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(serverCheckKey(QString)));
+        connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
+        gameView->setAttribute(Qt::WA_DeleteOnClose);
+        this->word = "";
+        this->dictionary = new Dictionary();
+        this->lastWordPos = 0;
+        dictionaryMap = dictionary->getDictionaryItemObject();
+        //set current word
+        getNextWord();
+
+        /// TEST
+        gameView->setWindowTitle(mode);
+        ///TEST
+
+        gameView->setTurn("Your turn");
+        gameView->show();
+        initializeNewGame(true);
+    }
+    else if(accepted && mode == "MP_CLIENT")
+    {
+        this->gameView = new GameView();
+        /// TEST
+        gameView->setWindowTitle(mode);
+        ///TEST
+        connect(gameView, SIGNAL(keyPressed(QString)), this, SLOT(clientSendKey(QString)));
+        connect(gameView, SIGNAL(destroyed(QObject*)), this, SLOT(viewDestroyed()));
+        gameView->setAttribute(Qt::WA_DeleteOnClose);
+        gameView->setTurn("Opponent's turn");
+        gameView->show();
+    }
+    else
+    {
+
+    }
 }
 
 void GameController::initializeNewGame(bool restart)
@@ -85,7 +128,11 @@ void GameController::initializeNewGame(bool restart)
     if(restart)
     {
         this->failCounter = 0;
+        this->serverFailCounter = 0;
+        this->clientFailCounter = 0;
         this->correctCounter = 0;
+        this->serverCorrectCounter = 0;
+        this->clientCorrectCounter = 0;
 
         if(gameDifficulty == 2)
         {
@@ -104,7 +151,10 @@ void GameController::initializeNewGame(bool restart)
         }
         getNextWord();
         gameView->newGame(word.length());
-        timer->start();
+        if(gameDifficulty != 1)
+        {
+            timer->start();
+        }
     }
     else
     {
@@ -133,7 +183,6 @@ int GameController::getScore()
 
 void GameController::setGameTimer(bool perRound)
 {
-    //timer->setSingleShot(!perRound);
     timer->setInterval(perRound ? roundTime * 1000 : gameTime * 1000);
     updateLabelTimer->setInterval(1000);
     connect(updateLabelTimer, SIGNAL(timeout()), this, SLOT(updateTimerTimeLeftLabel()));
@@ -166,7 +215,25 @@ void GameController::wrongCharacter()
         updateTimerTimeLeftLabel();
         updateLabelTimer->start();
     }
+}
 
+void GameController::serverWrongCharacter()
+{
+    serverFailCounter++;
+    if(serverFailCounter > 5)
+    {
+        serverGameOver(false);
+    }
+    gameView->triggerPaintEvent(false);
+}
+
+void GameController::clientWrongCharacter()
+{
+    clientFailCounter++;
+    if(clientFailCounter > 5)
+    {
+        serverGameOver(true);
+    }
 }
 
 void GameController::timeIsUp()
@@ -179,7 +246,8 @@ void GameController::gameOver(bool win)
     updateLabelTimer->stop();
     timer->stop();
     gameView->enableKeyPressEvents(false);
-    if(win){
+    if(win)
+    {
         highscore->addScore(this->username, getScore());
     }
     endOfGame = new EndOfGame();
@@ -188,20 +256,42 @@ void GameController::gameOver(bool win)
     endOfGame->showDialog(win, win ? getScore() : 0);
 }
 
+void GameController::serverGameOver(bool win)
+{
+    if(win)
+    {
+        //Server user wins
+        QMessageBox::information(0,"Game Over","Game Over - You win!");
+        emit gameMessage("#GAME_LOSE");
+    }
+    else
+    {
+        //Client user wins
+        QMessageBox::information(0,"Game Over","Game Over - You lose!");
+        emit gameMessage("#GAME_WIN");
+    }
+    gameEnded = true;
+    closeView();
+}
+
 void GameController::checkKey(QString key)
 {
-    if(word.contains(key, Qt::CaseInsensitive)){
+    if(word.contains(key, Qt::CaseInsensitive))
+    {
         int posLastChar = 0;
         int characterCount = word.count(key, Qt::CaseInsensitive);
-        for(int i = 0; i < characterCount; i++){
+        for(int i = 0; i < characterCount; i++)
+        {
             posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
             gameView->addCharacter(key, posLastChar);
             posLastChar += 1;
         }
-        if(!gameView->addUsedCharacter(key)){
+        if(!gameView->addUsedCharacter(key))
+        {
             correctCounter += characterCount; //add the count of characters that where added
             gameView->triggerPaintEvent(true);
-            if(mode == "SP_MEDIUM"){
+            if(mode == "SP_MEDIUM")
+            {
                 timer->stop();
                 timer->start();
                 updateLabelTimer->stop();
@@ -210,14 +300,17 @@ void GameController::checkKey(QString key)
                 updateLabelTimer->start();
             }
         }
-        if(correctCounter >= word.length()){
+        if(correctCounter >= word.length())
+        {
             gameOver(true);
         }
     }
     else{
-        if(!gameView->addUsedCharacter(key)){
+        if(!gameView->addUsedCharacter(key))
+        {
             wrongCharacter();
-            if(mode == "SP_MEDIUM"){
+            if(mode == "SP_MEDIUM")
+            {
                 timer->stop();
                 timer->start();
                 updateLabelTimer->stop();
@@ -229,12 +322,132 @@ void GameController::checkKey(QString key)
     }
 }
 
+//Check if key on server is valid and  send information to client
+void GameController::serverCheckKey(QString key)
+{
+    gameView->setTurn("Opponent's turn");
+    gameView->enableKeyPressEvents(false);
+    serverCheckCount++;
+    //initialize client view
+    if(serverCheckCount == 1)
+    {
+        emit gameMessage("#GAME_LENGTH_"+QString::number(word.length()));
+    }
+    if(word.contains(key, Qt::CaseInsensitive))
+    {
+        int posLastChar = 0;
+        int characterCount = word.count(key, Qt::CaseInsensitive);
+        for(int i = 0; i < characterCount; i++)
+        {
+            posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
+            emit gameMessage("#GAME_CHAR_"+key+"_"+QString::number(posLastChar));
+            gameView->addCharacter(key, posLastChar);
+            posLastChar += 1;
+        }
+        if(!gameView->addUsedCharacter(key))
+        {
+            serverCorrectCounter += characterCount; //add the count of characters that where added
+            gameView->triggerPaintEvent(true);
+        }
+        if(serverCorrectCounter >= word.length())
+        {
+            serverGameOver(true);
+        }
+    }
+    else{
+        if(!gameView->addUsedCharacter(key))
+        {
+            serverWrongCharacter();
+        }
+    }
+    if(serverCheckCount > 1)
+    {
+        emit gameMessage("#GAME_TURN");
+    }
+}
+
+//Check if key from client is valid and send information to client
+void GameController::clientCheckKey(QString key)
+{
+    if(word.contains(key, Qt::CaseInsensitive))
+    {
+        int posLastChar = 0;
+        int characterCount = word.count(key, Qt::CaseInsensitive);
+        for(int i = 0; i < characterCount; i++)
+        {
+            posLastChar = word.indexOf(key, posLastChar, Qt::CaseInsensitive);
+            emit gameMessage("#GAME_CHAR_"+key+"_"+QString::number(posLastChar));
+            emit gameMessage("#GAME_FCHAR_"+key);
+            gameView->addCharacter(key, posLastChar);
+            posLastChar += 1;
+        }
+        if(!gameView->addUsedCharacter(key))
+        {
+            clientCorrectCounter += characterCount; //add the count of characters that where added
+            gameView->triggerPaintEvent(true);
+        }
+        if(clientCorrectCounter >= word.length())
+        {
+            serverGameOver(false);
+        }
+    }
+    else
+    {
+        clientWrongCharacter();
+        emit gameMessage("#GAME_FCHAR_"+key);
+    }
+    gameView->setTurn("          Your turn");
+    gameView->enableKeyPressEvents(true);
+}
+
+//send pressed key from client to server
+void GameController::clientSendKey(QString key)
+{
+    gameView->setTurn("Opponent's turn");
+    gameView->enableKeyPressEvents(false);
+    emit gameMessage("#GAME_CHAR_"+key);
+}
+
 void GameController::getGameMessage(QString message)
 {
     if(message == "END")
     {
         QMessageBox::information(0,"Game Over","Your opponent disconnected.");
         closeView();
+    }
+    else if(message.left(7) == "LENGTH_")
+    {
+        gameView->setTurn("          Your turn");
+        gameView->newGame(message.mid(7).toInt());
+    }
+    else if(message.left(3) == "WIN")
+    {
+        QMessageBox::information(0,"Game Over","Game Over - You win!");
+    }
+    else if(message.left(4) == "LOSE")
+    {
+        QMessageBox::information(0,"Game Over","Game Over - You lose!");
+    }
+    else if(message.left(5) == "CHAR_" && mode == "MP_CLIENT")
+    {
+        gameView->addCharacter(message.mid(5,1),message.mid(7).toInt());
+        gameView->triggerPaintEvent(true);
+    }
+    else if(message.left(6) == "FCHAR_")
+    {
+        gameView->addUsedCharacter(message.mid(6,1));
+        gameView->triggerPaintEvent(true);
+        gameView->triggerPaintEvent(false);
+    }
+    else if(message.left(5) == "CHAR_" && mode == "MP_HOST")
+    {
+        clientCheckKey(message.mid(5,1));
+    }
+    else if(message.left(4) == "TURN")
+    {
+        //Set active user
+        gameView->setTurn("          Your turn");
+        gameView->enableKeyPressEvents(true);
     }
 }
 
@@ -248,8 +461,10 @@ void GameController::closeView()
 
 void GameController::viewDestroyed()
 {
-    qDebug()  << mode+"-view destroyed";
     gameView = NULL;
-    emit closed();
+    if(!gameEnded)
+    {
+        emit closed();
+    }
 }
 

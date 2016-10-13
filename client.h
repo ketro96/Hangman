@@ -6,7 +6,7 @@
 #include <QTcpSocket>
 #include <QNetworkSession>
 #include <QMessageBox>
-#include <QDebug>
+#include <QTime>
 
 class Client : public QObject
 {
@@ -24,6 +24,7 @@ public slots:
 private slots:
     void clientReadyRead();
     void disconnected();
+    void delay(int millisecondsToWait);
 
 signals:
     void receivedChatMessage(QString dataString);

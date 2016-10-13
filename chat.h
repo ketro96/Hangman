@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QMessageBox>
-#include <QDebug>
 
 namespace Ui {
 class Chat;
