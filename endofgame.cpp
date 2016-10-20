@@ -12,6 +12,7 @@ EndOfGame::EndOfGame(QWidget *parent) :
     ui(new Ui::EndOfGame)
 {
     ui->setupUi(this);
+        this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
 }
 
 EndOfGame::~EndOfGame()

@@ -12,8 +12,12 @@ Highscore::Highscore(QWidget *parent) :
     ui(new Ui::Highscore)
 {
     ui->setupUi(this);
-    readDB();
-    getHighscore();
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
+    validDBPath = false;
+    if(readDB())
+    {
+        getHighscore();
+    }
 }
 
 Highscore::~Highscore()
@@ -23,11 +27,34 @@ Highscore::~Highscore()
 }
 
 //Load database
-void Highscore::readDB()
+bool Highscore::readDB()
 {
     QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
-    db = QSqlDatabase::addDatabase("QSQLITE"); //db ist im Header deklariert
-    db.setDatabaseName(dbPath);
+    QFileInfo check_file(dbPath);
+    // check if file exists and if yes: Is it really a file and no directory?
+    if (check_file.exists() && check_file.isFile())
+    {
+        db = QSqlDatabase::addDatabase("QSQLITE"); //db declared in header
+        db.setDatabaseName(dbPath);
+        validDBPath = true;
+        return validDBPath;
+    }
+    else
+    {
+        return validDBPath;
+    }
+}
+
+bool Highscore::isValid()
+{
+    if(validDBPath)
+    {
+        return db.isValid();
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //Load highscores into ListWidget

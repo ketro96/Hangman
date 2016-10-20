@@ -11,7 +11,9 @@ GameView::GameView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameView)
 {
+    this->setFixedSize(741,391);
     this->setWindowTitle("HangMe");
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
     this->regex = QRegularExpression("[A-Za-z]");
     characterArray = {""};
     enableKeyPressEvents(false);
@@ -172,5 +174,5 @@ void GameView::guessed(QKeyEvent *e){
 
 void GameView::setTurn(QString user)
 {
-   ui->lblTurn->setText(user);
+    ui->lblTurn->setText(user);
 }

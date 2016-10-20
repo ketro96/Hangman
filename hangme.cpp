@@ -13,6 +13,7 @@ HangMe::HangMe(QWidget *parent) :
     ui(new Ui::HangMe)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
     ui->btnGoBack->hide();
     ui->btnGoBack->setIcon(QIcon(":/images/images/Back.png"));
     ui->btnSP_Easy->hide();

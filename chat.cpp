@@ -12,6 +12,7 @@ Chat::Chat(QString mode, QString username, QWidget *parent) :
     ui(new Ui::Chat)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
     this->mode = mode;
     ui->btnRequestGame->hide();
     if(mode == "MP_CLIENT")

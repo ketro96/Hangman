@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtSql>
 #include <QMessageBox>
+#include <QFileInfo>
 
 namespace Ui {
 class Highscore;
@@ -17,14 +18,14 @@ public:
     explicit Highscore(QWidget *parent = 0);
     ~Highscore();
     void addScore(QString username, int score);
-
+    bool isValid();
 
 signals:
     void closed();
 
 private slots:
     void getHighscore();
-    void readDB();
+    bool readDB();
     QSqlQuery queryDB(QString queryString, bool &successful);
     void resetHighscore();
     void on_pushButton_clicked();
@@ -36,6 +37,7 @@ protected:
 private:
     Ui::Highscore *ui;
     QSqlDatabase db;
+    bool validDBPath;
 };
 
 #endif // HIGHSCORE_H

@@ -85,11 +85,25 @@ void GameController::initializeGameController(bool accepted)
         this->dictionary = new Dictionary();
         this->highscore = new Highscore();
         this->lastWordPos = 0;
-
-        dictionaryMap = dictionary->getDictionaryItemObject();
-        getNextWord();
         gameView->show();
-        initializeNewGame(true);
+        if(highscore->isValid() && dictionary->isValid())
+        {
+            dictionaryMap = dictionary->getDictionaryItemObject();
+            if(!dictionaryMap.isEmpty())
+            {
+                initializeNewGame(true);
+            }
+            else
+            {
+                QMessageBox::information(0,"Error","Dictionary is empty.");
+                closeView();
+            }
+        }
+        else
+        {
+            QMessageBox::information(0,"Error","Databases not accessible.");
+            closeView();
+        }
     }
     //Initialize attributes for server, connect signals and open game view
     else if(accepted && mode == "MP_HOST")
@@ -101,12 +115,27 @@ void GameController::initializeGameController(bool accepted)
         this->word = "";
         this->dictionary = new Dictionary();
         this->lastWordPos = 0;
-        dictionaryMap = dictionary->getDictionaryItemObject();
-        //set current word
-        getNextWord();
-        gameView->setTurn("Your turn");
         gameView->show();
-        initializeNewGame(true);
+
+        if(dictionary->isValid())
+        {
+            dictionaryMap = dictionary->getDictionaryItemObject();
+            if(!dictionaryMap.isEmpty())
+            {
+                gameView->setTurn("Your turn");
+                initializeNewGame(true);
+            }
+            else
+            {
+                QMessageBox::information(0,"Error","Dictionary is empty.");
+                closeView();
+            }
+        }
+        else
+        {
+            QMessageBox::information(0,"Error","Databases not accessible.");
+            closeView();
+        }
     }
     //Set attributes for client, connect signals and open game view
     else if(accepted && mode == "MP_CLIENT")
@@ -162,13 +191,22 @@ void GameController::initializeNewGame(bool restart)
 void GameController::getNextWord()
 {
     //Grab next random word of the dictionary
-    QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
-    int pos = qrand() % ((dictionaryMap.size() + 3) - 3) + 3;
-    pos -= 3;
-    if(pos == lastWordPos)
+    int pos;
+    if(dictionaryMap.size() > 1)
     {
-        pos >= dictionaryMap.size()-1 ? pos-- : pos++;
+        QTime time = QTime::currentTime();
+        qsrand(time.second());
+        pos = qrand() % (dictionaryMap.size());
+        while(pos == lastWordPos) //make word position different to last position
+        {
+            QTime time = QTime::currentTime();
+            qsrand(time.second());
+            pos = qrand() % (dictionaryMap.size());
+        }
+    }
+    else
+    {
+        pos = 0;
     }
     this->word = dictionaryMap.keys().at(pos);
     lastWordPos = pos;
@@ -414,7 +452,7 @@ void GameController::clientSendKey(QString key)
 //Get mesages from client/server and call matching functions
 void GameController::getGameMessage(QString message)
 {
-    if(message == "END")
+    if(message == "END" && gameView)
     {
         QMessageBox::information(0,"Game Over","Your opponent disconnected.");
         closeView();

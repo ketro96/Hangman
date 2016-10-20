@@ -2,5 +2,6 @@
     <qresource prefix="/images">
         <file>images/Back.png</file>
         <file>images/HangMeLogo.png</file>
+        <file>images/Hangman.png</file>
     </qresource>
 </RCC>

@@ -12,8 +12,12 @@ Dictionary::Dictionary(QWidget *parent) :
     ui(new Ui::Dictionary)
 {
     ui->setupUi(this);
-    readDB();
-    getDictionaryItems();
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
+    validDBPath = false;
+    if(readDB())
+    {
+        getDictionaryItems();
+    }
     this->regex = QRegularExpression("^[A-Za-z]{3,13}+$");
     ui->rbGroup->setId(ui->rbEasy, 0);
     ui->rbGroup->setId(ui->rbMedium, 1);
@@ -27,11 +31,34 @@ Dictionary::~Dictionary()
 }
 
 //Load database
-void Dictionary::readDB()
+bool Dictionary::readDB()
 {
     QString dbPath = QApplication::applicationDirPath() + "/hangme.sqlite";
-    db = QSqlDatabase::addDatabase("QSQLITE", "DictionaryConnection"); //db ist im Header deklariert
-    db.setDatabaseName(dbPath);
+    QFileInfo check_file(dbPath);
+    // check if file exists and if yes: Is it really a file and no directory?
+    if (check_file.exists() && check_file.isFile())
+    {
+        db = QSqlDatabase::addDatabase("QSQLITE", "DictionaryConnection"); //db declared in header
+        db.setDatabaseName(dbPath);
+        validDBPath = true;
+        return validDBPath;
+    }
+    else
+    {
+        return validDBPath;
+    }
+}
+
+bool Dictionary::isValid()
+{
+    if(validDBPath)
+    {
+        return db.isValid();
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //Close all database connections
@@ -87,20 +114,20 @@ QMap<QString, int> Dictionary::getDictionaryItemObject()
 {
     bool successful = false;
     QSqlQuery query = queryDB("SELECT `word` FROM 'Dictionary'", successful);
-    //QList<QString> wordList;
     QMap<QString, int> wordMap;
     if (successful)
     {
         successful = query.first(); //jump to first item
         while (successful)
         {
-            //wordList.append(query.value(0).toString());
             wordMap.insert(query.value(0).toString(), query.value(1).toInt());
             successful = query.next();
         } //while successful
     } else
     { //Error executing SQL statement
         QMessageBox::information(0,"Error", query.lastError().text());
+        //Fill map with a single word
+        wordMap.insert("dictionary",1);
     }
     return wordMap;
 }

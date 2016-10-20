@@ -5,6 +5,7 @@
 #include <QtSql>
 #include <QMessageBox>
 #include <QStringList>
+#include <QFileInfo>
 
 namespace Ui {
 class Dictionary;
@@ -17,6 +18,7 @@ class Dictionary : public QWidget
 public:
     explicit Dictionary(QWidget *parent = 0);
     ~Dictionary();
+    bool isValid();
 
 signals:
 void closed();
@@ -30,7 +32,7 @@ private slots:
     QSqlQuery queryDB(QString queryString, bool &successful);
     void addDictionaryItems(QString word, int difficutly);
     void deleteDictionaryItems(QString item);
-    void readDB();
+    bool readDB();
     void closeDB();
     void getDictionaryItems(); //show in UI
 
@@ -41,6 +43,7 @@ private:
     Ui::Dictionary *ui;
     QSqlDatabase db;
     QRegularExpression regex;
+    bool validDBPath;
 };
 
 #endif // DICTIONARY_H

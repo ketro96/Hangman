@@ -6,12 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>414</width>
+    <width>424</width>
     <height>691</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>424</width>
+    <height>691</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>424</width>
+    <height>691</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Help</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background:rgb(255, 255, 255)</string>
   </property>
   <widget class="QLabel" name="lblCopyright">
    <property name="geometry">
@@ -77,7 +92,7 @@
     <rect>
      <x>10</x>
      <y>80</y>
-     <width>381</width>
+     <width>401</width>
      <height>31</height>
     </rect>
    </property>
@@ -88,7 +103,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Press Singleplayer -&gt; enter a nickname -&gt; select the level you want -&gt; play</string>
+    <string>Press Singleplayer -&gt; enter a nickname -&gt; select the level difficulty</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_4">
@@ -126,7 +141,7 @@
     </font>
    </property>
    <property name="text">
-    <string>if you want to host a game:</string>
+    <string>If you want to host a game:</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_6">
@@ -174,7 +189,7 @@
     <rect>
      <x>10</x>
      <y>190</y>
-     <width>381</width>
+     <width>401</width>
      <height>31</height>
     </rect>
    </property>
@@ -204,7 +219,7 @@
     </font>
    </property>
    <property name="text">
-    <string>if you want connect to a game:</string>
+    <string>If you want connect to a game:</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_10">
@@ -212,7 +227,7 @@
     <rect>
      <x>10</x>
      <y>230</y>
-     <width>381</width>
+     <width>401</width>
      <height>31</height>
     </rect>
    </property>
@@ -223,7 +238,7 @@
     </font>
    </property>
    <property name="text">
-    <string>-&gt; press connect -&gt; enter the ip address and ip of the game host -&gt; press ok</string>
+    <string>-&gt; press connect -&gt; enter the ip address and port of the game host</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_12">
@@ -231,7 +246,7 @@
     <rect>
      <x>10</x>
      <y>250</y>
-     <width>381</width>
+     <width>391</width>
      <height>31</height>
     </rect>
    </property>
@@ -242,7 +257,7 @@
     </font>
    </property>
    <property name="text">
-    <string>-&gt; press Gamre request -&gt; wait for the host to accept</string>
+    <string>-&gt; press ok -&gt; press Game request -&gt; wait for the host to accept</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_11">
@@ -271,7 +286,7 @@
     <rect>
      <x>10</x>
      <y>300</y>
-     <width>381</width>
+     <width>421</width>
      <height>31</height>
     </rect>
    </property>
@@ -282,7 +297,7 @@
     </font>
    </property>
    <property name="text">
-    <string>After you hosted a game or connected to an existing game you are able to </string>
+    <string>After you hosted a game or connected to an existing game you are </string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_14">
@@ -301,7 +316,7 @@
     </font>
    </property>
    <property name="text">
-    <string>chat with every connected client and the host.</string>
+    <string>able to chat with every connected client and the host.</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_15">
@@ -328,7 +343,7 @@
   <widget class="QLabel" name="lblAboutUs_16">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>30</x>
      <y>390</y>
      <width>301</width>
      <height>31</height>
@@ -353,6 +368,18 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>381</width>
+     <height>31</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>381</width>
+     <height>31</height>
+    </size>
+   </property>
    <property name="font">
     <font>
      <family>Segoe UI</family>
@@ -360,15 +387,15 @@
     </font>
    </property>
    <property name="text">
-    <string>There a 3 diffrent levels: </string>
+    <string>There are 3 different levels: </string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_18">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>30</x>
      <y>410</y>
-     <width>341</width>
+     <width>381</width>
      <height>31</height>
     </rect>
    </property>
@@ -385,9 +412,9 @@
   <widget class="QLabel" name="lblAboutUs_19">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>30</x>
      <y>430</y>
-     <width>321</width>
+     <width>371</width>
      <height>31</height>
     </rect>
    </property>
@@ -419,7 +446,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Highscore</string>
+    <string>Highscore:</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_21">
@@ -427,7 +454,7 @@
     <rect>
      <x>10</x>
      <y>490</y>
-     <width>381</width>
+     <width>391</width>
      <height>31</height>
     </rect>
    </property>
@@ -438,7 +465,7 @@
     </font>
    </property>
    <property name="text">
-    <string>into the Highscore table using the username that you picked at the start.</string>
+    <string>automatically written into the highscore table using your nickname.</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_22">
@@ -457,7 +484,7 @@
     </font>
    </property>
    <property name="text">
-    <string>In any SIngleplayer Game that you win the score will be automatically written </string>
+    <string>In any Singleplayer Game that you win the score will be </string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_23">
@@ -476,7 +503,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Multiplayer Games will not be considered in the Highscore.</string>
+    <string>Multiplayer games will not be considered in the highscore.</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_24">
@@ -497,7 +524,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Dictionary</string>
+    <string>Dictionary:</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_25">
@@ -516,7 +543,7 @@
     </font>
    </property>
    <property name="text">
-    <string>You can remove and add words in the Dictionary. There for: </string>
+    <string>You can remove and add words in the dictionary. Therefor: </string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_26">
@@ -535,7 +562,7 @@
     </font>
    </property>
    <property name="text">
-    <string>press File -&gt; Dictionary -&gt; and type the word you want to add</string>
+    <string>Press File -&gt; Dictionary -&gt; and type the word you want to add</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblAboutUs_27">
@@ -557,6 +584,34 @@
     <string>Then choose the difficulty of your word and -&gt; press add</string>
    </property>
   </widget>
+  <zorder>lblCopyright</zorder>
+  <zorder>lblAboutUs_23</zorder>
+  <zorder>lblAboutUs_27</zorder>
+  <zorder>lblAboutUs_26</zorder>
+  <zorder>lblAboutUs_25</zorder>
+  <zorder>lblAboutUs_24</zorder>
+  <zorder>lblAboutUs_21</zorder>
+  <zorder>lblAboutUs_22</zorder>
+  <zorder>lblAboutUs_20</zorder>
+  <zorder>lblAboutUs_19</zorder>
+  <zorder>lblAboutUs_18</zorder>
+  <zorder>lblAboutUs_16</zorder>
+  <zorder>lblAboutUs_17</zorder>
+  <zorder>lblAboutUs_15</zorder>
+  <zorder>lblAboutUs_14</zorder>
+  <zorder>lblAboutUs_13</zorder>
+  <zorder>lblAboutUs_11</zorder>
+  <zorder>lblAboutUs_12</zorder>
+  <zorder>lblAboutUs_10</zorder>
+  <zorder>lblAboutUs_9</zorder>
+  <zorder>lblAboutUs_8</zorder>
+  <zorder>lblAboutUs_5</zorder>
+  <zorder>lblAboutUs_7</zorder>
+  <zorder>lblAboutUs_6</zorder>
+  <zorder>lblAboutUs_4</zorder>
+  <zorder>lblAboutUs_3</zorder>
+  <zorder>lblAboutUs_2</zorder>
+  <zorder>lblHelp</zorder>
  </widget>
  <resources/>
  <connections/>

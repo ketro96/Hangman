@@ -12,6 +12,7 @@ GameHelp::GameHelp(QWidget *parent) :
     ui(new Ui::GameHelp)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
 }
 
 GameHelp::~GameHelp()

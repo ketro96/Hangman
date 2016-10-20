@@ -12,6 +12,7 @@ ConnectionSetup::ConnectionSetup(QWidget *parent) :
     ui(new Ui::ConnectionSetup)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
 }
 
 ConnectionSetup::~ConnectionSetup()

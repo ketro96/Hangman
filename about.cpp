@@ -12,6 +12,7 @@ About::About(QWidget *parent) :
     ui(new Ui::About)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/images/images/Hangman.png"));
 }
 
 About::~About()
